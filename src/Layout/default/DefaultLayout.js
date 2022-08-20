@@ -36,7 +36,7 @@ function DefaultLayout({ children }) {
           <ProfileCard />
         </div>
       </div>
-      <div className="lg:col-span-6 sm:col-span-9 col-span-12  border-2 sm:border-l-slate-300 sm:border-r-slate-300">
+      <div className="lg:col-span-6 sm:col-span-9 col-span-12  sm:border-l-slate-300 sm:border-r-slate-300">
         {children}
       </div>
       <div className="lg:col-span-3 hidden sm:hidden lg:flex lg:flex-col px-5">

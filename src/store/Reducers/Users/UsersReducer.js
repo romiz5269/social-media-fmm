@@ -35,6 +35,7 @@ export const UsersSlice = createSlice({
   },
   extraReducers: {
     [UserLogin.fulfilled]: (state, action) => {
+      localStorage.setItem("authToken", action.payload);
       state.userAuthToken = action.payload;
     },
     [UserLogin.rejected]: (state, action) => {

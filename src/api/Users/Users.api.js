@@ -44,7 +44,7 @@ export async function getUserProfile(username){
 
 export async function getOwnerProfile(userid){
   return new Promise ((resolve,reject)=>{
-    axiosPrivate.get(`/polls/editprofile/${userid}`)
+    axiosPrivate.get(`/polls/myprofile/${userid}`)
     .then(res=>resolve(res.data))
     .catch(err=>reject(err.response?.status))
   })

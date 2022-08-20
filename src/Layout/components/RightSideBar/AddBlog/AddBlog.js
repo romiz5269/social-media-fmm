@@ -14,7 +14,7 @@ const style = {
   borderRadius: "10px",
   padding: "8px",
   overflowY: "scroll",
-  height: "400px",
+  height: "500px",
 };
 function AddBlog() {
   const [open, setOpen] = useState(false);
@@ -42,7 +42,7 @@ function AddBlog() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="w-5/6 sm:w-2/5">
+        <Box sx={style} className="w-5/6 sm:w-6/12">
           <div className="flex flex-col mx-auto justify-center items-center">
             <AddBlogForm />
           </div>

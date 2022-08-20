@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ProfileBrand from "assets/images/profilecard/ProfileBrand.jpg";
 import { Popover, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function UserProfile() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -35,7 +36,9 @@ function UserProfile() {
           horizontal: "left",
         }}
       >
-        <Typography sx={{ py: 2, px: 3 }}>Profile</Typography>
+        <Typography sx={{ py: 2, px: 3 }}>
+          <Link to="/profile">Profile</Link>
+        </Typography>
         <Typography sx={{ py: 2, px: 3 }}>Logout</Typography>
       </Popover>
     </>

@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { FaCheck, FaTimes, FaInfoCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { http } from "services/Http/axios";
-
 
 // validate form fields with REGEX
 
@@ -9,7 +9,6 @@ const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const EMAIL_REGEX =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
 
 function Register() {
   const userRef = useRef();
@@ -36,6 +35,7 @@ function Register() {
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
+  const navigate = useNavigate();
   // validate username with regex Realtime
 
   useEffect(() => {
@@ -71,8 +71,7 @@ function Register() {
     setErrMsg("");
   }, [user, pwd, matchPwd]);
 
-
-  // submit form 
+  // submit form
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -101,9 +100,11 @@ function Register() {
       const response = await http.post("/polls/register/", bodyFormData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      
-      console.log(response);
- 
+
+      if (response.status === 200) {
+        console.log("Your Account successfully created");
+        navigate('/login',{replace:true})
+      }
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -168,8 +169,9 @@ function Register() {
                 >
                   <FaInfoCircle />
                   تعداد کاراکتر ها بین 4 تا 24 حرف باید باشد <br />
-                 با یک حرف کوچک شروع شود<br />
-                 حروف,اعداد,زیرخط,خط تیره مجاز هستند
+                  با یک حرف کوچک شروع شود
+                  <br />
+                  حروف,اعداد,زیرخط,خط تیره مجاز هستند
                   Letters,numbsers,underscores,hyphens,allowed
                 </p>
 

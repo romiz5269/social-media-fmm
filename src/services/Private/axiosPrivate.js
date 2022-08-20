@@ -3,6 +3,7 @@ import { URL } from "config/Urls/Urls.config";
 import { http } from "services/Http/axios";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
+import LogoutUser from "utils/LogoutFunc/Logout.Func";
 
 
 export const axiosPrivate = axios.create({
@@ -55,17 +56,20 @@ export const requestIntercept = axiosPrivate.interceptors.request.use(
 
 
 
-// export const responseIntercept = axiosPrivate.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const prevRequest = error?.config;
-//     if (error?.response?.status === 403 && !prevRequest?.sent) {
-//       // const refresh = useRefreshToken();
-//       // prevRequest.sent = true;
-//       // // const newAccessToken = await refresh();
-//       // prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
-//       return axiosPrivate(prevRequest);
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+export const responseIntercept = axiosPrivate.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const prevRequest = error?.config;
+    if(error?.response?.status === 401){
+      LogoutUser()  
+    }
+    // if (error?.response?.status === 403 && !prevRequest?.sent) {
+    //   // const refresh = useRefreshToken();
+    //   // prevRequest.sent = true;
+    //   // // const newAccessToken = await refresh();
+    //   // prevRequest.headers["Authorization"] = `Bearer ${newAccessToken}`;
+    //   return axiosPrivate(prevRequest);
+    // }
+    return Promise.reject(error);
+  }
+);
