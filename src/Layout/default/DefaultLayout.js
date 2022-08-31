@@ -47,7 +47,7 @@ function DefaultLayout({ children }) {
 
         {children}
       </div>
-      <div className="lg:col-span-4 hidden sm:hidden lg:flex lg:flex-col px-5">
+      <div className="lg:col-span-3 hidden sm:hidden lg:flex lg:flex-col px-5 mt-10">
         <SuggestBlogs />
         <div className="sm:sticky sm:top-0">
           <SuggestUsers />

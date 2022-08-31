@@ -55,14 +55,14 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
                 </div>
                 <div className="col-span-5 flex flex-col justify-evenly">
                   <div className="grid grid-cols-5 justify-between">
-                    <div className="col-span-4 flex flex-row mr-3 sm:mr-0">
+                    <div className="col-span-4 flex flex-row mr-3 sm:mr-0 pt-1">
                       <Link to={`/${blog.author?.username}`}>
-                        <span className="font-semibold text-lg">
+                        <span className="font-semibold text-md">
                           {blog.author?.username}
                         </span>
                       </Link>
 
-                      <span className="text-slate-500 text-xs pt-2 pr-3 sm:mr-0 mr-5 font-Vazirmatn">
+                      <span className="text-slate-500 text-xs pr-3 sm:mr-0 mr-5 font-Vazirmatn" style={{paddingTop:'5.5px'}}>
                         {moment(blog?.created_date).fromNow()}
                       </span>
                     </div>

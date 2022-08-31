@@ -12,7 +12,7 @@ function SuggestSingleTag() {
         </span>
       </div>
       <div className="col-span-1">
-        <button className="text-xs px-3 py-2 bg-orange-500 text-white rounded-full shadow-md">
+        <button className="text-xs px-3 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white rounded-full shadow-md">
           Follow
         </button>
       </div>

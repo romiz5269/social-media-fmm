@@ -47,7 +47,7 @@ function a11yProps(index) {
 function Profile() {
   const [value, setValue] = useState(0);
 
-  const userData = jwtDecode(localStorage.getItem("authToken")).user_id;
+  const userData = jwtDecode(localStorage.getItem("authToken")).name;
   const dispatch = useDispatch();
   console.log(userData)
   const handleChange = (event, newValue) => {
@@ -67,11 +67,11 @@ function Profile() {
   return (
     <div>
       <ProfileData profile={profile} />
-      <div className="mt-5 flex flex-row justify-center sm:mb-0 mb-10">
+      <div className="mt-5 flex flex-row justify-between  sm:mb-0 mb-10">
         <Box sx={{ width: "100%" }}>
           <Box
-            sx={{ borderBottom: 1, borderColor: "divider" }}
-            className="flex flex-row justify-center"
+            sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}
+            className="flex flex-row justify-between "
           >
             <Tabs
               value={value}
@@ -79,17 +79,29 @@ function Profile() {
               aria-label="basic tabs example"
             >
               <Tab
-                sx={{ fontFamily: "Vazirmatn" }}
+                sx={{
+                  fontFamily: "Vazirmatn",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                }}
                 label="بلاگ ها"
                 {...a11yProps(0)}
               />
               <Tab
-                sx={{ fontFamily: "Vazirmatn" }}
+                sx={{
+                  fontFamily: "Vazirmatn",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                }}
                 label="محصولات"
                 {...a11yProps(1)}
               />
               <Tab
-                sx={{ fontFamily: "Vazirmatn" }}
+                sx={{
+                  fontFamily: "Vazirmatn",
+                  fontWeight: "600",
+                  fontSize: "14px",
+                }}
                 label="لایک ها"
                 {...a11yProps(2)}
               />

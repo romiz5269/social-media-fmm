@@ -3,7 +3,7 @@ import { SuggestSingleUser } from "./SuggestSingleUser/SuggestSingleUser";
 
 function SuggestUsers() {
   return (
-    <div className="flex flex-col rounded-md shadow-xl mt-5">
+    <div className="flex flex-col rounded-lg shadow-md mt-5">
       <div className="p-3">
         <h2
           className="text-slate-400 text-sm pt-5"

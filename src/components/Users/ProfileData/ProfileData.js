@@ -10,6 +10,7 @@ import {
 } from "react-icons/fa";
 
 import { useEffect, useState } from "react";
+import { BiWorld } from "react-icons/bi";
 function ProfileData({ profile }) {
   const [editable, setEditable] = useState(false);
   const [username, setUsername] = useState(profile.username);
@@ -42,15 +43,15 @@ function ProfileData({ profile }) {
       {profile && (
         <>
           <div
-            className="flex flex-col relative bg-orange-400 sm:mt-0 mt-20 sm:mb-0 mb-12"
-            style={{ height: "150px" }}
+            className="flex flex-col relative bg-gradient-to-r from-cyan-500 to-blue-500 sm:mt-0 mt-20 sm:mb-0 mb-12"
+            style={{ height: "130px" }}
           >
-            <div className="absolute object-fill bottom-0 top-24 right-5">
+            <div className="absolute object-fill bottom-0 top-20 right-5">
               {editable ? (
                 <>
                   <div
                     className="profile-pic relative"
-                    style={{ width: "120px", height: "120px" }}
+                    style={{ width: "110px", height: "110px" }}
                   >
                     <img
                       alt="User Pic"
@@ -58,7 +59,7 @@ function ProfileData({ profile }) {
                       id="profile-image1"
                       onClick={(e) => profileImage()}
                       className="rounded-full border-t-4 border-t-white object-fill"
-                      style={{ width: "120px", height: "120px" }}
+                      style={{ width: "110px", height: "110px" }}
                     />
                     <input
                       id="profile-image-upload"
@@ -79,15 +80,15 @@ function ProfileData({ profile }) {
               ) : (
                 <img
                   src={profile.user_related_name?.image}
-                  className="rounded-full border-t-4 border-t-white"
-                  style={{ height: "120px", width: "120px" }}
+                  className="rounded-full border-4 border-white"
+                  style={{ height: "110px", width: "110px" }}
                 />
               )}
             </div>
 
             {editable ? (
               <>
-                <div className="absolute left-5 bottom-0 top-32">
+                <div className="absolute left-5 bottom-0 top-24">
                   <div
                     className="px-5 py-5 bg-white border-2 rounded-full"
                     onClick={() => setEditable(!editable)}
@@ -98,7 +99,7 @@ function ProfileData({ profile }) {
                     />
                   </div>
                 </div>
-                <div className="absolute left-24 bottom-0 top-32">
+                <div className="absolute left-24 bottom-0 top-24">
                   <div className="px-5 py-5 bg-white border-2 rounded-full">
                     <FaCheck
                       className="text-slate-800"
@@ -108,7 +109,7 @@ function ProfileData({ profile }) {
                 </div>
               </>
             ) : (
-              <div className="absolute left-5 bottom-0 top-32">
+              <div className="absolute left-5 bottom-0 top-24">
                 <div
                   className="px-5 py-5 bg-white border-2 rounded-full"
                   onClick={() => setEditable(!editable)}
@@ -121,7 +122,7 @@ function ProfileData({ profile }) {
               </div>
             )}
           </div>
-          <div className="sm:grid sm:grid-cols-12 mt-16 pr-3 pt-3">
+          <div className="sm:grid sm:grid-cols-12 mt-16 pr-3 ">
             <div className="sm:col-span-6 flex flex-col text-left pl-3">
               <div className="flex flex-row">
                 {editable ? (
@@ -130,32 +131,48 @@ function ProfileData({ profile }) {
                     onChange={(e) => setUsername(e.target.value)}
                   />
                 ) : (
-                  <span className="text-xl font-semibold pr-2">
+                  <span
+                    className="pr-2 "
+                    style={{ fontSize: "18px", fontWeight: "700" }}
+                  >
                     {profile.username}
                   </span>
                 )}
               </div>
-              <div className="flex flex-row py-2">
-                <FaEnvelope className="text-xs text-slate-500 mt-2 mr-2" />
-                <span className="text-sm mt-1 pr-2">{profile.email}</span>
-              </div>
-              <div className="flex flex-row py-2">
-                <FaCalendar className="text-xs text-slate-500 mt-2 mr-2" />
-                <span className="text-sm mt-1 pr-2">
-                  {profile.date_joined?.slice(0, 10)}
-                </span>
-              </div>
               <div className="flex flex-row">
-                <FaStickyNote className="text-xs text-slate-500 mt-2 mr-2" />
                 {editable ? (
                   <textarea onChange={(e) => setBio(e.target.value)}>
                     {bio}
                   </textarea>
                 ) : (
-                  <span className="text-sm text-right font-Vazirmatn text-slate-700 mt-1 w-2/4 sm:w-4/5 pr-2">
+                  <span
+                    className="text-right  font-Vazirmatn text-slate-400 mt-1 w-2/4 sm:w-4/5 pr-2 pt-2 pb-5"
+                    style={{ fontSize: "14px", fontWeight: "600" }}
+                  >
                     {profile.user_related_name?.bio}
                   </span>
                 )}
+              </div>
+              <div className="flex flex-row pb-2">
+                <FaEnvelope className="text-lg text-slate-400 mt-1 mr-2 " />
+                <span
+                  className=" mt-1 pr-2 text-slate-500"
+                  style={{ fontSize: "13px", fontWeight: "600" }}
+                >
+                  {profile.email}
+                </span>
+              </div>
+              <div className="flex flex-row">
+                <BiWorld
+                  className="text-xl text-slate-400 mt-1 mr-2"
+                  style={{ marginRight: "6px" }}
+                />
+                <span
+                  className=" mt-1 pr-2 text-slate-500"
+                  style={{ fontSize: "13px", fontWeight: "600" }}
+                >
+                  {profile.date_joined?.slice(0, 10)}
+                </span>
               </div>
             </div>
             <div className="sm:col-span-6 p-5">
