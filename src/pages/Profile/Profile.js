@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { AllBlogsById } from "components";
+import { AllBlogsById, AllOwnerBlogs } from "components";
 import { Products } from "pages/products/Products";
 import { ProfileData } from "components";
 import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
@@ -47,16 +47,16 @@ function a11yProps(index) {
 function Profile() {
   const [value, setValue] = useState(0);
 
-  const userData = jwtDecode(localStorage.getItem("authToken"));
+  const userData = jwtDecode(localStorage.getItem("authToken")).user_id;
   const dispatch = useDispatch();
-
+  console.log(userData)
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(fetchOwnerProfile(userData.user_id));
+    dispatch(fetchOwnerProfile(userData));
   }, []);
 
   const profile = useSelector((state) => state.users.ownerUser);
@@ -96,7 +96,7 @@ function Profile() {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <AllBlogsById />
+            <AllOwnerBlogs />
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Products />

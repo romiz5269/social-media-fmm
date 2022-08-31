@@ -1,4 +1,5 @@
 export {AllBlogs} from './Blogs/AllBlogs/AllBlogs'
+export {AllOwnerBlogs} from './Blogs/AllOwnerBlogs/AllOwnerBlogs'
 export {AllBlogsById} from './Blogs/AllBlogsById/AllBlogsById'
 export {SingleBlog} from './Blogs/SingleBlog/SingleBlog'
 export {AllBlogsByCategory} from './Blogs/AllBlogsByCategory/AllBlogsByCategory'

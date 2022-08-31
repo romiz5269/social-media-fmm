@@ -15,7 +15,7 @@ function AppRoute() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Navigate to="/home" replace />} />
+          <Route path="/" exact element={<Navigate to="/home" replace />} />
           <Route
             path={PATH.HOME}
             element={

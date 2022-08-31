@@ -5,7 +5,7 @@ export const PATH = {
     PRODUCTS:'/products',
     NOTIFICATIONS : '/notifications',
     BLOGTHREAD : '/thread/blog/:id',
-    THREADUSERPROFILE : '/user/:name',
+    THREADUSERPROFILE : '/:name',
     POPULARBLOGS: '/popular/blogs',
     POPULARUSERS: '/popular/users',
     POPULARTAGS : '/popular/tags',

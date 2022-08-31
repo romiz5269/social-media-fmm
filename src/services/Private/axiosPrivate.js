@@ -38,7 +38,7 @@ export const requestIntercept = axiosPrivate.interceptors.request.use(
     //fetch new Access Token and set as req header and save in localStorage
 
     const response = await http.post(
-      "/login/api/token/refresh/",
+      "/login/api/token/refresh",
       {},
       {
         withCredentials: true,
@@ -61,7 +61,7 @@ export const responseIntercept = axiosPrivate.interceptors.response.use(
   async (error) => {
     const prevRequest = error?.config;
     if(error?.response?.status === 401){
-      LogoutUser()  
+      localStorage.removeItem('authToken'); 
     }
     // if (error?.response?.status === 403 && !prevRequest?.sent) {
     //   // const refresh = useRefreshToken();
