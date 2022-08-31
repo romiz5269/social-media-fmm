@@ -4,6 +4,7 @@ import {
   getAllBlogs,
   getAllBlogsByAuthor,
   getSingleBlogById,
+  updateSingleBlog,
 } from "api/Blogs/blogs.api";
 import { axiosPrivate } from "services/Private/axiosPrivate";
 
@@ -41,6 +42,9 @@ export const BlogsSlice = createSlice({
       axiosPrivate.delete(`/content/post/delete/${action.payload}/`);
       state.blogs = state.blogs.filter((item) => item.id !== action.payload);
     },
+    EditSingleBlog:(state,action)=>{
+      updateSingleBlog(action.payload)
+    }
   },
   extraReducers: {
     [fetchAllBlogs.fulfilled]: (state, action) => {
@@ -66,16 +70,17 @@ export const BlogsSlice = createSlice({
       }
     },
     [fetchSingleBlogById.fulfilled]: (state, action) => {
-      console.log(action.payload);
+      
       if (state.singleBlog.length > 0) {
         state.singleBlog.pop();
       }
       state.singleBlog.push(action.payload);
+      console.log(state.singleBlog)
     },
     [fetchAllBlogsByAuthor.fulfilled]: (state, action) => {
       state.blogs = action.payload;
     },
   },
 });
-export const { removeOwnerBlog } = BlogsSlice.actions;
+export const { removeOwnerBlog,EditSingleBlog } = BlogsSlice.actions;
 export default BlogsSlice.reducer;

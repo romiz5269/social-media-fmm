@@ -22,7 +22,7 @@ export async function getAllBlogsByAuthor(username) {
 export async function getSingleBlogById(id) {
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .get(`${URL.SINGLEBLOG}/${id}/`)
+      .get(`${URL.SINGLEBLOG}/${id}`)
       .then((res) => resolve(res.data))
       .catch((err) => reject(err.response?.status));
   });

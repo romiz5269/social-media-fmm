@@ -9,7 +9,9 @@ import {
 import LinesEllipsis from "react-lines-ellipsis";
 import moment from "moment";
 import jwtDecode from "jwt-decode";
-import { AiOutlineDelete } from "react-icons/ai";
+import { AiOutlineComment, AiOutlineDelete, AiOutlineWarning } from "react-icons/ai";
+import { EditBlogModal } from "components";
+import { LikeComponent } from "components/Likes/LikeComponent";
 
 function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
   const [blogsList, setBlogsList] = useState(null);
@@ -58,18 +60,29 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
                       </span>
                     </div>
                     <div className="col-span-1 flex flex-row justify-end py-1 px-3">
-                      {location.pathname === "/profile" && blog?.author?.username === owner && (
-                        <>
-                          <div
-                            className="text-sm hover:cursor-pointer ml-5 mt-1"
-                            onClick={(e) => handleRemoveBlog(blog?.id)}
-                          >
-                            <AiOutlineDelete className="text-md text-red-500" />
+                      {location.pathname === "/profile" &&
+                        blog?.author?.username === owner && (
+                          <>
+                            <div
+                              className="text-sm hover:cursor-pointer ml-5 mt-1"
+                              onClick={(e) => handleRemoveBlog(blog?.id)}
+                            >
+                              <AiOutlineDelete className="text-md text-red-500" />
+                            </div>
+                            <div>
+                              <EditBlogModal postid={blog.id} />
+                            </div>
+                          </>
+                        )}
+                      {blog?.author?.username !== owner && (
+                        <div>
+                          <div className="text-sm flex flex-row">
+                            <span className="text-xs text-yellow-600">
+                              Report
+                            </span>
+                            <AiOutlineWarning className="text-md mr-2 text-yellow-600" />
                           </div>
-                          <div>
-                            {/* <EditBlogModal postid={blog.id} /> */}
-                          </div>
-                        </>
+                        </div>
                       )}
                     </div>
                   </div>
@@ -101,12 +114,25 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
 
                   <div className="flex flex-row justify-start pb-2">
                     <div className="flex flex-row justify-start ml-20">
-                      <FaRegComment className="ml-3 opacity-60" />
-                      <span className="text-xs pr-2">{blog.posts.length}</span>
+                      <AiOutlineComment className="ml-3 opacity-60 text-lg" />
+                      <span className="text-xs pr-2">
+                        {blog?.posts?.length}
+                      </span>
                     </div>
                     <div className="flex flex-row justify-start ml-20">
-                      <FaRegHeart className="opacity-60" />
-                      <span className="text-xs pr-2">{blog.likes}</span>
+                      {blog?.posts.find((like) => like.user === owner) ? (
+                        <LikeComponent
+                          blogid={blog.id}
+                          isLiked={true}
+                          LikeCount={blog?.posts.length}
+                        />
+                      ) : (
+                        <LikeComponent
+                          blogid={blog.id}
+                          isLiked={false}
+                          LikeCount={blog?.posts?.length}
+                        />
+                      )}
                     </div>
                     <div className="flex flex-row justify-start ml-20">
                       <FaRegComments className="opacity-60" />
@@ -120,8 +146,8 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
           ))}
         </>
       ) : (
-        <div className="flex flex-row-reverse justify-center mx-auto">
-          <div class="loader"></div>
+        <div className="flex flex-row-reverse justify-center mx-auto mt-5">
+          <div className="loader"></div>
           <span className="text-md pl-3 mb-3">... loading data </span>
         </div>
       )}
