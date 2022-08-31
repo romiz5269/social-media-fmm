@@ -20,14 +20,14 @@ function AddComment({id}) {
   }
 
   return (
-    <div className="mx-auto flex flex-col justify-between py-5 shadow-lg my-5 rounded-lg border-t-2">
+    <div className="mx-auto flex flex-col justify-between py-2 ">
       <div className="grid grid-cols-6">
         <div className="col-span-1 p-2 flex justify-center flex-row">
           <div>
             <img
               src="#"
               className="rounded-full"
-              style={{ width: "50px", height: "50px" }}
+              style={{ width: "45px", height: "45px" }}
             />
           </div>
         </div>

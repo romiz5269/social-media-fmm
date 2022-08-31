@@ -12,6 +12,7 @@ import jwtDecode from "jwt-decode";
 import { AiOutlineComment, AiOutlineDelete, AiOutlineWarning } from "react-icons/ai";
 import { EditBlogModal } from "components";
 import { LikeComponent } from "components/Likes/LikeComponent";
+import { BiShare } from "react-icons/bi";
 
 function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
   const [blogsList, setBlogsList] = useState(null);
@@ -34,7 +35,11 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
           {blogsList.map((blog) => (
             <div
               key={blog.id}
-              className="flex flex-col pb-3 shadow-lg border-t-2 pl-3 pt-5 border-t-orange-500 mt-5 rounded-lg sm:pt-5"
+              className="flex flex-col pb-3  pl-3  sm:pt-2"
+              style={{
+                borderTop: "1px solid #e7e7e7",
+                borderBottom: "1px solid #e7e7e7",
+              }}
             >
               <div className="grid grid-cols-6">
                 <div className="col-span-1 p-2 flex justify-center flex-row">
@@ -42,7 +47,7 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
                     <Link to={`/${blog.author.username}`}>
                       <img
                         src={blog.author?.media?.image}
-                        className="rounded-full sm:w-16 w-12 sm:h-16 h-10 mr-2 sm:mr-0"
+                        className="rounded-full sm:w-12 w-12 sm:h-12 h-10 mr-2 sm:mr-0 mt-1"
                         // style={{ width: "60px", height: "60px" }}
                       />
                     </Link>
@@ -52,10 +57,12 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
                   <div className="grid grid-cols-5 justify-between">
                     <div className="col-span-4 flex flex-row mr-3 sm:mr-0">
                       <Link to={`/${blog.author?.username}`}>
-                        <span>{blog.author?.username}</span>
+                        <span className="font-semibold text-lg">
+                          {blog.author?.username}
+                        </span>
                       </Link>
 
-                      <span className="text-slate-500 text-xs pt-1 pr-3 sm:mr-0 mr-5 font-Vazirmatn">
+                      <span className="text-slate-500 text-xs pt-2 pr-3 sm:mr-0 mr-5 font-Vazirmatn">
                         {moment(blog?.created_date).fromNow()}
                       </span>
                     </div>
@@ -87,20 +94,20 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
                     </div>
                   </div>
                   <Link to={`/thread/blog/${blog.id}`}>
-                    <div className="pt-4 pl-4">
-                      <h2 className="text-xl text-right pr-3 font-semibold py-2 font-Vazirmatn">
+                    <div className="pl-4">
+                      <h2 className="text-xl text-right  font-semibold py-2 font-Vazirmatn">
                         {blog.title}
                       </h2>
 
                       {captionShow === "show" ? (
-                        <p className="text-xs pt-3  text-slate-700 text-justify font-Vazirmatn  pr-3 leading-5 text-ellipsis overflow-x-hidden ">
+                        <p className="text-sm pt-3  text-slate-700 text-justify font-Vazirmatn  pr-3 leading-5 text-ellipsis overflow-x-hidden ">
                           {blog.content}
                         </p>
                       ) : (
                         <LinesEllipsis
                           text={blog.content}
                           maxLine="1"
-                          className="font-Vazirmatn text-xs text-slate-700"
+                          className="font-Vazirmatn text-sm text-slate-700"
                           ellipsis="..."
                           trimRight
                           basedOn="letters"
@@ -137,6 +144,9 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
                     <div className="flex flex-row justify-start ml-20">
                       <FaRegComments className="opacity-60" />
                       <span className="text-xs pr-2">4</span>
+                    </div>
+                    <div className="flex flex-row justify-start ml-20">
+                      <BiShare className="opacity-60 text-lg" />
                     </div>
                   </div>
                 </div>

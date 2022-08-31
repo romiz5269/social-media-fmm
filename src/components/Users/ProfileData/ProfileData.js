@@ -11,8 +11,6 @@ import {
 
 import { useEffect, useState } from "react";
 function ProfileData({ profile }) {
-
-  
   const [editable, setEditable] = useState(false);
   const [username, setUsername] = useState(profile.username);
   const [email, setEmail] = useState(profile.email);
@@ -21,13 +19,11 @@ function ProfileData({ profile }) {
     profile.user_related_name?.image
   );
 
-  
   useEffect(() => {
     if (!editable) {
       setPrewviewSrc(profile.user_related_name?.image);
     }
   }, [editable]);
-
 
   const previewFile = (editable) => {
     console.log("preview : changed");
@@ -36,7 +32,6 @@ function ProfileData({ profile }) {
     preview.src = URL.createObjectURL(file);
     setPrewviewSrc(preview.src);
   };
-
 
   const profileImage = () => {
     document.getElementById("profile-image-upload").click();
@@ -50,20 +45,20 @@ function ProfileData({ profile }) {
             className="flex flex-col relative bg-orange-400 sm:mt-0 mt-20 sm:mb-0 mb-12"
             style={{ height: "150px" }}
           >
-            <div className="absolute object-fill bottom-0 top-16 right-12">
+            <div className="absolute object-fill bottom-0 top-24 right-5">
               {editable ? (
                 <>
                   <div
                     className="profile-pic relative"
-                    style={{ width: "140px", height: "140px" }}
+                    style={{ width: "120px", height: "120px" }}
                   >
                     <img
                       alt="User Pic"
                       src={previewSrc}
                       id="profile-image1"
                       onClick={(e) => profileImage()}
-                      className="rounded-full border-8 border-white object-fill"
-                      style={{ width: "140px", height: "140px" }}
+                      className="rounded-full border-t-4 border-t-white object-fill"
+                      style={{ width: "120px", height: "120px" }}
                     />
                     <input
                       id="profile-image-upload"
@@ -71,58 +66,64 @@ function ProfileData({ profile }) {
                       type="file"
                       onChange={(e) => previewFile()}
                     />
-                    <div  style={{ color: "#999" }} className="absolute left-6 bottom-12  bg-slate-400 px-2 pb-2 rounded-full text-xl "><span className="text-xs text-white">Click to upload</span></div>
+                    <div
+                      style={{ color: "#999" }}
+                      className="absolute left-6 bottom-4  bg-slate-400 px-2 pb-2 rounded-full text-xl "
+                    >
+                      <span className="text-xs text-white">
+                        Click to upload
+                      </span>
+                    </div>
                   </div>
                 </>
               ) : (
                 <img
                   src={profile.user_related_name?.image}
-                  className="rounded-full border-8 border-white"
-                  style={{ height: "140px", width: "140px" }}
+                  className="rounded-full border-t-4 border-t-white"
+                  style={{ height: "120px", width: "120px" }}
                 />
               )}
             </div>
 
             {editable ? (
               <>
-                <div className="absolute left-12 bottom-0 top-28">
+                <div className="absolute left-5 bottom-0 top-32">
                   <div
                     className="px-5 py-5 bg-white border-2 rounded-full"
                     onClick={() => setEditable(!editable)}
                   >
                     <FaRegTimesCircle
                       className="text-slate-800"
-                      style={{ height: "25px", width: "25px" }}
+                      style={{ height: "15px", width: "15px" }}
                     />
                   </div>
                 </div>
-                <div className="absolute left-32 bottom-0 top-28">
+                <div className="absolute left-24 bottom-0 top-32">
                   <div className="px-5 py-5 bg-white border-2 rounded-full">
                     <FaCheck
                       className="text-slate-800"
-                      style={{ height: "25px", width: "25px" }}
+                      style={{ height: "15px", width: "15px" }}
                     />
                   </div>
                 </div>
               </>
             ) : (
-              <div className="absolute left-12 bottom-0 top-28">
+              <div className="absolute left-5 bottom-0 top-32">
                 <div
                   className="px-5 py-5 bg-white border-2 rounded-full"
                   onClick={() => setEditable(!editable)}
                 >
                   <FaPencilAlt
                     className="text-slate-800"
-                    style={{ height: "25px", width: "25px" }}
+                    style={{ height: "15px", width: "15px" }}
                   />
                 </div>
               </div>
             )}
           </div>
-          <div className="sm:grid sm:grid-cols-12 mt-16">
+          <div className="sm:grid sm:grid-cols-12 mt-16 pr-3 pt-3">
             <div className="sm:col-span-6 flex flex-col text-left pl-3">
               <div className="flex flex-row">
-                <FaUser className="text-xs text-slate-500 mt-2 mr-2" />
                 {editable ? (
                   <input
                     value={profile.username}
@@ -136,9 +137,7 @@ function ProfileData({ profile }) {
               </div>
               <div className="flex flex-row py-2">
                 <FaEnvelope className="text-xs text-slate-500 mt-2 mr-2" />
-                <span className="text-sm mt-1 pr-2">
-                  {profile.email}
-                </span>
+                <span className="text-sm mt-1 pr-2">{profile.email}</span>
               </div>
               <div className="flex flex-row py-2">
                 <FaCalendar className="text-xs text-slate-500 mt-2 mr-2" />

@@ -35,7 +35,7 @@ function LikeComponent({ blogid, isLiked, LikeCount }) {
     return (
       <>
         <AiOutlineHeart
-          className=" hover:cursor-pointer text-lg"
+          className=" hover:cursor-pointer text-lg opacity-60"
           onClick={(e) => handleAddLike(blogid)}
         />
         <span className="text-xs pr-2">{likesCount}</span>

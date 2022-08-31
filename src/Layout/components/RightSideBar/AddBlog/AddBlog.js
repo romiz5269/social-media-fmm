@@ -3,6 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import { AddBlogForm } from "components";
 import { Modal } from "@mui/material";
 import Box from "@mui/material/Box";
+import { BiPlus } from "react-icons/bi";
 
 const style = {
   position: "absolute",
@@ -26,15 +27,15 @@ function AddBlog() {
     <div>
       <button
         onClick={handleOpen}
-        className="bg-orange-500 font-Vazirmatn hidden lg:block md:hidden mt-2 py-3 px-9 text-sm font-semibold text-white rounded-full shadow-xl "
+        className="bg-orange-500 font-Vazirmatn hidden lg:block md:hidden mt-2 py-3 px-14 text-sm font-semibold text-white rounded-full shadow-xl "
       >
         بلاگ جدید
       </button>
       <button
         onClick={handleOpen}
-        className="md:block lg:hidden fixed bg-orange-500 mt-2 py-3 px-3 text-sm font-semibold text-white rounded-full shadow-xl "
+        className="md:block lg:hidden fixed bg-orange-500 sm:mt-4 mt-2 py-3 px-3 text-sm font-semibold text-white rounded-full shadow-xl "
       >
-        <FaPlus />
+        <BiPlus className="text-lg" />
       </button>
       <Modal
         open={open}
