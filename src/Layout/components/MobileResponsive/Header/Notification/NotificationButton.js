@@ -19,7 +19,7 @@ function NotificationButton() {
   return (
     <>
       <FaRegBell
-        className="mt-3 text-xl"
+        className="mt-3 text-xl dark:text-white"
         src={ProfileBrand}
         aria-describedby={id}
         variant="contained"

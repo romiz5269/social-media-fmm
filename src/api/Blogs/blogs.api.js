@@ -3,20 +3,34 @@ import { URL } from "config/Urls/Urls.config";
 import { http } from "services/Http/axios";
 import { axiosPrivate } from "services/Private/axiosPrivate";
 
-export async function getAllBlogs() {
+
+export async function getAllBlogs(config) {
+  if (config.pageNum === undefined) {
+    config.pageNum = 1;
+  }
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .get(URL.ALLBLOGS)
-      .then((res) => resolve(res.data))
-      .catch((err) => reject(err.response?.status));
+      .get(`${URL.ALLBLOGS}?page=${config.pageNum}`, {
+        signal: config.options.signal,
+      })
+      .then((res) => resolve(res.data.results))
+      .catch((err) => {
+        if (config.options.signal.aborted) return;
+        reject(err);
+      });
   });
 }
-export async function getAllBlogsByAuthor(username) {
+export async function getAllBlogsByAuthor(config) {
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .get(`${URL.ALLUSERBLOGS}/${username}`)
+      .get(`${URL.ALLUSERBLOGS}/${config.username}?page=${config.pageNum}`, {
+        signal: config.options.singnal,
+      })
       .then((res) => resolve(res.data))
-      .catch((err) => reject(err.response?.status));
+      .catch((err) => {
+        if (config.options.signal.aborted) return;
+        reject(err.response?.status);
+      });
   });
 }
 export async function getSingleBlogById(id) {
@@ -25,6 +39,32 @@ export async function getSingleBlogById(id) {
       .get(`${URL.SINGLEBLOG}/${id}`)
       .then((res) => resolve(res.data))
       .catch((err) => reject(err.response?.status));
+  });
+}
+export async function getAllBlogsByFollow(config) {
+  return new Promise((resolve, reject) => {
+    axiosPrivate
+      .get(`${URL.ALLBLOGSBYFOLLOW}?page=${config.pageNum}`, {
+        signal: config.options.signal,
+      })
+      .then((res) => resolve(res.data))
+      .catch((err) => {
+        if (config.options.signal.aborted) return;
+        reject(err.message);
+      });
+  });
+}
+export async function getAllExplorePosts(config) {
+  return new Promise((resolve, reject) => {
+    axiosPrivate
+      .get(`${URL.ALLEXPLOREPOSTS}?page=${config.pageNum}`, {
+        signal: config.options.signal,
+      })
+      .then((res) => resolve(res.data))
+      .catch((err) => {
+        if (config.options.signal.aborted) return;
+        reject(err.message);
+      });
   });
 }
 export async function createNewBlog(data) {

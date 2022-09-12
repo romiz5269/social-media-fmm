@@ -56,6 +56,15 @@ function AppRoute() {
             }
           />
           <Route
+            path={PATH.SETTINGS}
+            element={
+              <PrivateRoute
+                Component={() => <Page.Settings />}
+                hasLayout={false}
+              />
+            }
+          />
+          <Route
             path={PATH.BLOGTHREAD}
             element={
               <PrivateRoute

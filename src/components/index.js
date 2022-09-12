@@ -17,3 +17,4 @@ export {BlogsInfo} from './Blogs/BlogsInfo/BlogsInfo'
 export {BlogLoader} from './Loading/BlogLoader/BlogLoader'
 export {UserAvatar} from './Users/Avatar/UserAvatar'
 export {BlogInteractions} from './Blogs/BlogInteractions/BlogInteractions'
+export { SettingForm } from "./Users/Settings/SettingForm.component";

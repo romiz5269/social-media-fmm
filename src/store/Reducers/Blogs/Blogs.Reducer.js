@@ -10,8 +10,8 @@ import { axiosPrivate } from "services/Private/axiosPrivate";
 
 export const fetchAllBlogs = createAsyncThunk(
   "blogs/fetchAllBlogs",
-  async () => {
-    return await getAllBlogs();
+  async (config) => {
+    return await getAllBlogs(config);
   }
 );
 export const fetchAllBlogsByAuthor = createAsyncThunk(
@@ -50,6 +50,39 @@ export const BlogsSlice = createSlice({
     status: "",
   },
   reducers: {
+    createBlog: (state, action) => {
+      createNewBlog(action.payload);
+      state.blogs.push(...action.payload);
+      state.profileBlogs.push(...action.payload);
+      state.postingStatus = false;
+    },
+    // insertNewComment: (state, action) => {
+    //   addNewComment(action.payload);
+    //   state.singleBlog[0].comments.unshift(action.payload);
+    // },
+    // createALike: (state, action) => {
+    //   addNewLike(action.payload);
+    // },
+    // removeSingleComment: (state, action) => {
+    //   deleteComment(action.payload);
+
+    //   state.singleBlog[0].comments = state.singleBlog[0].comments.filter(
+    //     (item) => item.id !== action.payload
+    //   );
+    // },
+
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+    setIsError: (state, action) => {
+      state.isError = action.payload;
+    },
+    setFetchError: (state, action) => {
+      state.fetchError = action.payload;
+    },
+    setHasNextPage: (state, action) => {
+      state.hasNextPage = action.payload;
+    },
     removeOwnerBlog: (state, action) => {
       axiosPrivate.delete(`/polls/post/${action.payload}`);
       state.blogs = state.blogs.filter((item) => item.id !== action.payload);
@@ -63,25 +96,30 @@ export const BlogsSlice = createSlice({
   },
   extraReducers: {
     [fetchAllBlogs.fulfilled]: (state, action) => {
-      state.blogs = action.payload;
+      state.blogs.push(...action.payload);
+      setHasNextPage(Boolean(action.payload.length));
+      setIsLoading(false);
+    },
+    [fetchAllBlogs.rejected]: (state, action) => {
+      state.isLoading = false;
+      state.isError = true;
+      state.fetchError = { message: action.payload.message };
     },
     [addNewBlog.fulfilled]: (state, action) => {
-      if (action.payload === "200") {
-        state.status = "Post Created Successfully";
-      }
-      if (action.payload === "201") {
-        state.status = "Your Post Already Created";
-      }
+      state.status = "Post Created Successfully";
+      state.blogs.unshift(action.payload);
+      state.profileBlogs.unshift(action.payload);
+      state.postingStatus = false;
     },
     [addNewBlog.rejected]: (state, action) => {
       if (action.payload === "401") {
         localStorage.removeItem("authToken");
       }
       if (action.payload === "403") {
-        state.error = "Request have a issue";
+        state.status = "Request have a issue";
       }
       if (action.payload === "500") {
-        state.error = "Server is unavailable";
+        state.status = "Server is unavailable";
       }
     },
     [fetchSingleBlogById.fulfilled]: (state, action) => {
@@ -89,12 +127,34 @@ export const BlogsSlice = createSlice({
         state.singleBlog.pop();
       }
       state.singleBlog.push(action.payload);
-      console.log(state.singleBlog);
     },
     [fetchAllBlogsByAuthor.fulfilled]: (state, action) => {
-      state.blogs = action.payload;
+      state.profileBlogs.push(...action.payload);
+      setHasNextPage(Boolean(action.payload.length));
+      setIsLoading(false);
     },
+    // [fetchAllBlogsByFollow.fulfilled]: (state, action) => {
+    //   if (action.payload === undefined) {
+    //     state.followingBlogs = [];
+    //   } else {
+    //     state.followingBlogs.push(...action.payload);
+    //     setHasNextPage(Boolean(action.payload.length));
+    //     setIsLoading(false);
+    //   }
+    // },
+    // [fetchALLExplorePosts.fulfilled]: (state, action) => {
+    //   state.explorePosts = action.payload;
+    // },
   },
 });
-export const { removeOwnerBlog,EditSingleBlog } = BlogsSlice.actions;
+export const {
+  createBlog,
+  EditSingleBlog,
+  removeOwnerBlog,
+  setIsLoading,
+  setIsError,
+  setHasNextPage,
+  setFetchError,
+  setPostingStatus,
+} = BlogsSlice.actions;
 export default BlogsSlice.reducer;

@@ -8,30 +8,32 @@ function BlogInteractions({blog,owner}) {
   return (
     <>
       <div className="flex flex-row justify-start sm:ml-14 ml-8">
-        <AiOutlineComment className="ml-3 opacity-60 text-lg" />
-        <span className="text-xs pr-2">{blog?.posts?.length}</span>
+        <AiOutlineComment className="ml-3 sm:opacity-60 text-lg dark:text-white" />
+        <span className="text-xs pr-2 dark:text-white">
+          {blog?.posts ? blog?.posts?.length : blog?.comments_count}
+        </span>
       </div>
       <div className="flex flex-row justify-start sm:ml-14 ml-8">
-        {blog?.posts.find((like) => like.user === owner) ? (
+        {/* {blog?.likes?.find((like) => like.user === owner) ? (
           <LikeComponent
             blogid={blog.id}
             isLiked={true}
-            LikeCount={blog?.posts.length}
+            LikeCount={blog?.likes.length}
           />
         ) : (
           <LikeComponent
             blogid={blog.id}
             isLiked={false}
-            LikeCount={blog?.posts?.length}
+            LikeCount={blog?.likes?.length}
           />
-        )}
+        )} */}
       </div>
       <div className="flex flex-row justify-start sm:ml-14 ml-8">
-        <FaRegComments className="opacity-60" />
-        <span className="text-xs pr-2">4</span>
+        <FaRegComments className="sm:opacity-60 dark:text-white" />
+        <span className="text-xs pr-2 dark:text-white"></span>
       </div>
-      <div className="flex flex-row justify-start">
-        <BiShare className="opacity-60 text-lg" />
+      <div className="flex flex-row justify-start dark:text-white">
+        <BiShare className="sm:opacity-60 text-lg dark:text-white" />
       </div>
     </>
   );

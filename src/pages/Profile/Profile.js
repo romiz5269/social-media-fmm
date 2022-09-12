@@ -10,6 +10,7 @@ import { Products } from "pages/products/Products";
 import { ProfileData } from "components";
 import { fetchOwnerProfile, fetchUserData } from "store/Reducers/Users/UsersReducer";
 import jwtDecode from "jwt-decode";
+import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,7 +47,7 @@ function a11yProps(index) {
 }
 function Profile() {
   const [value, setValue] = useState(0);
-
+  const {theme} = useCheckThemeMode()
   const userData = jwtDecode(localStorage.getItem("authToken")).name;
   const dispatch = useDispatch();
  
@@ -79,29 +80,56 @@ function Profile() {
               aria-label="basic tabs example"
             >
               <Tab
-                sx={{
-                  fontFamily: "Vazirmatn",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                }}
+                sx={
+                  theme
+                    ? {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#fff",
+                      }
+                    : {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                      }
+                }
                 label="بلاگ ها"
                 {...a11yProps(0)}
               />
               <Tab
-                sx={{
-                  fontFamily: "Vazirmatn",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                }}
+                sx={
+                  theme
+                    ? {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#fff",
+                      }
+                    : {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                      }
+                }
                 label="محصولات"
                 {...a11yProps(1)}
               />
               <Tab
-                sx={{
-                  fontFamily: "Vazirmatn",
-                  fontWeight: "600",
-                  fontSize: "14px",
-                }}
+                sx={
+                  theme
+                    ? {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#fff",
+                      }
+                    : {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                      }
+                }
                 label="لایک ها"
                 {...a11yProps(2)}
               />

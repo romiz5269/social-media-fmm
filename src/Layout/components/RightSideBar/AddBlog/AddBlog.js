@@ -3,19 +3,14 @@ import { FaPlus } from "react-icons/fa";
 import { AddBlogForm } from "components";
 import { Modal } from "@mui/material";
 import Box from "@mui/material/Box";
-import { BiPlus } from "react-icons/bi";
+import { BiPaperPlane, BiPlus } from "react-icons/bi";
 
 const style = {
   position: "absolute",
-  top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
-  boxShadow: 24,
-  borderRadius: "10px",
-  padding: "8px",
-  overflowY: "scroll",
-  height: "500px",
+  overflowY: "auto",
 };
 function AddBlog() {
   const [open, setOpen] = useState(false);
@@ -35,7 +30,7 @@ function AddBlog() {
         onClick={handleOpen}
         className="md:block lg:hidden fixed bg-gradient-to-r from-cyan-500 to-blue-500 sm:mt-4 mt-2 py-3 px-3 text-sm font-semibold text-white rounded-full shadow-xl "
       >
-        <BiPlus className="text-lg" />
+        <BiPaperPlane className="text-lg" />
       </button>
       <Modal
         open={open}
@@ -43,7 +38,10 @@ function AddBlog() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="w-5/6 sm:w-6/12">
+        <Box
+          sx={style}
+          className=" top-[45%] h-[600px] sm:h-[650px] sm:top-[50%] w-[100%] sm:w-[80%] md:w-[50%] lg:w-[30%] lg:rounded-md"
+        >
           <div className="flex flex-col mx-auto justify-center items-center">
             <AddBlogForm />
           </div>
