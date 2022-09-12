@@ -8,12 +8,15 @@ export const URL = {
   GETPROFILE: "/polls/profile",
   EDITPROFILE: "/polls/editprofile",
 
-  SINGLEBLOG: "/polls/postsingle",
+  SINGLEBLOG: "/polls/post",
   ALLBLOGS: "/polls",
   ALLUSERBLOGS: "/polls/postuser",
-  CREATEBLOG: "/polls/postcreate",
-  EDITBLOG: "/polls/editpost",
-  DELETEBLOG: "/polls/editpost",
+  CREATEBLOG: "/polls/postcreate/",
+  EDITBLOG: "/polls/post",
+  DELETEBLOG: "/polls/post",
 
   CREATECOMENT: "/polls/createcomment",
+
+  CREATEFOLLOW: "/polls/follow",
+  DELETEFOLLOW: "/polls/unfollow",
 };

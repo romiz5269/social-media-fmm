@@ -8,7 +8,7 @@ import Tab from "@mui/material/Tab";
 import { AllBlogsById, AllOwnerBlogs } from "components";
 import { Products } from "pages/products/Products";
 import { ProfileData } from "components";
-import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
+import { fetchOwnerProfile, fetchUserData } from "store/Reducers/Users/UsersReducer";
 import jwtDecode from "jwt-decode";
 
 function TabPanel(props) {
@@ -49,7 +49,7 @@ function Profile() {
 
   const userData = jwtDecode(localStorage.getItem("authToken")).name;
   const dispatch = useDispatch();
-  console.log(userData)
+ 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -66,7 +66,7 @@ function Profile() {
   
   return (
     <div>
-      <ProfileData profile={profile} />
+      <ProfileData profile={profile} hasFollowButton={false} />
       <div className="mt-5 flex flex-row justify-between  sm:mb-0 mb-10">
         <Box sx={{ width: "100%" }}>
           <Box

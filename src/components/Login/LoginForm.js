@@ -1,23 +1,23 @@
 import { Link } from "react-router-dom";
 
-const LoginForm = ({handleSubmit,setUser,user,pwd,setPwd,userRef}) => {
+const LoginForm = ({handleSubmit,setEmail,email,pwd,setPwd,userRef}) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
         <h2 className="font-Vazirmatn">فرم ثبت نام</h2>
         <label className="font-Vazirmatn" htmlFor="username">
-          نام کاربری :
+          ایمیل :
         </label>
         <input
           type="text"
           dir="ltr"
           ref={userRef}
-          id="username"
-          name="username"
+          id="email"
+          name="email"
           placeholder="نام کاربری ... "
           autoComplete="off"
-          onChange={(e) => setUser(e.target.value)}
-          value={user}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           required
           className="font-Vazirmatn"
         />
@@ -51,7 +51,7 @@ const LoginForm = ({handleSubmit,setUser,user,pwd,setPwd,userRef}) => {
         </div>
         <button
           className="bg-blue-500 disabled:bg-slate-300 rounded-md my-5 text-white font-Vazirmatn"
-          disabled={!user || !pwd ? true : false}
+          disabled={!email || !pwd ? true : false}
         >
           ورود به حساب
         </button>

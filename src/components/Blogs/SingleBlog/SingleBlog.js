@@ -32,7 +32,6 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
               <div className="grid grid-cols-6">
                 <BlogsInfo blog={blog} captionShow={captionShow} owner={owner} handleRemoveBlog={handleRemoveBlog} />
               </div>
-              <div></div>
             </div>
           ))}
         </>

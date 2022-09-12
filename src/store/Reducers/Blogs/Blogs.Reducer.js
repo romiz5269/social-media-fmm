@@ -33,18 +33,33 @@ export const BlogsSlice = createSlice({
   name: "blogs",
   initialState: {
     blogs: [],
+    profileBlogs: [],
+    followingBlogs: [],
+    explorePosts: [],
     singleBlog: [],
+    likes: [],
+    comments: [],
+    singleLike: [],
+    postingStatus: false,
+    isUserLiked: false,
+    isLoading: false,
+    isError: false,
+    fetchError: {},
+    hasNextPage: false,
     error: "",
     status: "",
   },
   reducers: {
     removeOwnerBlog: (state, action) => {
-      axiosPrivate.delete(`/content/post/delete/${action.payload}/`);
+      axiosPrivate.delete(`/polls/post/${action.payload}`);
       state.blogs = state.blogs.filter((item) => item.id !== action.payload);
     },
-    EditSingleBlog:(state,action)=>{
-      updateSingleBlog(action.payload)
-    }
+    EditSingleBlog: (state, action) => {
+      updateSingleBlog(action.payload);
+    },
+    setPostingStatus: (state, action) => {
+      state.postingStatus = true;
+    },
   },
   extraReducers: {
     [fetchAllBlogs.fulfilled]: (state, action) => {
@@ -70,12 +85,11 @@ export const BlogsSlice = createSlice({
       }
     },
     [fetchSingleBlogById.fulfilled]: (state, action) => {
-      
       if (state.singleBlog.length > 0) {
         state.singleBlog.pop();
       }
       state.singleBlog.push(action.payload);
-      console.log(state.singleBlog)
+      console.log(state.singleBlog);
     },
     [fetchAllBlogsByAuthor.fulfilled]: (state, action) => {
       state.blogs = action.payload;

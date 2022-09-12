@@ -30,7 +30,7 @@ function EditBlogModal({ postid }) {
   const handleOpen = () => {
    try{
     const response =  axiosPrivate
-    .get(`/polls/postsingle/${postid}`)
+    .get(`${URL.SINGLEBLOG}/${postid}`)
     .then((res) => setTargetBlog(res.data));
    }catch(err){
     console.log(err.message)

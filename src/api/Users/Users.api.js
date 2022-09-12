@@ -1,6 +1,7 @@
 import { PATH } from "config/Path/Path.config";
 import { axiosPrivate } from "services/Private/axiosPrivate";
 import { http } from "services/Http/axios";
+import { URL } from "config/Urls/Urls.config";
 
 // function for userLogin in login page
 
@@ -33,7 +34,7 @@ export async function getUserData() {
 export async function getUserProfile(username){
   return new Promise ((resolve,reject)=>{
     axiosPrivate
-      .get(`/polls/profile/${username}`)
+      .get(`${URL.GETPROFILE}/${username}`)
       .then((res) => resolve(res.data))
       .catch((err) => reject(err.response?.status));
   })
@@ -42,9 +43,9 @@ export async function getUserProfile(username){
 
 //fetch owner profile search with userid from access token
 
-export async function getOwnerProfile(userid){
+export async function getOwnerProfile(username){
   return new Promise ((resolve,reject)=>{
-    axiosPrivate.get(`/polls/myprofile/${userid}`)
+    axiosPrivate.get(`${URL.GETPROFILE}/${username}`)
     .then(res=>resolve(res.data))
     .catch(err=>reject(err.response?.status))
   })
@@ -79,3 +80,18 @@ export async function updateSingleUser({ id, data }) {
   });
 }
 
+export async function addNewFollow(userid) {
+   return new Promise((resolve, reject) => {
+     axiosPrivate
+       .delete(`${URL.DELETEFOLLOW}/${userid}/`)
+       .then((res) => resolve(res.status));
+   });
+}
+
+export async function deleteFollow(userid) {
+  return new Promise((resolve, reject) => {
+    axiosPrivate
+      .delete(`${URL.DELETEFOLLOW}/${userid}/`)
+      .then((res) => resolve(res.status));
+  });
+}
