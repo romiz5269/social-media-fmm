@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
+import { BlogsInfo, BlogLoader } from "components";
 import jwtDecode from "jwt-decode";
-import {BlogsInfo} from "components";
-import {BlogLoader} from "components";
 
 function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
   const [blogsList, setBlogsList] = useState(null);

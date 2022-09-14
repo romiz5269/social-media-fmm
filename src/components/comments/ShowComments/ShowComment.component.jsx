@@ -1,23 +1,21 @@
-import { useGetOwnerUsername } from 'hooks/useGetOwnerUsername.hook';
-import jwtDecode from 'jwt-decode';
-import React, { useEffect, useState } from 'react'
-import { FaEllipsisH, FaReply, FaTrash } from 'react-icons/fa';
-import LinesEllipsis from 'react-lines-ellipsis';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchOwnerProfile } from 'store/Reducers/Users/UsersReducer';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
+import jwtDecode from "jwt-decode";
+import { FaEllipsisH, FaReply, FaTrash } from "react-icons/fa";
 
-function ShowComment({ commentCount, comments,postAuthor }) {
-    console.log(comments);
-    console.log(postAuthor);
-    const [isOwner,setIsOwner] = useState(false)
-   
-    const dispatch = useDispatch()
-    const commenterValid = jwtDecode(localStorage.getItem('authToken'));
-     useEffect(() => {
-       dispatch(fetchOwnerProfile(commenterValid.user_id));
-     }, []);
-    const miniProfile = useSelector((state) => state.users.ownerUser);
+function ShowComment({ commentCount, comments, postAuthor }) {
+  console.log(comments);
+  console.log(postAuthor);
+  const [isOwner, setIsOwner] = useState(false);
+
+  const dispatch = useDispatch();
+  const commenterValid = jwtDecode(localStorage.getItem("authToken"));
+  useEffect(() => {
+    dispatch(fetchOwnerProfile(commenterValid.user_id));
+  }, []);
+  const miniProfile = useSelector((state) => state.users.ownerUser);
   return (
     <>
       <div className="flex flex-col shadow-md border-t-slate-600 border-t-2 pb-5 rounded-md">
@@ -129,4 +127,4 @@ function ShowComment({ commentCount, comments,postAuthor }) {
   );
 }
 
-export {ShowComment}
+export { ShowComment };

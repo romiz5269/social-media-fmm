@@ -1,5 +1,6 @@
 import { FaCog } from "react-icons/fa";
 import {
+  LogoutButton,
   MenuBar,
   NotificationButton,
   ProfileCard,
@@ -7,8 +8,8 @@ import {
   SuggestTags,
   SuggestUsers,
   UserProfile,
-} from "Layout/components";
-import AddBlog from "Layout/components/RightSideBar/AddBlog/AddBlog";
+} from "Layout/components/index.BaseLayoutComponent";
+import AddBlog from "Layout/components/RightSideBar/AddBlog/AddBlog.LayoutComponent";
 import { BiArrowBack } from "react-icons/bi";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,7 +18,7 @@ import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
 function DefaultLayout({ children }) {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const { theme } = useCheckThemeMode();
-
+  
   useEffect(() => {
     if (theme) {
       document.body.style.backgroundColor = "#2f3136";
@@ -80,7 +81,7 @@ function DefaultLayout({ children }) {
         <div className="sm:sticky sm:top-10">
           <MenuBar />
           <AddBlog />
-          <div>Logout</div>
+          {/* <LogoutButton /> */}
         </div>
       </div>
       <div

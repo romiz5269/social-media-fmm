@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
 import jwtDecode from "jwt-decode";
 import { axiosPrivate } from "services/Private/axiosPrivate";
+import { BiLogOutCircle } from "react-icons/bi";
 
-function ProfileCard() {
+function LogoutButton
+() {
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -40,43 +42,15 @@ function ProfileCard() {
   const id = open ? "simple-popover" : undefined;
   return (
     <>
-      
-      {Object.keys(miniProfile).length > 0   && (
-      <div className="flex flex-row mt-24 ">
-        <div className="sm:pr-2" onClick={handleClick}>
-          <img
-            src={miniProfile.user_related_name?.image}
-            className="rounded-full"
-            style={{ height: "50px", width: "50px" }}
-          />
-        </div>
-        <div className="flex flex-col pr-5 mt-3 lg:block md:hidden">
-          <h3 className="text-xl">{miniProfile?.username}</h3>
-        </div>
-        <div className="pt-4 pl-5 lg:block md:hidden"></div>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-        >
-          <Typography sx={{ py: 2, px: 3 }}>
-            <Link to="/profile">Profile</Link>
-          </Typography>
-          <Typography sx={{ py: 2, px: 3 }}>
-            <div className="hover:cursor-pointer" onClick={(e) => LogOutUser()}>
-              Logout
-            </div>
-          </Typography>
-        </Popover>
-      </div>
-      )}
+      <button className="bg-gradient-to-r from-red-700 to-red-500 font-Vazirmatn hidden lg:block md:hidden mt-2 py-3 px-16 text-sm font-semibold text-white rounded-full shadow-xl ">
+        Logout
+      </button>
+      <button className="md:block lg:hidden fixed bg-gradient-to-r from-red-700 to-red-500 sm:mt-20 mt-2 py-3 px-3 text-sm font-semibold text-white rounded-full shadow-xl ">
+        <BiLogOutCircle className="text-lg" />
+      </button>
     </>
   );
 }
 
-export { ProfileCard };
+export { LogoutButton
+ };

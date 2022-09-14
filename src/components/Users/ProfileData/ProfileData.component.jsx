@@ -3,10 +3,7 @@ import {
   FaCamera,
   FaCheck,
   FaEnvelope,
-  FaPencilAlt,
-  FaRegTimesCircle,
-  FaStickyNote,
-  FaUser,
+
 } from "react-icons/fa";
 
 import { useEffect, useState } from "react";
@@ -80,7 +77,7 @@ function ProfileData({ profile,hasFollowButton }) {
             )}
           </div>
           <div className="sm:grid sm:grid-cols-12 mt-16 pr-3">
-            <div className="sm:col-span-6 flex flex-col text-left pl-3">
+            <div className="sm:col-span-5 flex flex-col text-left pl-3">
               <div className="flex flex-row">
                 <span
                   className="pr-2 dark:text-white"
@@ -121,7 +118,7 @@ function ProfileData({ profile,hasFollowButton }) {
                 </span>
               </div>
             </div>
-            <div className="sm:col-span-6 p-5">
+            <div className="sm:col-span-7 pl-3 ">
               <div className="bg-slate-300 dark:bg-white rounded-md flex flex-col">
                 <div className="flex flex-row justify-evenly py-2">
                   <div className="text-center flex flex-col text-slate-600 font-semibold">

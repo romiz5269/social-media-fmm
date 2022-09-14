@@ -1,6 +1,6 @@
 import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
 import { Link } from "react-router-dom";
-import { SuggestSingleTag } from "./SuggestSingleTag/SuggestSingleTag";
+import { SuggestSingleTag } from "./SuggestSingleTag/SuggestSingleTag.LayoutComponent";
 
 function SuggestTags() {
   const { theme } = useCheckThemeMode();

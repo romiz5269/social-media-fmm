@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import { FaCalendar, FaStickyNote, FaUser } from "react-icons/fa";
 import { AllBlogsById } from "components";
-import { Products } from "pages/products/Products";
+import { Products } from "pages/products/Products.Page";
 import ProfileImage from "assets/images/userprofile/profile-image.webp";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";

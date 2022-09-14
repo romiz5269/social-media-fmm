@@ -1,4 +1,4 @@
-import DefaultLayout from "../../Layout/default/DefaultLayout";
+import DefaultLayout from "../../Layout/default/DefaultLayoutMainLayout";
 
 function PublicRoute({Component,hasLayout}) {
   return(

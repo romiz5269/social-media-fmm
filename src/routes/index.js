@@ -1,1 +1,1 @@
-export {PublicRoute} from './Public/PublicRoute'
+export {PublicRoute} from './Public/PublicRoute.Route'

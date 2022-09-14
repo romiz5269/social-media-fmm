@@ -4,11 +4,11 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { PATH } from "../config/Path/Path.config.js";
-import * as Page from "../pages";
-import { PublicRoute } from "./";
-import PrivateRoute from "./Private/PrivateRoute.js";
-import ProtectedRoute from "./Protected/ProtectedRoute.js";
+import { PATH } from "../config/Path/Path.config.jsx";
+import * as Page from "../pages/index.BasePage";
+import { PublicRoute } from ".";
+import PrivateRoute from "./Private/PrivateRoute.Route.jsx";
+import ProtectedRoute from "./Protected/ProtectedRoute.Route.jsx";
 
 function AppRoute() {
   return (

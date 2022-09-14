@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { PATH } from "config/Path/Path.config.js";
+import { PATH } from "config/Path/Path.config.jsx";
 
 function ProtectedRoute({ Component }) {
     const isLoggedIn = localStorage.getItem("authToken");

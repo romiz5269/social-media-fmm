@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { SuggestSingleUser } from "./SuggestSingleUser/SuggestSingleUser";
+import { SuggestSingleUser } from "./SuggestSingleUser/SuggestSingleUser.LayoutComponent";
 
 function SuggestUsers({ theme }) {
   return (

@@ -97,7 +97,7 @@ function Register() {
     // send request to register path for initial user
 
     try {
-      const response = await http.post("/polls/register/", bodyFormData, {
+      const response = await http.post("/account/register/", bodyFormData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

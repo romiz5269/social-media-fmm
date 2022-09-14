@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { AllBlogsById, AllOwnerBlogs } from "components";
-import { Products } from "pages/products/Products";
+import { Products } from "pages/products/Products.Page";
 import { ProfileData } from "components";
 import { fetchOwnerProfile, fetchUserData } from "store/Reducers/Users/UsersReducer";
 import jwtDecode from "jwt-decode";

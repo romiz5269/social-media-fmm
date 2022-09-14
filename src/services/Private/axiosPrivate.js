@@ -42,7 +42,7 @@ export const requestIntercept = axiosPrivate.interceptors.request.use(
         withCredentials: true,
       }
     );
-    console.log(response);
+    
     localStorage.setItem("authToken", response?.data?.access);
     req.headers["Authorization"] = `Bearer ${response?.data.access}`;
     return req;

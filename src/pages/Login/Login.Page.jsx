@@ -2,7 +2,7 @@ import { useRef, useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { UserLogin } from "store/Reducers/Users/UsersReducer";
-import LoginForm from "components/Login/LoginForm";
+import LoginForm from "components/Login/LoginForm.component";
 import { axiosPrivate } from "services/Private/axiosPrivate";
 import { http } from "services/Http/axios";
 

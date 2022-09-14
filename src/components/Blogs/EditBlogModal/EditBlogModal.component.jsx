@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
 import { useState } from "react";
-import { FaPencilAlt, FaPlus } from "react-icons/fa";
-import { AddBlogForm } from "components";
-import { Modal } from "@mui/material";
-import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchSingleBlogById } from "store/Reducers/Blogs/Blogs.Reducer";
-import { EditBlogForm } from "components";
+import { useDispatch } from "react-redux";
 import { axiosPrivate } from "services/Private/axiosPrivate";
 import { URL } from "config/Urls/Urls.config";
+import { EditBlogForm } from "components";
+import { FaPencilAlt } from "react-icons/fa";
+import { Modal } from "@mui/material";
+import Box from "@mui/material/Box";
+
+
 
 const style = {
   position: "absolute",
@@ -39,7 +38,6 @@ function EditBlogModal({ postid }) {
   };
   const handleClose = () => {
     setOpen(false);
-    // setTargetBlog(null);
   };
 
   return (
@@ -56,7 +54,6 @@ function EditBlogModal({ postid }) {
         <Box sx={style} className="w-5/6 sm:w-2/5">
           <div className="flex flex-col mx-auto justify-center items-center">
             {targetBlog && <EditBlogForm blog={targetBlog} />}
-            {/* <AddProductForm /> */}
           </div>
         </Box>
       </Modal>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   BiBell,
@@ -8,11 +8,29 @@ import {
   BiHash,
   BiHomeCircle,
   BiListUl,
+  BiLogOutCircle,
   BiUser,
 } from "react-icons/bi";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import swal from "sweetalert";
+import { userLogout } from "api/Users/Users.api";
+import { UserLogout } from "store/Reducers/Users/UsersReducer";
 function MenuBar() {
- 
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
+  const handleLogout = () => {
+    swal({
+      title: "آیا برای خروج از حساب اطمینان دارید ؟",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        dispatch(UserLogout())
+      }
+    });
+  };
   return (
     <div className="sm:flex sm:flex-col flex flex-row justify-center sm:pr-3 sm:pt-5">
       <Link to="/home">
@@ -123,7 +141,7 @@ function MenuBar() {
           ) : (
             <span className="relative">
               <BiBell
-                className="ml-5 mb-10 dark:text-white"
+                className="ml-5 mb-3 dark:text-white"
                 style={{ fontSize: "30px" }}
               />
             </span>
@@ -142,7 +160,7 @@ function MenuBar() {
             <BiCog className="ml-5 mb-1 text-2xl dark:text-white" />
           ) : (
             <BiCog
-              className="ml-5 mb-10 dark:text-white"
+              className="ml-5 mb-2 dark:text-white"
               style={{ fontSize: "30px" }}
             />
           )}
@@ -154,6 +172,26 @@ function MenuBar() {
           </span>
         </div>
       </Link>
+      <div className="sm:flex flex-row sm:hover:text-slate-800 pb-6 pt-4 sm:pt-0 pl-4 sm:pr-0 text-slate-500  hidden opacity-80 sm:opacity-100">
+        {window.innerWidth > 1024 ? (
+          <button onClick={handleLogout}>
+            <BiLogOutCircle className="ml-5 mb-1 text-2xl dark:text-white text-red-600" />
+          </button>
+        ) : (
+          <button onClick={handleLogout}>
+            <BiLogOutCircle
+              className="ml-5 dark:text-white text-red-600"
+              style={{ fontSize: "30px" }}
+            />
+          </button>
+        )}
+        <span
+          className="text-md font-semibold pt-1 lg:block hidden sm:hidden dark:text-white text-red-600"
+          style={{ fontFamily: "Vazirmatn" }}
+        >
+          خروج از حساب
+        </span>
+      </div>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
 import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { SuggestSingleBlog } from "./SuggestSingleBlog/SuggestSingleBlog";
+import { SuggestSingleBlog } from "./SuggestSingleBlog/SuggestSingleBlog.LayoutComponent";
 
 function SuggestBlogs() {
   const { theme } = useCheckThemeMode();

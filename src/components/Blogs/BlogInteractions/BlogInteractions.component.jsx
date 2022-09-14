@@ -1,4 +1,4 @@
-import { LikeComponent } from "components/Likes/LikeComponent";
+import { LikeComponent } from "components/Likes/LikeComponent.component";
 import React from "react";
 import { AiOutlineComment } from "react-icons/ai";
 import { BiShare } from "react-icons/bi";

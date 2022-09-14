@@ -1,26 +1,16 @@
-import React from "react";
+import React,{useState} from 'react'
 import { Link, useLocation } from "react-router-dom";
-
-import { useState } from "react";
-import LinesEllipsis from "react-lines-ellipsis";
-import jwtDecode from "jwt-decode";
 import { useDispatch } from "react-redux";
-// import {
-//   createALike,
-//   removeLike,
-// } from "store/Reducers/Blogs/Blogs.Reducer";
+import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
+import { EditBlogModal, BlogInteractions } from "components";
+import jwtDecode from "jwt-decode";
 import moment from "moment";
-import {EditBlogModal} from "components";
-import { LikeComponent } from "components/Likes/LikeComponent";
+import LinesEllipsis from "react-lines-ellipsis";
 import {
-  AiOutlineComment,
+
   AiOutlineDelete,
-  AiOutlineSound,
   AiOutlineWarning,
 } from "react-icons/ai";
-import { BlogInfo } from "../BlogsInfo/BlogsInfo";
-import { BlogInteractions } from "../BlogInteractions/BlogInteractions";
-import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
 
 const LikedStyle = {
   color: "#ce1126",
