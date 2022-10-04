@@ -36,7 +36,7 @@ export const requestIntercept = axiosPrivate.interceptors.request.use(
     //fetch new Access Token and set as req header and save in localStorage
 
     const response = await http.post(
-      "/login/api/token/refresh",
+      "/account/api/token/refresh",
       {},
       {
         withCredentials: true,

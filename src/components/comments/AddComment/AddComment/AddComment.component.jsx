@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createNewComment } from "api/Comments/Comments.api";
+import { insertNewComment } from "store/Reducers/Blogs/Blogs.Reducer";
 
 function AddComment({ id }) {
   const [body, setBody] = useState("");
@@ -10,11 +11,11 @@ function AddComment({ id }) {
   const handleAddComment = (e) => {
     e.preventDefault();
 
-    const formDataBody = new FormData();
+    // const formDataBody = new FormData();
 
-    formDataBody.append("body", body);
+    // formDataBody.append("body", body);
 
-    dispatch(createNewComment({ id: id, data: formDataBody }));
+    dispatch(insertNewComment({ id: id, body: body }));
   };
 
   return (

@@ -7,14 +7,15 @@ import {
 } from "react-icons/fa";
 
 import { useEffect, useState } from "react";
-import { BiWorld } from "react-icons/bi";
-import { useLocation, useParams } from "react-router-dom";
+import { BiArrowBack, BiBell, BiWorld } from "react-icons/bi";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import jwtDecode from "jwt-decode";
 import { createNewFollow, removeFollow } from "store/Reducers/Users/UsersReducer";
-function ProfileData({ profile,hasFollowButton }) {
+function ProfileData({ profile }) {
   const location = useLocation();
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
   const [editable, setEditable] = useState(false);
   const [username, setUsername] = useState(profile.name);
   const [email, setEmail] = useState(profile?.email);
@@ -37,6 +38,23 @@ function ProfileData({ profile,hasFollowButton }) {
     <>
       {profile && (
         <>
+          <div className="grid grid-cols-12">
+            <div className="col-span-11 flex flex-col justify-start pr-3 py-1">
+              <span className="text-lg font-[600]">{profile.username}</span>
+              <div className="text-slate-600 font-semibold">
+                <span className="text-xs text-slate-500 font-[500]">150</span>
+                <span className="font-Vazirmatn text-xs text-slate-500 font-[500] pr-1">
+                  پست ها
+                </span>
+              </div>
+            </div>
+            <div className="col-span-1 flex flex-col items-center justify-center ">
+              <BiArrowBack
+                onClick={(e) => Navigate(-1)}
+                className="text-blue-600 text-lg hover:cursor-pointer dark:text-white"
+              />
+            </div>
+          </div>
           <div
             className="flex flex-col relative bg-gradient-to-r from-blue-500 to-blue-600 sm:mt-0  sm:mb-0 mb-12"
             style={{ height: "150px" }}
@@ -48,13 +66,8 @@ function ProfileData({ profile,hasFollowButton }) {
                 style={{ height: "120px", width: "120px" }}
               />
             </div>
-            <button onClick={(e) => handleAddFollow(profile.id)}>
-              + Follow
-            </button>
-            <button onClick={(e) => handleRemoveFollow(profile.id)}>
-              Followed
-            </button>
-            {hasFollowButton && name !== owner && (
+
+            {hasFollow && name !== owner && (
               <>
                 {hasFollow ? (
                   <div className="absolute left-12 bottom-0 top-32">
@@ -76,8 +89,19 @@ function ProfileData({ profile,hasFollowButton }) {
               </>
             )}
           </div>
-          <div className="sm:grid sm:grid-cols-12 mt-16 pr-3">
-            <div className="sm:col-span-5 flex flex-col text-left pl-3">
+          <div className="sm:grid sm:grid-cols-12">
+            <div className="col-span-12 pl-3 py-2">
+              <div className="flex flex-row justify-end">
+                {/* {profile && profile.name !== owner && (
+                    
+                    // <FollowButtonCheck username={name} owner={owner} />
+                  )} */}
+                <BiBell />
+              </div>
+            </div>
+          </div>
+          <div className="sm:grid sm:grid-cols-12 pr-3">
+            <div className="sm:col-span-12 flex flex-col text-left pl-3">
               <div className="flex flex-row">
                 <span
                   className="pr-2 dark:text-white"
@@ -117,29 +141,26 @@ function ProfileData({ profile,hasFollowButton }) {
                   {profile?.last_login?.slice(0, 10)}
                 </span>
               </div>
-            </div>
-            <div className="sm:col-span-7 pl-3 ">
-              <div className="bg-slate-300 dark:bg-white rounded-md flex flex-col">
-                <div className="flex flex-row justify-evenly py-2">
-                  <div className="text-center flex flex-col text-slate-600 font-semibold">
-                    <span className="font-Vazirmatn text-xs">پست ها</span>
-                    <span className="text-sm">150</span>
-                  </div>
-                  <div className="text-center flex flex-col text-slate-600 font-semibold">
-                    <span className="font-Vazirmatn text-xs">
-                      دنبال کنندگان
-                    </span>
-                    <span className="text-sm">{profile?.followers_count}</span>
-                  </div>
-                  <div className="text-center flex flex-col text-slate-600 font-semibold">
-                    <span className="font-Vazirmatn text-xs">
-                      دنبال شوندگان
-                    </span>
-                    <span className="text-sm">{profile?.followings_count}</span>
-                  </div>
+              <div className="flex flex-row">
+                <div className="text-center mr-2 text-slate-600 font-semibold">
+                  <span className="text-sm text-[#000]">
+                    {profile?.follower}
+                  </span>
+                  <span className="font-Vazirmatn text-xs text-slate-500 font-[500] pr-1">
+                    دنبال کنندگان
+                  </span>
+                </div>
+                <div className="text-center mr-4 text-slate-600 font-semibold">
+                  <span className="text-sm text-[#000]">
+                    {profile?.following}
+                  </span>
+                  <span className="font-Vazirmatn text-xs text-slate-500 font-[500] pr-1">
+                    دنبال شوندگان
+                  </span>
                 </div>
               </div>
             </div>
+           
           </div>
         </>
       )}

@@ -1,11 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  addNewComment,
+  addNewLike,
   createNewBlog,
+  deleteComment,
   getAllBlogs,
   getAllBlogsByAuthor,
+  getAllBlogsByFollow,
+  getAllComments,
+  getAllExplorePosts,
   getSingleBlogById,
   updateSingleBlog,
 } from "api/Blogs/blogs.api";
+import { URL } from "config/Urls/Urls.config";
 import { axiosPrivate } from "services/Private/axiosPrivate";
 
 export const fetchAllBlogs = createAsyncThunk(
@@ -26,9 +33,45 @@ export const fetchSingleBlogById = createAsyncThunk(
     return await getSingleBlogById(id);
   }
 );
+export const fetchAllBlogsByFollow = createAsyncThunk(
+  "blogs/fetchAllBlogsByFollow",
+  async (config) => {
+    return await getAllBlogsByFollow(config);
+  }
+);
+export const fetchALLExplorePosts = createAsyncThunk(
+  "blogs/fetchAllExplorePosts",
+  async (config) => {
+    return await getAllExplorePosts(config);
+  }
+);
 export const addNewBlog = createAsyncThunk("blogs/addNewBlog", async (data) => {
   return await createNewBlog(data);
 });
+export const fetchAllCommentsOfPost = createAsyncThunk(
+  "blogs/fetchAllCommentsOfPost",
+  async (config) => {
+    return await getAllComments(config);
+  }
+);
+export const createNewComment = createAsyncThunk(
+  "blogs/createNewComment",
+  async (data) => {
+    return await addNewComment(data);
+  }
+);
+export const removeComment = createAsyncThunk(
+  "blogs/removeComment",
+  async (id) => {
+    return await deleteComment(id);
+  }
+);
+export const addLikeOnBlog = createAsyncThunk(
+  "blogs/addLikeOnBlog",
+  async (id) => {
+    return await addNewLike(id);
+  }
+);
 export const BlogsSlice = createSlice({
   name: "blogs",
   initialState: {
@@ -56,16 +99,19 @@ export const BlogsSlice = createSlice({
       state.profileBlogs.push(...action.payload);
       state.postingStatus = false;
     },
-    // insertNewComment: (state, action) => {
-    //   addNewComment(action.payload);
-    //   state.singleBlog[0].comments.unshift(action.payload);
-    // },
-    // createALike: (state, action) => {
-    //   addNewLike(action.payload);
-    // },
-    // removeSingleComment: (state, action) => {
-    //   deleteComment(action.payload);
-
+    insertNewComment: (state, action) => {
+      addNewComment(action.payload);
+      state.singleBlog[0].comments.unshift(action.payload);
+    },
+    createALike: (state, action) => {
+      addNewLike(action.payload);
+    },
+    removeSingleComment: (state, action) => {
+      deleteComment(action.payload);
+      state.comments = state.comments.filter(
+        (item) => item.id !== action.payload
+      );
+    },
     //   state.singleBlog[0].comments = state.singleBlog[0].comments.filter(
     //     (item) => item.id !== action.payload
     //   );
@@ -84,7 +130,10 @@ export const BlogsSlice = createSlice({
       state.hasNextPage = action.payload;
     },
     removeOwnerBlog: (state, action) => {
-      axiosPrivate.delete(`/polls/post/${action.payload}`);
+      axiosPrivate.delete(`${URL.DELETEBLOG}/${action.payload}`);
+      state.profileBlogs = state.profileBlogs.filter(
+        (item) => item.id !== action.payload
+      );
       state.blogs = state.blogs.filter((item) => item.id !== action.payload);
     },
     EditSingleBlog: (state, action) => {
@@ -99,6 +148,7 @@ export const BlogsSlice = createSlice({
       state.blogs.push(...action.payload);
       setHasNextPage(Boolean(action.payload.length));
       setIsLoading(false);
+      state.comments = [];
     },
     [fetchAllBlogs.rejected]: (state, action) => {
       state.isLoading = false;
@@ -110,6 +160,7 @@ export const BlogsSlice = createSlice({
       state.blogs.unshift(action.payload);
       state.profileBlogs.unshift(action.payload);
       state.postingStatus = false;
+      state.comments = [];
     },
     [addNewBlog.rejected]: (state, action) => {
       if (action.payload === "401") {
@@ -127,11 +178,36 @@ export const BlogsSlice = createSlice({
         state.singleBlog.pop();
       }
       state.singleBlog.push(action.payload);
+      state.comments = [];
     },
     [fetchAllBlogsByAuthor.fulfilled]: (state, action) => {
       state.profileBlogs.push(...action.payload);
       setHasNextPage(Boolean(action.payload.length));
       setIsLoading(false);
+    },
+    [fetchAllBlogsByFollow.fulfilled]: (state, action) => {
+      if (action.payload === undefined) {
+        state.followingBlogs = [];
+      } else {
+        state.followingBlogs.push(...action.payload);
+        setHasNextPage(Boolean(action.payload.length));
+        setIsLoading(false);
+      }
+      state.comments = [];
+    },
+    [fetchALLExplorePosts.fulfilled]: (state, action) => {
+      state.explorePosts = action.payload;
+      state.comments = [];
+    },
+    [fetchAllCommentsOfPost.fulfilled]: (state, action) => {
+      // console.log(action.payload);
+      if (action.payload === undefined) {
+        state.comments = [];
+      } else {
+        state.comments.push(...action.payload);
+        setHasNextPage(Boolean(action.payload.length));
+        setIsLoading(false);
+      }
     },
     // [fetchAllBlogsByFollow.fulfilled]: (state, action) => {
     //   if (action.payload === undefined) {
@@ -149,8 +225,11 @@ export const BlogsSlice = createSlice({
 });
 export const {
   createBlog,
+  createALike,
   EditSingleBlog,
+  insertNewComment,
   removeOwnerBlog,
+  removeSingleComment,
   setIsLoading,
   setIsError,
   setHasNextPage,

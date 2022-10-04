@@ -28,7 +28,7 @@ function AddBlog() {
       </button>
       <button
         onClick={handleOpen}
-        className="md:block lg:hidden fixed bg-gradient-to-r from-cyan-500 to-blue-500 sm:mt-4 mt-2 py-3 px-3 text-sm font-semibold text-white rounded-full shadow-xl "
+        className="md:block lg:hidden fixed bg-gradient-to-r from-cyan-500 to-blue-500 sm:mt-4 mt-2 sm:py-3 sm:px-3 py-5 px-5 text-sm font-semibold text-white rounded-full shadow-xl "
       >
         <BiPaperPlane className="text-lg" />
       </button>

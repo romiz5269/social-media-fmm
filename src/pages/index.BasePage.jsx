@@ -13,3 +13,4 @@ export { ShowUsersProfile } from "./users/ShowUsersProfile.Page";
 export { Profile } from "./Profile/Profile.Page";
 export { Register } from "./Register/Register.Page";
 export { Login } from "./Login/Login.Page";
+export {VerifyConfirmationPage} from './verify/confirmation/VerifyConfirmation.page'

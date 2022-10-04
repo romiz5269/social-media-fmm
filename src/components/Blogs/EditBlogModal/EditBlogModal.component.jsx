@@ -42,7 +42,7 @@ function EditBlogModal({ postid }) {
 
   return (
     <div>
-      <button onClick={handleOpen} className="text-xs text-slate-500">
+      <button onClick={handleOpen} className="text-sm text-slate-500">
         <FaPencilAlt />
       </button>
       <Modal

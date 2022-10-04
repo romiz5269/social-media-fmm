@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import { createALike } from "store/Reducers/Blogs/Blogs.Reducer";
 // import { createALike, removeLike } from "store/Reducers/Blogs/Blogs.Reducer";
 
 function LikeComponent({ blogid, isLiked, LikeCount }) {
@@ -10,35 +11,35 @@ function LikeComponent({ blogid, isLiked, LikeCount }) {
   const handleAddLike = (id) => {
     setHasLiked(true);
     setLikesCount(likesCount + 1);
-    // dispatch(createALike(id));
+    dispatch(createALike(id));
   };
 
   const handleRemoveLike = (postid) => {
     setHasLiked(false);
     setLikesCount(likesCount - 1);
-    // dispatch(removeLike(postid));
+    dispatch(createALike(postid));
   };
 
   if (hasLiked) {
     return (
-      <>
+      <div className="hover:bg-red-200 dark:hover:bg-black rounded-full flex flex-row px-2 py-1 hover:cursor-pointer">
         <AiFillHeart
-          className=" hover:cursor-pointer text-lg"
+          className=" hover:cursor-pointer text-xl dark:text-white "
           style={{ color: "#ce1126", opacity: 1 }}
           onClick={(e) => handleRemoveLike(blogid)}
         />
-        <span className="text-xs pr-2">{likesCount}</span>
-      </>
+        <span className="text-xs pr-2 dark:text-white">{likesCount}</span>
+      </div>
     );
   } else {
     return (
-      <>
+      <div className="hover:bg-slate-200 dark:hover:bg-black rounded-full flex flex-row px-2 py-1">
         <AiOutlineHeart
-          className=" hover:cursor-pointer text-lg opacity-60"
+          className=" hover:cursor-pointer text-xl dark:text-white"
           onClick={(e) => handleAddLike(blogid)}
         />
-        <span className="text-xs pr-2">{likesCount}</span>
-      </>
+        <span className="text-xs pr-2 dark:text-white">{likesCount}</span>
+      </div>
     );
   }
 }

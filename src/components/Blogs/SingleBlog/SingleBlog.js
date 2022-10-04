@@ -5,7 +5,7 @@ import jwtDecode from "jwt-decode";
 function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
   const [blogsList, setBlogsList] = useState(null);
   const [loading, setLoading] = useState(true);
-  const owner = jwtDecode(localStorage.getItem("authToken")).name;
+  const owner = jwtDecode(localStorage.getItem("authToken"));
   useEffect(() => {
     setTimeout(() => {
       setBlogsList(blogs);
@@ -29,7 +29,7 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
               }}
             >
               <div className="grid grid-cols-6">
-                <BlogsInfo blog={blog} captionShow={captionShow} owner={owner} handleRemoveBlog={handleRemoveBlog} />
+                <BlogsInfo blog={blog} captionShow={captionShow} owner={owner.user_id} handleRemoveBlog={handleRemoveBlog} />
               </div>
             </div>
           ))}

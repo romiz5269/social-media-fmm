@@ -3,7 +3,6 @@ import { URL } from "config/Urls/Urls.config";
 import { http } from "services/Http/axios";
 import { axiosPrivate } from "services/Private/axiosPrivate";
 
-
 export async function getAllBlogs(config) {
   if (config.pageNum === undefined) {
     config.pageNum = 1;
@@ -26,7 +25,7 @@ export async function getAllBlogsByAuthor(config) {
       .get(`${URL.ALLUSERBLOGS}/${config.username}?page=${config.pageNum}`, {
         signal: config.options.singnal,
       })
-      .then((res) => resolve(res.data))
+      .then((res) => resolve(res.data.results))
       .catch((err) => {
         if (config.options.signal.aborted) return;
         reject(err.response?.status);
@@ -44,10 +43,10 @@ export async function getSingleBlogById(id) {
 export async function getAllBlogsByFollow(config) {
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .get(`${URL.ALLBLOGSBYFOLLOW}?page=${config.pageNum}`, {
+      .get(`${URL.ALLBLOGSBYFOLLOW}?route=home&page=${config.pageNum}`, {
         signal: config.options.signal,
       })
-      .then((res) => resolve(res.data))
+      .then((res) => resolve(res.data.results))
       .catch((err) => {
         if (config.options.signal.aborted) return;
         reject(err.message);
@@ -57,10 +56,10 @@ export async function getAllBlogsByFollow(config) {
 export async function getAllExplorePosts(config) {
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .get(`${URL.ALLEXPLOREPOSTS}?page=${config.pageNum}`, {
+      .get(`${URL.ALLEXPLOREPOSTS}?route=explore&page=${config.pageNum}`, {
         signal: config.options.signal,
       })
-      .then((res) => resolve(res.data))
+      .then((res) => resolve(res.data.results))
       .catch((err) => {
         if (config.options.signal.aborted) return;
         reject(err.message);
@@ -83,10 +82,8 @@ export async function addNewLike(id) {
   return new Promise((resolve, reject) => {
     axiosPrivate
       .post(
-        URL.CREATELIKE,
-        {
-          post: id,
-        },
+        `${URL.CREATENEWLIKE}/${id}/like/`,
+        {},
         {
           headers: { "Content-Type": "application/json" },
         }
@@ -98,24 +95,47 @@ export async function addNewLike(id) {
 
 export async function deleteLike(postid) {
   return new Promise((resolve, reject) => {
-    axiosPrivate.delete(`${URL.DELETELIKE}/${postid}/`);
+    axiosPrivate.delete(`${URL.DELETELIKE}/${postid}/like/`);
+  });
+}
+
+export async function getAllComments(config) {
+  console.log(config);
+  return new Promise((resolve, reject) => {
+    axiosPrivate
+      .get(
+        `${URL.ALLCOMMENTS}${config.postId}/comment/?page=${config.pageNum}`,
+        {
+          signal: config.options.signal,
+        }
+      )
+      .then((res) => resolve(res.data.results))
+      .catch((err) => reject(err));
   });
 }
 
 export async function addNewComment(data) {
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .post(`/activity/comment/create/`, data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
+      .post(
+        `${URL.CREATECOMENT}/${data.id}/comment/`,
+        {
+          body: data.body,
+        },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
       .then((res) => console.log("Successfully"))
       .catch((err) => reject(err.message));
   });
 }
 
-export async function deleteComment(id) {
+export async function deleteComment(data) {
   return new Promise((resolve, reject) => {
-    axiosPrivate.delete(`${URL.DELETECOMMENT}/${id}/`);
+    axiosPrivate.delete(
+      `${URL.DELETECOMMENT}/${data.postId}/comment/${data.commentId}/`
+    );
   });
 }
 
@@ -123,7 +143,7 @@ export async function updateSingleBlog(data) {
   return new Promise((resolve, reject) => {
     axiosPrivate
       .patch(
-        `${URL.EDITBLOG}/${data.id}`,
+        `${URL.EDITBLOG}/${data.id}/`,
         {
           content: data.content,
           title: data.title,

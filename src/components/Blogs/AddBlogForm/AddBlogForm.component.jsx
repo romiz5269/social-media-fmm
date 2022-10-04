@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
-import { addNewBlog } from "store/Reducers/Blogs/Blogs.Reducer";
+import { addNewBlog, setPostingStatus } from "store/Reducers/Blogs/Blogs.Reducer";
 import ProfileImage from "assets/images/userprofile/profile-image.webp";
 import previewPost from "assets/images/post/preview-post.png";
 import jwtDecode from "jwt-decode";
@@ -24,7 +24,7 @@ function AddBlogForm() {
   // console.log(userName);
   const formDataBody = new FormData();
   const handleCreatePost = async (e) => {
-    // dispatch(setPostingStatus(true));
+    dispatch(setPostingStatus(true));
     e.preventDefault();
 
     // set and config form data for send data as payload in post request

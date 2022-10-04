@@ -11,15 +11,22 @@ export const URL = {
 
   CHANGEPASSWORD: "/account/changepassword", //PATCH
 
-  SINGLEBLOG: "/polls/post",
+  SINGLEBLOG: "/polls",
   ALLBLOGS: "/polls",
   ALLUSERBLOGS: "/polls/postuser",
-  CREATEBLOG: "/polls/postcreate/",
-  EDITBLOG: "/polls/post",
-  DELETEBLOG: "/polls/post",
+  ALLEXPLOREPOSTS: "/polls",
+  ALLBLOGSBYFOLLOW: "/polls",
+  CREATEBLOG: "/polls/",
+  EDITBLOG: "/polls",
+  DELETEBLOG: "/polls",
 
-  CREATECOMENT: "/polls/createcomment",
+  CREATENEWLIKE: "/polls",
+  DELETELIKE: "/polls",
 
+  CREATECOMENT: "/polls",
+  DELETECOMMENT: "/polls",
+
+  ALLCOMMENTS: "/polls/",
   CREATEFOLLOW: "/account/follow",
   DELETEFOLLOW: "/account/unfollow",
 };

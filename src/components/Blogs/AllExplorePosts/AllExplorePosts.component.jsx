@@ -1,16 +1,14 @@
-import { useRef } from "react";
-import { useState, useEffect, useRe, useCallback } from "react";
-import { AiOutlineFileSearch } from "react-icons/ai";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchAllBlogs,
+  fetchALLExplorePosts,
   setFetchError,
   setIsLoading,
 } from "store/Reducers/Blogs/Blogs.Reducer";
 import { PostList } from "../PostList/PostList.component";
-import { SingleBlog } from "../SingleBlog/SingleBlog";
+import { ImCrying } from "react-icons/im";
 
-function AllBlogs() {
+function AllExplorePosts() {
   const dispatch = useDispatch();
   const [pageNum, setPageNum] = useState(1);
 
@@ -25,7 +23,7 @@ function AllBlogs() {
     const controller = new AbortController();
     const { signal } = controller;
 
-    dispatch(fetchAllBlogs({ pageNum: pageNum, options: { signal } }));
+    dispatch(fetchALLExplorePosts({ pageNum: pageNum, options: { signal } }));
 
     return () => controller.abort();
   }, [pageNum, dispatch]);
@@ -33,14 +31,12 @@ function AllBlogs() {
   const intObserver = useRef();
   const lastBlogRef = useCallback(
     (blog) => {
-      console.log("ran");
       if (isLoading) return;
       if (intObserver.current) intObserver.current.disconnect();
 
       intObserver.current = new IntersectionObserver((blogs) => {
         console.log(blogs);
         if (blogs[0].isIntersecting) {
-          console.log("we near last node");
           setPageNum((prev) => prev + 1);
         }
       });
@@ -48,21 +44,22 @@ function AllBlogs() {
     },
     [isLoading, hasNextPage]
   );
-  const blogs = useSelector((state) => state.blogs.blogs);
+  const blogs = useSelector((state) => state.blogs.explorePosts);
 
   if (isError) return <p>Error : {fetchError}</p>;
-  if (!blogs.length)
+  if (!blogs?.length)
     return (
       <div className="pt-10 text-2xl text-center flex flex-col justify-center">
-        <AiOutlineFileSearch
+        <ImCrying
           className="text-slate-500 mx-auto mb-5"
           style={{ fontSize: "70px" }}
         />
-        <span className="text-slate-500">There is no post to display</span>
+        <span className="text-slate-500">
+          Faild to load data , Check Your network connection !{" "}
+        </span>
       </div>
     );
   const content = blogs?.map((blog, i) => {
-    console.log("blog", blog);
     if (blogs?.length === i + 1) {
       return <PostList ref={lastBlogRef} key={blog.id} blogs={blog} />;
     }
@@ -72,9 +69,8 @@ function AllBlogs() {
     <>
       {isLoading && <p>Loading More Blogs ...</p>}
       {content}
-      {/* <SingleBlog blogs={blogs} captionShow="cut" /> */}
     </>
   );
 }
 
-export {AllBlogs};
+export { AllExplorePosts };

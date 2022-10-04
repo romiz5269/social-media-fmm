@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 
 import {
   BiBell,
-  BiBlanket,
   BiCartAlt,
   BiCog,
   BiHash,
@@ -16,6 +15,8 @@ import { useDispatch } from "react-redux";
 import swal from "sweetalert";
 import { userLogout } from "api/Users/Users.api";
 import { UserLogout } from "store/Reducers/Users/UsersReducer";
+import { axiosPrivate } from "services/Private/axiosPrivate";
+import { URL } from "config/Urls/Urls.config";
 function MenuBar() {
   const dispatch = useDispatch();
   const Navigate = useNavigate();
@@ -26,13 +27,18 @@ function MenuBar() {
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
+
       if (willDelete) {
-        dispatch(UserLogout())
+        axiosPrivate.post(URL.LOGOUT).then((res) => {
+          localStorage.removeItem("authToken");
+          Navigate("/login");
+        });
       }
+      
     });
   };
   return (
-    <div className="sm:flex sm:flex-col flex flex-row justify-center sm:pr-3 sm:pt-5">
+    <div className="sm:flex sm:flex-col flex flex-row sm:justify-center justify-between w-[100%] sm:pr-3 sm:pt-5">
       <Link to="/home">
         <div className="flex flex-row sm:hover:text-slate-800 sm:pb-6 pb-4 sm:pl-4 sm:pr-0 sm:pt-0 pt-4 text-slate-500  opacity-80 sm:opacity-100">
           {window.innerWidth > 1024 ? (
@@ -91,7 +97,7 @@ function MenuBar() {
       </Link>
 
       <Link to="/products">
-        <div className="flex flex-row sm:hover:text-slate-800 sm:pb-6 pb-4 pt-4 sm:pt-0 sm:pl-4 sm:pr-0 text-slate-500 opacity-80 sm:opacity-100">
+        <div className="flex flex-row  sm:hover:text-slate-800 sm:pb-6 pb-4 pt-4 sm:pt-0 sm:pl-4 sm:pr-0 text-slate-500 opacity-80 sm:opacity-100">
           {window.innerWidth > 1024 ? (
             <BiCartAlt className="ml-5 mb-1 text-2xl dark:text-white" />
           ) : (

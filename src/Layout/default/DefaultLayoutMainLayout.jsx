@@ -50,8 +50,8 @@ function DefaultLayout({ children }) {
         <div>
           <UserProfile />
         </div>
-        <span className="text-xl font-semibold pt-2 dark:text-white">LOGO</span>
-        <div className="flex flex-row justify-center">
+        <span className="text-2xl font-semibold pt-3 dark:text-white text-orange-600">LOGO</span>
+        <div className="flex flex-row justify-center pt-2">
           <NotificationButton />
           <Link to="/settings">
             <FaCog className="mt-3 mr-10 text-xl dark:text-white" />
@@ -62,7 +62,7 @@ function DefaultLayout({ children }) {
         <AddBlog />
       </div>
       <div
-        className="fixed sm:hidden col-span-12 z-10 bottom-0   w-full  flex flex-row justify-center"
+        className="fixed sm:hidden col-span-12 z-10 bottom-0 w-full flex flex-row justify-center border border-blue-600"
         style={
           theme
             ? { backgroundColor: "#1F1F1F", borderTop: "1px solid #333" }
@@ -92,12 +92,7 @@ function DefaultLayout({ children }) {
         }
         className="lg:col-span-5 sm:col-span-8 col-span-12"
       >
-        <div className="flex flex-row justify-end py-2 px-2">
-          <BiArrowBack
-            onClick={(e) => Navigate(-1)}
-            className="text-blue-600 text-xl hover:cursor-pointer dark:text-white"
-          />
-        </div>
+      
 
         {children}
       </div>

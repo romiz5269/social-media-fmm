@@ -20,7 +20,7 @@ function UserProfile() {
     <>
       <img
         src={ProfileBrand}
-        style={{ height: "45px", width: "45px" }}
+        style={{ height: "55px", width: "55px" }}
         className="rounded-full  border-2"
         aria-describedby={id}
         variant="contained"

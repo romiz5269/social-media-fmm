@@ -123,6 +123,12 @@ function AppRoute() {
             element={<ProtectedRoute Component={() => <Page.Register />} />}
           />
           <Route
+            path={PATH.VERIFY}
+            element={
+              <PrivateRoute Component={() => <Page.VerifyConfirmationPage />} hasLayout={false} />
+            }
+          />
+          <Route
             path={PATH.LOGIN}
             element={<ProtectedRoute Component={() => <Page.Login />} />}
           />

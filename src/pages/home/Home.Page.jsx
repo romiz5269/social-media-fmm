@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AddBlogForm, SingleBlog } from "components";
+import { AddBlogForm, AllBlogsByFollow, SingleBlog } from "components";
 import { axiosPrivate } from "services/Private/axiosPrivate";
 import "../../assets/css/output.css";
 import { BiArrowBack } from "react-icons/bi";
@@ -42,7 +42,7 @@ function Home() {
   };
   return (
     <div className="flex flex-col sm:mt-0 mt-20 sm:mb-0 mb-12">
-      <SingleBlog />
+      <AllBlogsByFollow />
     </div>
   );
 }
