@@ -7,6 +7,7 @@ import {
 } from "store/Reducers/Blogs/Blogs.Reducer";
 import { SingleBlog, AddComment, ShowComment, CommentsList } from "components";
 import { useState } from "react";
+import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
 
 function SingleBlogDetail() {
   const [pageNum, setPageNum] = useState(1);
@@ -28,6 +29,7 @@ function SingleBlogDetail() {
         options: { signal },
       })
     );
+  
 
     return () => controller.abort();
   }, [pageNum, dispatch]);
@@ -37,9 +39,9 @@ function SingleBlogDetail() {
   return (
     <>
       <SingleBlog blogs={singleBlog} captionShow="show" />
-      <AddComment id={singleBlog[0]?.id} />
+      <AddComment id={singleBlog[0]?.id} commenter={singleBlog[0]?.author} />
 
-      {singleBlog.length > 0 && <CommentsList postId={singleBlog[0]?.id} author ={singleBlog[0].author} />}
+      {singleBlog.length > 0 && <CommentsList postId={singleBlog[0]?.id} author ={singleBlog[0]?.author} />}
     </>
   );
 }

@@ -9,7 +9,7 @@ export async function getAllBlogs(config) {
   }
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .get(`${URL.ALLBLOGS}?page=${config.pageNum}`, {
+      .get(`${URL.ALLBLOGS}?route=blogs&page=${config.pageNum}`, {
         signal: config.options.signal,
       })
       .then((res) => resolve(res.data.results))

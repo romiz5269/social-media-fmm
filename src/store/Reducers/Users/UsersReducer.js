@@ -10,6 +10,7 @@ import {
 } from "api/Users/Users.api";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import BlogsReducer, { clearProfileBlogs } from "../Blogs/Blogs.Reducer";
 export const UserLogin = createAsyncThunk("users/UserLogin", async (data) => {
   return await userLogin(data);
 });
@@ -53,16 +54,15 @@ export const UsersSlice = createSlice({
     users: [],
     singleUser: [],
     ownerUser: [],
-    isUserLogged:false,
+    isUserLogged: false,
     userAuthToken: "",
     AuthError: "",
     userData: [],
     hasFollowThreadUser: false,
   },
   reducers: {
-    getIsUserLoggedIn : (state) =>{
-      localStorage.getItem('authToken')
-
+    getIsUserLoggedIn: (state) => {
+      localStorage.getItem("authToken");
     },
     getUserAuthToken: (state, action) => {
       const data = state.userAuthToken;
@@ -71,19 +71,15 @@ export const UsersSlice = createSlice({
       const data = state.AuthError;
     },
     getUsername: (state) => {
-
       const userToken = localStorage.getItem("authToken");
       const data = jwt_decode(userToken);
       state.userData = data.username;
-
     },
   },
   extraReducers: {
     [UserLogin.fulfilled]: (state, action) => {
-      
       localStorage.setItem("authToken", action.payload);
       state.userAuthToken = action.payload;
-      
     },
     [UserLogin.rejected]: (state, action) => {
       if (action.error.message === "401") {
@@ -97,8 +93,8 @@ export const UsersSlice = createSlice({
         state.AuthError = "No Server Response";
       }
     },
-    [UserLogout.fulfilled] : (state,action)=>{
-      localStorage.removeItem('authToken');
+    [UserLogout.fulfilled]: (state, action) => {
+      localStorage.removeItem("authToken");
     },
     [fetchUserData.fulfilled]: (state, action) => {
       state.singleUser = action.payload;
@@ -131,9 +127,14 @@ export const UsersSlice = createSlice({
     },
     [removeFollow.fulfilled]: (state, action) => {
       state.hasFollowThreadUser = false;
+      clearProfileBlogs();
     },
   },
 });
-export const { getAuthError, getUserAuthToken, getUsername,getIsUserLoggedIn } =
-  UsersSlice.actions;
+export const {
+  getAuthError,
+  getUserAuthToken,
+  getUsername,
+  getIsUserLoggedIn,
+} = UsersSlice.actions;
 export default UsersSlice.reducer;

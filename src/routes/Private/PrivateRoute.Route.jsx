@@ -5,6 +5,11 @@ import { useEffect } from "react";
 
 const PrivateRoute = ({ Component, hasLayout }) => {
   const [isLoggedIn,setIsLoggedIn] = useState(localStorage.getItem('authToken'))
+  useEffect(()=>{
+    setInterval(()=>{
+      
+    },4000)
+  },[])
 
   if (!isLoggedIn) {
     return <Navigate to="/login" />;

@@ -8,6 +8,7 @@ import swal from "sweetalert";
 import { removeSingleComment } from "store/Reducers/Blogs/Blogs.Reducer";
 
 const ShowComment = React.forwardRef(({ comments, author }, ref) => {
+  console.log(comments)
   const [isOwner, setIsOwner] = useState(false);
   const dispatch = useDispatch();
   const owner = jwtDecode(localStorage.getItem("authToken"));

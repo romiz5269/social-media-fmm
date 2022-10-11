@@ -1,14 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FaCalendar, FaStickyNote, FaUser } from "react-icons/fa";
-import { AllBlogsById } from "components";
-import { Products } from "pages/products/Products.Page";
-import ProfileImage from "assets/images/userprofile/profile-image.webp";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
+import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
+import { AllBlogsById, AllOwnerBlogs, ProfileData } from "components";
+import { Products } from "pages";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-
+import jwtDecode from "jwt-decode";
+import { BiLock } from "react-icons/bi";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,79 +48,111 @@ function a11yProps(index) {
 
 function ShowUsersProfile() {
   const [value, setValue] = useState(0);
-
+  const { name } = useParams();
+  const { theme } = useCheckThemeMode();
+  const Navigate = useNavigate();
+  const dispatch = useDispatch();
+  const owner = jwtDecode(localStorage.getItem("authToken")).name;
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    if (name === owner) {
+      Navigate("/profile", { replace: true });
+    } else {
+      dispatch(fetchOwnerProfile(name));
+    }
+  }, [name, owner]);
+
+  const profile = useSelector((state) => state.users.ownerUser);
+  const hasFollow = useSelector((state) => state.users.hasFollowThreadUser);
+  console.log(hasFollow);
   return (
     <div>
-      <div
-        className="flex flex-col relative bg-orange-400 sm:mt-0 mt-20 sm:mb-0 mb-12"
-        style={{ height: "150px" }}
-      >
-        <div className="absolute object-fill bottom-0 top-16 right-12">
-          <img
-            src={ProfileImage}
-            
-            className="rounded-full border-8 border-white"
-            style={{ height: "140px", width: "140px" }}
-          />
-        </div>
-      </div>
-      <div className="sm:grid sm:grid-cols-12 mt-16">
-        <div className="sm:col-span-6 flex flex-col text-left pl-3">
-          <div className="flex flex-row">
-            <FaUser className="text-xs text-slate-500 mt-2 mr-2" />
-            <span className="text-xl font-semibold pr-2">Mohammadreza</span>
-          </div>
-          <div className="flex flex-row py-2">
-            <FaCalendar className="text-xs text-slate-500 mt-2 mr-2" />
-            <span className="text-sm mt-1 pr-2">22 july 2022</span>
-          </div>
-          <div className="flex flex-row">
-            <FaStickyNote className="text-xs text-slate-500 mt-2 mr-2" />
-            <span className="text-sm pr-2 text-slate-700 mt-1 w-2/4 sm:w-4/5">
-              my name is Mohammadreza and im full stack web developer
-            </span>
-          </div>
-        </div>
-        <div className="sm:col-span-6 p-5">
-          <div className="bg-slate-300 rounded-md flex flex-col">
-            <div className="flex flex-row justify-evenly py-2">
-              <div className="text-center flex flex-col text-slate-600 font-semibold">
-                <span className="font-Vazirmatn text-xs">پست ها</span>
-                <span className="text-sm">150</span>
-              </div>
-              <div className="text-center flex flex-col text-slate-600 font-semibold">
-                <span className="font-Vazirmatn text-xs">دنبال کنندگان</span>
-                <span className="text-sm">250</span>
-              </div>
-              <div className="text-center flex flex-col text-slate-600 font-semibold">
-                <span className="font-Vazirmatn text-xs">دنبال شوندگان</span>
-                <span className="text-sm">2k</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <ProfileData
+        profile={profile}
+        // hasFollowButton={true}
+        // hasEditButton={false}
+      />
       <div className="mt-5 flex flex-row justify-center sm:mb-0 mb-10">
         <Box sx={{ width: "100%" }}>
           <Box
-            sx={{ borderBottom: 1, borderColor: "divider" }}
-            className="flex flex-row justify-center"
+            sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}
+            className="flex flex-row justify-between "
           >
             <Tabs
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab label="بلاگ ها" {...a11yProps(0)} />
-              <Tab label="محصولات" {...a11yProps(1)} />
-              <Tab label="لایک ها" {...a11yProps(2)} />
+              <Tab
+                sx={
+                  theme
+                    ? {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#fff",
+                      }
+                    : {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                      }
+                }
+                label="بلاگ ها"
+                {...a11yProps(0)}
+              />
+              <Tab
+                sx={
+                  theme
+                    ? {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#fff",
+                      }
+                    : {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                      }
+                }
+                label="محصولات"
+                {...a11yProps(1)}
+              />
+              <Tab
+                sx={
+                  theme
+                    ? {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "500",
+                        fontSize: "14px",
+                        color: "#fff",
+                      }
+                    : {
+                        fontFamily: "Vazirmatn",
+                        fontWeight: "600",
+                        fontSize: "14px",
+                      }
+                }
+                label="لایک ها"
+                {...a11yProps(2)}
+              />
             </Tabs>
           </Box>
-          <TabPanel value={value} index={0}>
-            <AllBlogsById />
+          <TabPanel value={value} index={0} className="min-h-[300px]">
+            {hasFollow ? (
+              <AllOwnerBlogs  />
+            ) : (
+              <div className="flex flex-col justify-center items-center">
+                <BiLock className="text-9xl  text-slate-400 w-[60px] h-[60px]" />
+                <span className="text-slate-500 py-8 text-lg">
+                  You can't see posts of this page , you should follow this
+                </span>
+              </div>
+            )}
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Products />

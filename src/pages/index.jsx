@@ -9,7 +9,7 @@ export { ProductDetail } from "./Threads/Product/ProductDetail.Page";
 export { PopularBlogs } from "./Popular/Blogs/PopularBlogs";
 export { PopularTags } from "./Popular/Tags/PopularTags";
 export { PopularUsers } from "./Popular/Users/PopularUsers";
-export { ShowUsersProfile } from "./users/ShowUsersProfile.Page";
+export { ShowUsersProfile } from "./users/ShowUsersProfile.Page.jsx";
 export { Profile } from "./Profile/Profile.Page";
 export { Register } from "./Register/Register.Page";
 export { Login } from "./Login/Login.Page";

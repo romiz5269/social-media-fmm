@@ -62,7 +62,7 @@ export async function updateSingleProfile(data){
 export async function addNewFollow(userid) {
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .delete(`${URL.DELETEFOLLOW}/${userid}/`)
+      .post(`${URL.CREATEFOLLOW}/${userid}/`)
       .then((res) => resolve(res.status));
   });
 }
@@ -70,7 +70,7 @@ export async function addNewFollow(userid) {
 export async function deleteFollow(userid) {
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .delete(`${URL.DELETEFOLLOW}/${userid}/`)
+      .post(`${URL.DELETEFOLLOW}/${userid}/`)
       .then((res) => resolve(res.status));
   });
 }

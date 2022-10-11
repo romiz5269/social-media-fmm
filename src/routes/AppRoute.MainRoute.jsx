@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { PATH } from "../config/Path/Path.config.jsx";
-import * as Page from "../pages/index.BasePage";
+import * as Page from "../pages";
 import { PublicRoute } from ".";
 import PrivateRoute from "./Private/PrivateRoute.Route.jsx";
 import ProtectedRoute from "./Protected/ProtectedRoute.Route.jsx";
@@ -125,7 +125,10 @@ function AppRoute() {
           <Route
             path={PATH.VERIFY}
             element={
-              <PrivateRoute Component={() => <Page.VerifyConfirmationPage />} hasLayout={false} />
+              <PrivateRoute
+                Component={() => <Page.VerifyConfirmationPage />}
+                hasLayout={false}
+              />
             }
           />
           <Route

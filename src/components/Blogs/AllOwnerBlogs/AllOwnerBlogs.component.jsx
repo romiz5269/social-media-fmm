@@ -14,11 +14,14 @@ import { AiOutlineFileSearch } from "react-icons/ai";
 import swal from "sweetalert";
 import { PostList } from "../PostList/PostList.component";
 
-function AllOwnerBlogs() {
+function AllOwnerBlogs({ routeName }) {
   const dispatch = useDispatch();
-  const name = jwtDecode(localStorage.getItem("authToken")).name;
+
+  const username = "";
+  const ownerName = jwtDecode(localStorage.getItem("authToken")).name;
+  const { name } = useParams();
+
   const handleRemoveBlog = (blogid) => {
-    console.log("clicked");
     swal({
       title: "آیا مطمئن هستید ؟",
       text: "اگر بلاگ حذف شود امکان بازیابی آن وجود نخواهد داشت!",
@@ -37,6 +40,7 @@ function AllOwnerBlogs() {
   };
   const [pageNum, setPageNum] = useState(1);
 
+  console.log(ownerName === name);
   const isLoading = useSelector((state) => state.blogs.isLoading);
   const isError = useSelector((state) => state.blogs.isError);
   const hasNextPage = useSelector((state) => state.blogs.hasNextPage);
@@ -47,12 +51,12 @@ function AllOwnerBlogs() {
     dispatch(setFetchError({}));
     const controller = new AbortController();
     const { signal } = controller;
-
+    
     dispatch(
       fetchAllBlogsByAuthor({
         pageNum: pageNum,
         options: { signal },
-        username: name,
+        username: ownerName !== name &&  window.location.pathname !== "/profile" ? name : ownerName,
       })
     );
 

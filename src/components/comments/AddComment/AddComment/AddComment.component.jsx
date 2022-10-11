@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { createNewComment } from "api/Comments/Comments.api";
 import { insertNewComment } from "store/Reducers/Blogs/Blogs.Reducer";
 
-function AddComment({ id }) {
+function AddComment({ id, commenter }) {
   const [body, setBody] = useState("");
   const dispatch = useDispatch();
 
@@ -15,7 +15,16 @@ function AddComment({ id }) {
 
     // formDataBody.append("body", body);
 
-    dispatch(insertNewComment({ id: id, body: body }));
+    dispatch(
+      insertNewComment({
+        id: id,
+        body: body,
+        commenter: {
+          username: commenter.username,
+          image: commenter.image,
+        },
+      })
+    );
   };
 
   return (

@@ -1,17 +1,15 @@
-import {
-  FaCalendar,
-  FaCamera,
-  FaCheck,
-  FaEnvelope,
-
-} from "react-icons/fa";
+import { FaCalendar, FaCamera, FaCheck, FaEnvelope } from "react-icons/fa";
 
 import { useEffect, useState } from "react";
 import { BiArrowBack, BiBell, BiWorld } from "react-icons/bi";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import jwtDecode from "jwt-decode";
-import { createNewFollow, removeFollow } from "store/Reducers/Users/UsersReducer";
+import {
+  createNewFollow,
+  removeFollow,
+} from "store/Reducers/Users/UsersReducer";
+import { clearProfileBlogs } from "store/Reducers/Blogs/Blogs.Reducer";
 function ProfileData({ profile }) {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -20,10 +18,10 @@ function ProfileData({ profile }) {
   const [username, setUsername] = useState(profile.name);
   const [email, setEmail] = useState(profile?.email);
   const [bio, setBio] = useState(profile?.bio);
-  console.log(profile)
+  console.log(profile);
   const { name } = useParams();
   const owner = jwtDecode(localStorage.getItem("authToken")).name;
-
+  console.log(window.location);
   const hasFollow = useSelector((state) => state.users.hasFollowThreadUser);
 
   const handleAddFollow = (userid) => {
@@ -32,6 +30,7 @@ function ProfileData({ profile }) {
   const handleRemoveFollow = (userid) => {
     console.log(name);
     dispatch(removeFollow(userid));
+    dispatch(clearProfileBlogs());
   };
 
   return (
@@ -42,7 +41,9 @@ function ProfileData({ profile }) {
             <div className="col-span-11 flex flex-col justify-start pr-3 py-1">
               <span className="text-lg font-[600]">{profile.username}</span>
               <div className="text-slate-600 font-semibold">
-                <span className="text-xs text-slate-500 font-[500]">150</span>
+                <span className="text-xs text-slate-500 font-[500]">
+                  {profile.postcount}
+                </span>
                 <span className="font-Vazirmatn text-xs text-slate-500 font-[500] pr-1">
                   پست ها
                 </span>
@@ -66,37 +67,38 @@ function ProfileData({ profile }) {
                 style={{ height: "120px", width: "120px" }}
               />
             </div>
-
-            {hasFollow && name !== owner && (
-              <>
-                {hasFollow ? (
-                  <div className="absolute left-12 bottom-0 top-32">
-                    <div className="px-5 py-2 bg-blue-500 text-white border-2 rounded-full">
-                      <button onClick={(e) => handleRemoveFollow(profile.id)}>
-                        Followed
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="absolute left-12 bottom-0 top-32">
-                    <div className="px-5 py-2 bg-white border-2 rounded-full">
-                      <button onClick={(e) => handleAddFollow(profile.id)}>
-                        + Follow
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </>
-            )}
           </div>
           <div className="sm:grid sm:grid-cols-12">
             <div className="col-span-12 pl-3 py-2">
               <div className="flex flex-row justify-end">
+                {name !== owner && window.location.pathname !== "/profile" && (
+                  <>
+                    {hasFollow ? (
+                      <div className="ml-5">
+                        <div className="px-5 py-1 bg-blue-500 text-white border-2 rounded-full">
+                          <button
+                            onClick={(e) => handleRemoveFollow(profile.id)}
+                          >
+                            Followed
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="ml-5">
+                        <div className="px-5 py-1 bg-white border-2 rounded-full">
+                          <button onClick={(e) => handleAddFollow(profile.id)}>
+                            + Follow
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
                 {/* {profile && profile.name !== owner && (
                     
                     // <FollowButtonCheck username={name} owner={owner} />
                   )} */}
-                <BiBell />
+                <BiBell className="text-xl text-slate-500 mt-2" />
               </div>
             </div>
           </div>
@@ -129,18 +131,20 @@ function ProfileData({ profile }) {
                   </span>
                 </div>
               )}
-              <div className="flex flex-row py-2">
-                <BiWorld
-                  className="text-xl text-slate-400 mt-1 mr-2"
-                  style={{ marginRight: "6px" }}
-                />
-                <span
-                  className=" mt-1 pr-2 text-slate-500 dark:text-slate-300"
-                  style={{ fontSize: "13px", fontWeight: "600" }}
-                >
-                  {profile?.last_login?.slice(0, 10)}
-                </span>
-              </div>
+              {profile.last_login && (
+                <div className="flex flex-row py-2">
+                  <BiWorld
+                    className="text-xl text-slate-400 mt-1 mr-2"
+                    style={{ marginRight: "6px" }}
+                  />
+                  <span
+                    className=" mt-1 pr-2 text-slate-500 dark:text-slate-300"
+                    style={{ fontSize: "13px", fontWeight: "600" }}
+                  >
+                    {profile?.last_login?.slice(0, 10)}
+                  </span>
+                </div>
+              )}
               <div className="flex flex-row">
                 <div className="text-center mr-2 text-slate-600 font-semibold">
                   <span className="text-sm text-[#000]">
@@ -160,7 +164,6 @@ function ProfileData({ profile }) {
                 </div>
               </div>
             </div>
-           
           </div>
         </>
       )}

@@ -192,7 +192,8 @@ function MenuBar() {
           </button>
         )}
         <span
-          className="text-md font-semibold pt-1 lg:block hidden sm:hidden dark:text-white text-red-600"
+          onClick={handleLogout}
+          className="text-md font-semibold pt-1 lg:block hidden sm:hidden dark:text-white text-red-600 hover:cursor-pointer"
           style={{ fontFamily: "Vazirmatn" }}
         >
           خروج از حساب

@@ -101,7 +101,9 @@ export const BlogsSlice = createSlice({
     },
     insertNewComment: (state, action) => {
       addNewComment(action.payload);
-      state.singleBlog[0].comments.unshift(action.payload);
+      // state.singleBlog[0].comments.unshift(action.payload);
+      console.log(action.payload);
+      state.comments.unshift(action.payload);
     },
     createALike: (state, action) => {
       addNewLike(action.payload);
@@ -109,14 +111,9 @@ export const BlogsSlice = createSlice({
     removeSingleComment: (state, action) => {
       deleteComment(action.payload);
       state.comments = state.comments.filter(
-        (item) => item.id !== action.payload
+        (item) => item.id !== action.payload.commentId
       );
     },
-    //   state.singleBlog[0].comments = state.singleBlog[0].comments.filter(
-    //     (item) => item.id !== action.payload
-    //   );
-    // },
-
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     },
@@ -135,6 +132,10 @@ export const BlogsSlice = createSlice({
         (item) => item.id !== action.payload
       );
       state.blogs = state.blogs.filter((item) => item.id !== action.payload);
+    },
+    clearProfileBlogs: (state) => {
+      state.profileBlogs = [];
+      console.log("clear ran");
     },
     EditSingleBlog: (state, action) => {
       updateSingleBlog(action.payload);
@@ -228,6 +229,7 @@ export const {
   createALike,
   EditSingleBlog,
   insertNewComment,
+  clearProfileBlogs,
   removeOwnerBlog,
   removeSingleComment,
   setIsLoading,
