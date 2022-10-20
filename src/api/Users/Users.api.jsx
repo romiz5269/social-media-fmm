@@ -67,10 +67,10 @@ export async function addNewFollow(userid) {
   });
 }
 
-export async function deleteFollow(userid) {
+export async function deleteFollow(username) {
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .post(`${URL.DELETEFOLLOW}/${userid}/`)
+      .post(`${URL.DELETEFOLLOW}/${username}/`)
       .then((res) => resolve(res.status));
   });
 }

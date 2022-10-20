@@ -102,7 +102,7 @@ export const BlogsSlice = createSlice({
     insertNewComment: (state, action) => {
       addNewComment(action.payload);
       // state.singleBlog[0].comments.unshift(action.payload);
-      console.log(action.payload);
+      
       state.comments.unshift(action.payload);
     },
     createALike: (state, action) => {
@@ -183,6 +183,7 @@ export const BlogsSlice = createSlice({
     },
     [fetchAllBlogsByAuthor.fulfilled]: (state, action) => {
       state.profileBlogs.push(...action.payload);
+      
       setHasNextPage(Boolean(action.payload.length));
       setIsLoading(false);
     },

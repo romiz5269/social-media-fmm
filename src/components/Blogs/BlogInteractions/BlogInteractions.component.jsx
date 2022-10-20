@@ -1,23 +1,23 @@
 import { LikeComponent } from "components/Likes/LikeComponent.component";
 import React from "react";
-import { AiOutlineComment } from "react-icons/ai";
+import { AiOutlineComment, AiOutlineRetweet } from "react-icons/ai";
 import { BiShare, BiShareAlt } from "react-icons/bi";
 import { FaRegComments, FaRetweet } from "react-icons/fa";
-
+import { GoComment, GoCommentDiscussion } from "react-icons/go";
 function BlogInteractions({ blog, owner }) {
   console.log('owner :::=>',blog.user_likes)
   return (
     <>
-      <div className="flex flex-row justify-start sm:ml-14 ml-8">
+      <div className="flex flex-row justify-start ml-8">
         <div className="flex flex-row dark:hover:bg-black hover:bg-slate-200 rounded-full  px-2 py-1 hover:cursor-pointer">
-          <AiOutlineComment className="ml-1 sm:opacity-60 text-xl dark:text-white" />
+          <GoComment className="ml-1 text-xl dark:text-white text-[#8e9ba2] hover:text-green-600" />
           <span className="text-xs pr-2 dark:text-white">
             {blog?.comment ? blog?.comment?.length : blog?.comments_count}
           </span>
         </div>
       </div>
-      <div className="flex flex-row justify-start sm:ml-14 ml-12">
-        {blog?.user_likes?.find((like) => like === owner) ? (
+      <div className="flex flex-row justify-start  ml-12">
+        {blog?.youliked ? (
           <LikeComponent
             blogid={blog.id}
             isLiked={true}
@@ -31,12 +31,12 @@ function BlogInteractions({ blog, owner }) {
           />
         )}
       </div>
-      <div className="flex flex-row justify-start sm:ml-14 ml-8">
-        <FaRetweet className="sm:opacity-60 dark:text-white text-xl" />
+      <div className="flex flex-row justify-start  ml-8">
+        <GoCommentDiscussion className=" dark:text-white text-xl text-[#8e9ba2]" />
         <span className="text-xs pr-2 dark:text-white"></span>
       </div>
       <div className="flex flex-row justify-start dark:text-white">
-        <BiShareAlt className="sm:opacity-60 dark:text-white text-xl" />
+        <BiShareAlt className=" dark:text-white text-xl text-[#8e9ba2]" />
       </div>
     </>
   );

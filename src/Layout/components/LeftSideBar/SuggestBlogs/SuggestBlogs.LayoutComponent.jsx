@@ -7,12 +7,12 @@ function SuggestBlogs() {
   const { theme } = useCheckThemeMode();
   return (
     <div
-      className="flex flex-col rounded-md shadow-xl"
+      className="flex flex-col rounded-b-[20px] bg-[#F7F9F9] px-4"
       style={theme ? { backgroundColor: "#36393f" } : {}}
     >
-      <div className="px-3 pb-3">
+      <div className="pb-3">
         <h2
-          className="text-slate-400 text-sm pt-5"
+          className="text-[#606F7B] text-sm pt-3"
           style={{ fontFamily: "Vazirmatn" }}
         >
           بلاگ های محبوب
@@ -23,7 +23,7 @@ function SuggestBlogs() {
       <SuggestSingleBlog />
       <Link to="/popular/blogs">
         <div
-          className="text-center py-3 text-blue-700 dark:text-green-500 text-sm border-t-2 z-10"
+          className="text-start py-5 text-blue-400 dark:text-green-500 text-sm z-10 font-[300]"
           style={{ fontFamily: "Vazirmatn" }}
         >
           مشاهده بیشتر

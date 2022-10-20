@@ -51,9 +51,10 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
 
     const BlogBody = (
       <>
+     
         <div
           key={blogs.id}
-          className="flex flex-col pb-3 sm:pt-2  sm:mb-0"
+          className="flex flex-col pb-3 sm:pt-2  sm:mb-0 px-[16px]"
           style={
             theme
               ? { borderTop: "1px solid #bcbcbc" }
@@ -63,22 +64,22 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
                 }
           }
         >
-          <div className="grid grid-cols-6">
-            <div className="col-span-1 sm:p-2 pt-10 flex justify-center flex-row">
+          <div className="grid grid-cols-12 ">
+            <div className="col-span-2 flex justify-start flex-row pt-3">
               <div>
                 <Link to={`/${blogs?.user}`}>
                   <img
                     src={blogs.user_image}
-                    className="rounded-full sm:w-12 w-[70px] sm:h-12 h-[70px]  sm:mr-0"
+                    className="rounded-full sm:w-[70px] w-[70px] sm:h-[70px] h-[70px]"
                   />
                 </Link>
               </div>
             </div>
-            <div className="col-span-5 flex flex-col justify-evenly">
+            <div className="col-span-10 flex flex-col justify-evenly ">
               <div className="grid grid-cols-5 justify-between">
                 <div className="col-span-4 flex flex-row mr-3 sm:mr-0">
                   <Link to={`/${blogs?.user}`}>
-                    <span className="font-semibold text-xl dark:text-white">
+                    <span className="font-semibold text-[20px] dark:text-white">
                       {blogs?.author?.username}
                     </span>
                   </Link>
@@ -91,21 +92,22 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
                   </span>
                 </div>
                 <div className="col-span-1 flex flex-row justify-end py-1 px-3">
-                  {location.pathname === "/profile" && blogs.author.username === owner.name && (
-                    <>
-                      <div
-                        className="text-sm hover:cursor-pointer ml-5 mt-1"
-                        onClick={(e) => handleRemoveBlog(blogs?.id)}
-                      >
-                        <AiOutlineDelete className="text-lg text-red-500" />
-                      </div>
-                      <div>
-                        <EditBlogModal postid={blogs.id} />
-                      </div>
-                    </>
-                  )}
+                  {location.pathname === "/profile" &&
+                    blogs?.author?.username === owner.name && (
+                      <>
+                        <div
+                          className="text-sm hover:cursor-pointer ml-5 mt-1"
+                          onClick={(e) => handleRemoveBlog(blogs?.id)}
+                        >
+                          <AiOutlineDelete className="text-lg text-red-500" />
+                        </div>
+                        <div>
+                          <EditBlogModal postid={blogs.id} />
+                        </div>
+                      </>
+                    )}
 
-                  {blogs.author.username !== owner.name && (
+                  {blogs?.author?.username !== owner.name && (
                     <div>
                       <div className="text-sm flex flex-row">
                         <span className="text-xs text-yellow-600">Report</span>
@@ -123,7 +125,7 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
 
                   {captionShow === "show" ? (
                     <p
-                      className="text-md pt-3  text-slate-700 text-justify font-Vazirmatn dark:text-slate-200  pr-3"
+                      className="text-md pt-3  text-[#0f1419] text-justify font-Vazirmatn dark:text-slate-200  pr-3"
                       style={{ height: "auto", fontWeight: "300" }}
                     >
                       {blogs?.content}
@@ -132,7 +134,7 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
                     <LinesEllipsis
                       text={blogs?.content}
                       maxLine="3"
-                      className="font-Vazirmatn text-md text-slate-700 dark:text-slate-200 sm:pr-0 pr-3"
+                      className="font-Vazirmatn text-md text-[#0f1419] font-[300] dark:text-slate-200 sm:pr-0 pr-3"
                       ellipsis="..."
                       trimRight
                       basedOn="letters"
@@ -143,14 +145,14 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
                   <div className="py-2 pl-3">
                     <img
                       src={blogs?.image}
-                      className="rounded-lg mt-1 border-2 w-full"
-                      style={{ height: "250px" }}
+                      className="rounded-[10px] mt-1 border-2"
+                      style={{ height: "275px",width:"100%" }}
                     />
                   </div>
                 )}
               </Link>
 
-              <div className="flex flex-row flex-wrap justify-start pb-2 pt-5">
+              <div className="flex flex-row flex-wrap justify-around pt-2">
                 <BlogInteractions blog={blogs} owner={owner.user_id} />
               </div>
             </div>

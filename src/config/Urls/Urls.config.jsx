@@ -1,5 +1,5 @@
 export const URL = {
-  REQ_URL: "https://social-new2.herokuapp.com",
+  REQ_URL: "http://binjhom.ir/blog",
   USER: "/user",
   BLOGS: "/blogs",
   REGISTER: "/account/register/", //POST
@@ -28,5 +28,5 @@ export const URL = {
 
   ALLCOMMENTS: "/polls/",
   CREATEFOLLOW: "/account/follow",
-  DELETEFOLLOW: "/account/unfollow",
+  DELETEFOLLOW: "/account/follow",
 };

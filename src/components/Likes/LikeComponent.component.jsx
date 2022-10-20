@@ -24,7 +24,7 @@ function LikeComponent({ blogid, isLiked, LikeCount }) {
     return (
       <div className="hover:bg-red-200 dark:hover:bg-black rounded-full flex flex-row px-2 py-1 hover:cursor-pointer">
         <AiFillHeart
-          className=" hover:cursor-pointer text-xl dark:text-white "
+          className=" hover:cursor-pointer text-xl dark:text-white text-[#8e9ba2]"
           style={{ color: "#ce1126", opacity: 1 }}
           onClick={(e) => handleRemoveLike(blogid)}
         />
@@ -35,7 +35,7 @@ function LikeComponent({ blogid, isLiked, LikeCount }) {
     return (
       <div className="hover:bg-slate-200 dark:hover:bg-black rounded-full flex flex-row px-2 py-1">
         <AiOutlineHeart
-          className=" hover:cursor-pointer text-xl dark:text-white"
+          className=" hover:cursor-pointer text-xl dark:text-white text-[#8e9ba2]"
           onClick={(e) => handleAddLike(blogid)}
         />
         <span className="text-xs pr-2 dark:text-white">{likesCount}</span>

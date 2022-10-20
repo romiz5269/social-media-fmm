@@ -18,7 +18,7 @@ import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
 function DefaultLayout({ children }) {
   const [windowSize, setWindowSize] = useState(window.innerWidth);
   const { theme } = useCheckThemeMode();
-  
+
   useEffect(() => {
     if (theme) {
       document.body.style.backgroundColor = "#2f3136";
@@ -38,7 +38,7 @@ function DefaultLayout({ children }) {
   }, [window.innerWidth, theme]);
   const Navigate = useNavigate();
   return (
-    <div className="container mx-auto max-w-screen-xl grid grid-cols-12">
+    <div className="min-w-screen grid grid-cols-12 justify-center ">
       <div
         className="sm:hidden z-10 fixed top-0 w-full bg-white  shadow-lg text-slate-500 col-span-12 py-2 px-5 flex flex-row justify-between"
         style={
@@ -50,7 +50,9 @@ function DefaultLayout({ children }) {
         <div>
           <UserProfile />
         </div>
-        <span className="text-2xl font-semibold pt-3 dark:text-white text-orange-600">LOGO</span>
+        <span className="text-2xl font-semibold pt-3 dark:text-white text-orange-600">
+          LOGO
+        </span>
         <div className="flex flex-row justify-center pt-2">
           <NotificationButton />
           <Link to="/settings">
@@ -74,33 +76,41 @@ function DefaultLayout({ children }) {
       <div
         className={
           windowSize > 1024
-            ? "sm:col-span-3 col-span-3 sm:flex sm:flex-col  sm:items-center pr-14 hidden"
+            ? "sm:col-span-3 col-span-3 sm:flex sm:flex-col  sm:items-end hidden pl-[40px] "
             : "lg:col-span-3 sm:col-span-3 col-span-3 sm:flex sm:flex-col  sm:items-center pr-24 hidden"
         }
+        style={
+          theme
+            ? { borderLeft: "1px solid #bcbcbc" }
+            : { borderLeft: "1px solid #f6f6f6" }
+        }
       >
-        <div className="sm:sticky sm:top-10">
-          <MenuBar />
-          <AddBlog />
+        <div className="sm:sticky sm:top-10 grid grid-cols-12">
+          <div className="col-span-5"></div>
+          <div className="col-span-7">
+            <MenuBar />
+            <AddBlog />
+          </div>
           {/* <LogoutButton /> */}
         </div>
       </div>
-      <div
-        style={
-          theme
-            ? { border: "1px solid #bcbcbc" }
-            : { border: "1px solid #e7e7e7" }
-        }
-        className="lg:col-span-5 sm:col-span-8 col-span-12"
-      >
-      
-
-        {children}
-      </div>
-      <div className="lg:col-span-3 hidden sm:hidden lg:flex lg:flex-col px-5 pt-5">
-        <SuggestBlogs />
-        <div className="sm:sticky sm:top-0">
-          <SuggestUsers theme={theme} />
-          <SuggestTags theme={theme} />
+      <div className="col-span-8 grid grid-cols-12">
+        <div className="lg:col-span-8 sm:col-span-8 col-span-12 border">
+          {children}
+        </div>
+        <div
+          className="lg:col-span-4 hidden sm:hidden lg:flex lg:flex-col pr-[16px]  pt-5 "
+          style={
+            theme
+              ? { borderRight: "1px solid #bcbcbc" }
+              : { borderRight: "1px solid #f6f6f6" }
+          }
+        >
+          <SuggestBlogs />
+          <div className="sm:sticky sm:top-0">
+            <SuggestUsers theme={theme} />
+            <SuggestTags theme={theme} />
+          </div>
         </div>
       </div>
     </div>

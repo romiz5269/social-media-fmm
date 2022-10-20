@@ -116,7 +116,7 @@ export const UsersSlice = createSlice({
     },
     [fetchOwnerProfile.fulfilled]: (state, action) => {
       state.ownerUser = action.payload;
-      if (action.payload.is_following) {
+      if (action.payload.youfollow) {
         state.hasFollowThreadUser = true;
       } else {
         state.hasFollowThreadUser = false;
