@@ -71,7 +71,7 @@ function AllBlogsByFollow() {
     <>
       {isLoading && <p>Loading More Blogs ...</p>}
       <div
-        className="backdrop-blur-md sticky top-0 p-4 z-20 "
+        className="backdrop-blur-md sticky top-0 p-4 z-20 md:flex hidden"
         style={{ backgroundColor: "rgba(255, 255, 255, 0.2)" }}
       >
         <span className="text-[17px] font-[600] font-Vazirmatn">صفحه اصلی</span>

@@ -70,7 +70,7 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
                 <Link to={`/${blogs?.user}`}>
                   <img
                     src={blogs.user_image}
-                    className="rounded-full sm:w-[70px] w-[70px] sm:h-[70px] h-[70px]"
+                    className="rounded-full sm:w-[70px] w-[60px] sm:h-[70px] h-[60px]"
                   />
                 </Link>
               </div>
@@ -106,7 +106,7 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
                         </div>
                       </>
                     )}
-
+{/* 
                   {blogs?.author?.username !== owner.name && (
                     <div>
                       <div className="text-sm flex flex-row">
@@ -114,7 +114,7 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
                         <AiOutlineWarning className="text-lg mr-2 text-yellow-600" />
                       </div>
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
               <Link to={`/thread/blog/${blogs?.id}`}>
@@ -145,8 +145,8 @@ const PostList = React.forwardRef(({ blogs,handleRemoveBlog},ref) => {
                   <div className="py-2 pl-3">
                     <img
                       src={blogs?.image}
-                      className="rounded-[10px] mt-1 border-2"
-                      style={{ height: "275px",width:"100%" }}
+                      className="rounded-[10px] mt-1 border-2 sm:h-[275px] h-[200px]"
+                      style={{width:"100%" }}
                     />
                   </div>
                 )}

@@ -11,6 +11,7 @@ import {
 } from "store/Reducers/Users/UsersReducer";
 import { clearProfileBlogs } from "store/Reducers/Blogs/Blogs.Reducer";
 import { AiOutlineMail } from "react-icons/ai";
+import numberToPersian from "utils/toPersianNumbers/toPersianNumbers";
 function ProfileData({ profile }) {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -39,14 +40,14 @@ function ProfileData({ profile }) {
       {profile && (
         <>
           <div
-            className="grid grid-cols-12  sticky top-0 z-20 backdrop-blur-md"
+            className="md:grid md:grid-cols-12 hidden sticky top-0 z-20 backdrop-blur-md"
             style={{ backgroundColor: "rgba(255,255,255,0.8)" }}
           >
             <div className="col-span-11 flex flex-col justify-start pr-3 py-1 ">
               <span className="text-lg font-[600]">{profile.username}</span>
               <div className="text-slate-600 font-semibold">
                 <span className="text-xs text-slate-500 font-[500]">
-                  {profile.postcount}
+                  {profile?.postcount && numberToPersian(profile.postcount)}
                 </span>
                 <span className="font-Vazirmatn text-xs text-slate-500 font-[500] pr-1">
                   پست ها
@@ -61,7 +62,7 @@ function ProfileData({ profile }) {
             </div>
           </div>
           <div
-            className="flex flex-col relative bg-gradient-to-r from-blue-500 to-blue-600 sm:mt-0  sm:mb-0 mb-12"
+            className="flex flex-col relative bg-gradient-to-r from-blue-500 to-blue-600  sm:mb-0 mb-12 md:mt-0 mt-3 sm:mt-16"
             style={{ height: "180px" }}
           >
             <div className="absolute object-fill bottom-0 top-28 right-5">
@@ -91,8 +92,9 @@ function ProfileData({ profile }) {
                       </div>
                     ) : (
                       <div className="ml-2 mt-2">
-                        <div className="px-5 py-1 bg-white  rounded-full text-[#0f1419] font-bold font-Vazirmatn"
-                        style={{border:"1px solid #d4d4d4"}}
+                        <div
+                          className="px-5 py-1 bg-white  rounded-full text-[#0f1419] font-bold font-Vazirmatn"
+                          style={{ border: "1px solid #d4d4d4" }}
                         >
                           <button
                             onClick={(e) => handleAddFollow(profile.username)}
@@ -155,20 +157,30 @@ function ProfileData({ profile }) {
                   </span>
                 </div>
               )}
-              <div className="flex flex-row">
-                <div className="text-center  text-slate-600 font-semibold">
-                  <span className="text-sm text-[#000]">
-                    {profile?.followercount}
+              <div className="flex flex-row pt-2">
+                <div className="text-center  text-slate-600 font-semibold md:hidden flex pl-2 ">
+                  <span className="mdtext-sm text-[#000] ">
+                    {profile?.postcount && numberToPersian(profile.postcount)}
                   </span>
-                  <span className="font-Vazirmatn text-xs text-slate-500 font-[500] pr-1">
+                  <span className="font-Vazirmatn mdtext-xs text-slate-500 font-[500] pr-1 ">
+                    پست
+                  </span>
+                </div>
+                <div className="text-center  text-slate-600 font-semibold">
+                  <span className="mdtext-sm text-[#000] font-Vazirmatn">
+                    {profile?.followercount &&
+                      numberToPersian(profile?.followercount)}
+                  </span>
+                  <span className="font-Vazirmatn mdtext-xs text-slate-500 font-[500] pr-1">
                     دنبال کنندگان
                   </span>
                 </div>
                 <div className="text-center mr-4 text-slate-600 font-semibold">
-                  <span className="text-sm text-[#000]">
-                    {profile?.followingcount}
+                  <span className="mdtext-sm text-[#000] font-Vazirmatn">
+                    {profile?.followingcount &&
+                      numberToPersian(profile?.followingcount)}
                   </span>
-                  <span className="font-Vazirmatn text-xs text-slate-500 font-[500] pr-1">
+                  <span className="font-Vazirmatn mdtext-xs text-slate-500 font-[500] pr-1">
                     دنبال شوندگان
                   </span>
                 </div>

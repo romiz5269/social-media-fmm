@@ -1,14 +1,14 @@
-import {UserAvatar} from 'components'
-import moment from 'moment'
-import React from 'react'
-import { AiOutlineDelete, AiOutlineWarning } from 'react-icons/ai';
-import LinesEllipsis from 'react-lines-ellipsis';
-import { Link, useLocation } from 'react-router-dom'
-import {BlogInteractions} from 'components';
-import { EditBlogModal } from 'components';
+import { UserAvatar } from "components";
+import moment from "moment";
+import React from "react";
+import { AiOutlineDelete, AiOutlineWarning } from "react-icons/ai";
+import LinesEllipsis from "react-lines-ellipsis";
+import { Link, useLocation } from "react-router-dom";
+import { BlogInteractions } from "components";
+import { EditBlogModal } from "components";
 
-function BlogsInfo({blog,owner,captionShow,handleRemoveBlog}) {
-    const location = useLocation();
+function BlogsInfo({ blog, owner, captionShow, handleRemoveBlog }) {
+  const location = useLocation();
   return (
     <>
       <div className="col-span-1 p-2 flex justify-center flex-row">
@@ -22,13 +22,13 @@ function BlogsInfo({blog,owner,captionShow,handleRemoveBlog}) {
         <div className="grid grid-cols-5 justify-between">
           <div className="col-span-4 flex flex-row mr-3 sm:mr-0 pt-1">
             <Link to={`/${blog.author?.username}`}>
-              <span className="font-semibold text-md">
+              <span className="font-semibold text-[20px] dark:text-white">
                 {blog.author?.username}
               </span>
             </Link>
 
             <span
-              className="text-slate-500 text-xs pr-3 sm:mr-0 mr-5 font-Vazirmatn"
+              className="text-slate-500 dark:text-slate-300 text-sm pr-3 sm:mr-0 mr-5 font-Vazirmatn"
               style={{ paddingTop: "5.5px" }}
             >
               {moment(blog?.created_date).fromNow()}
@@ -49,14 +49,14 @@ function BlogsInfo({blog,owner,captionShow,handleRemoveBlog}) {
                   </div>
                 </>
               )}
-            {blog?.author?.username !== owner && (
+            {/* {blog?.author?.username !== owner && (
               <div>
                 <div className="text-sm flex flex-row">
                   <span className="text-xs text-yellow-600">Report</span>
                   <AiOutlineWarning className="text-md mr-2 text-yellow-600" />
                 </div>
               </div>
-            )}
+            )} */}
           </div>
         </div>
         <Link to={`/thread/blog/${blog.id}`}>
@@ -70,7 +70,7 @@ function BlogsInfo({blog,owner,captionShow,handleRemoveBlog}) {
                 className="text-sm pt-3 dark:text-slate-300  text-slate-700 text-justify font-Vazirmatn  pr-3"
                 style={{ height: "auto", fontWeight: "300" }}
               >
-                {blog?.caption}
+                {blog?.content}
               </p>
             ) : (
               <LinesEllipsis
@@ -84,11 +84,15 @@ function BlogsInfo({blog,owner,captionShow,handleRemoveBlog}) {
             )}
           </div>
           <div className="py-2 pl-3">
-            <img src={blog.image} className="rounded-lg mt-1" />
+            <img
+              src={blog.image}
+              className="rounded-[10px] mt-1 border-2"
+              style={{ height: "275px", width: "100%" }}
+            />
           </div>
         </Link>
 
-        <div className="flex flex-row flex-wrap justify-start pb-2">
+        <div className="flex flex-row flex-wrap justify-around pt-2">
           <BlogInteractions blog={blog} owner={owner} />
         </div>
       </div>
@@ -96,4 +100,4 @@ function BlogsInfo({blog,owner,captionShow,handleRemoveBlog}) {
   );
 }
 
-export {BlogsInfo}
+export { BlogsInfo };

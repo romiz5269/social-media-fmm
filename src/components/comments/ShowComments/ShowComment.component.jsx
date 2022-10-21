@@ -8,13 +8,19 @@ import swal from "sweetalert";
 import { removeSingleComment } from "store/Reducers/Blogs/Blogs.Reducer";
 
 const ShowComment = React.forwardRef(({ comments, author }, ref) => {
-  console.log(comments)
+  console.log(comments);
   const [isOwner, setIsOwner] = useState(false);
   const dispatch = useDispatch();
   const owner = jwtDecode(localStorage.getItem("authToken"));
   useEffect(() => {
     dispatch(fetchOwnerProfile(owner.user_id));
   }, []);
+  console.log(owner)
+  console.log(
+    `owner:${owner}`,
+    `commenter:${comments?.commenter?.username}`,
+    `author:${author?.username}`
+  );
   const miniProfile = useSelector((state) => state.users.ownerUser);
   const handleRemoveComment = (id) => {
     console.log("clicked");
@@ -38,14 +44,15 @@ const ShowComment = React.forwardRef(({ comments, author }, ref) => {
   const commentBody = (
     <>
       {comments && (
-        <div className="grid grid-cols-6 pl-3 py-5">
-          <div className="col-span-1 p-2 flex justify-center flex-row">
+        <div className="grid grid-cols-6 py-4"
+        >
+          <div className="col-span-1  flex justify-center flex-row">
             <div>
               <Link to="/user/mohammadreza">
                 <img
                   src={comments.commenter?.media?.image}
                   className="rounded-full"
-                  style={{ width: "60px", height: "60px" }}
+                  style={{ width: "70px", height: "70px" }}
                 />
               </Link>
             </div>
@@ -73,7 +80,7 @@ const ShowComment = React.forwardRef(({ comments, author }, ref) => {
             <div className="pt-2 flex flex-row justify-end pl-8">
               <FaReply className="text-slate-400 text-sm hover:text-slate-800 hover:cursor-pointer" />
               {author.username === comments.commenter?.username ||
-              owner.username === comments.commenter?.username ? (
+              owner.name === comments.commenter?.username ? (
                 <FaTrash
                   onClick={(e) => handleRemoveComment(comments?.id)}
                   className="text-slate-400 text-sm mr-5 hover:text-red-600 hover:cursor-pointer"

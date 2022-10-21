@@ -23,13 +23,15 @@ function SingleBlog({ blogs, captionShow, handleRemoveBlog }) {
             <div
               key={blog.id}
               className="flex flex-col pb-3 sm:pt-2"
-              style={{
-                borderTop: "1px solid #e7e7e7",
-                borderBottom: "1px solid #e7e7e7",
-              }}
+           
             >
               <div className="grid grid-cols-6">
-                <BlogsInfo blog={blog} captionShow={captionShow} owner={owner.user_id} handleRemoveBlog={handleRemoveBlog} />
+                <BlogsInfo
+                  blog={blog}
+                  captionShow={captionShow}
+                  owner={owner.user_id}
+                  handleRemoveBlog={handleRemoveBlog}
+                />
               </div>
             </div>
           ))}

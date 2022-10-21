@@ -28,25 +28,18 @@ function AddComment({ id, commenter }) {
   };
 
   return (
-    <div className="mx-auto flex flex-col justify-between py-2 ">
+    <div className="mx-auto flex flex-col justify-between pt-1 "
+    style={{borderTop:'2px solid #f6f6f6'}}
+    >
       <div className="grid grid-cols-6">
-        <div className="col-span-1 p-2 flex justify-center flex-row">
-          <div>
-            <img
-              src="#"
-              className="rounded-full"
-              style={{ width: "45px", height: "45px" }}
-            />
-          </div>
+        <div className="col-span-1 flex justify-center items-start pt-4 flex-row ">
+          <img
+            src="#"
+            className="rounded-full"  
+            style={{ width: "70px", height: "70px" }}
+          />
         </div>
         <div className="col-span-5 flex flex-col justify-evenly">
-          <div className="grid grid-cols-5 justify-between">
-            <div className="col-span-4 flex flex-row">
-              <Link to="/user/mohammadreza">
-                <span>MohammadReza</span>
-              </Link>
-            </div>
-          </div>
           <form
             className="w-full mx-auto flex flex-col justify-between pl-5 mt-3"
             onSubmit={handleAddComment}
@@ -55,7 +48,7 @@ function AddComment({ id, commenter }) {
               <textarea
                 className="w-full border-2 border-slate-100 px-3 pt-3 text-sm font-Vazirmatn "
                 cols="70"
-                rows="10"
+                rows="3"
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
                 placeholder=" دیدگاه خود را بنویسید ..."
@@ -64,16 +57,16 @@ function AddComment({ id, commenter }) {
             </div>
             <div className="mx-auto flex flex-row justify-start w-full">
               <div>
-                <button className="bg-blue-500  hover:bg-green-500 ml-2 transition px-5 py-2 mt-5 font-Vazirmatn text-white text-sm rounded-lg shadow-md">
+                <button className="bg-blue-500  hover:bg-green-500 ml-2 transition px-5 py-2 mt-2 mb-3 font-Vazirmatn text-white text-sm rounded-lg ">
                   ثبت نظر
                 </button>
               </div>
               <div>
                 <button
                   onClick={(e) => setBody("")}
-                  className="bg-red-500 hover:bg-slate-500 transition px-5 py-2 mt-5 font-Vazirmatn text-white text-sm rounded-lg shadow-md"
+                  className="bg-red-500 hover:bg-slate-500 transition px-5 py-2 mt-2 mb-3 font-Vazirmatn text-white text-sm rounded-lg "
                 >
-                  انصراف
+                  پاک کردن
                 </button>
               </div>
             </div>

@@ -36,123 +36,133 @@ function MenuBar() {
     });
   };
   return (
-    <div className="sm:flex sm:flex-col flex flex-row sm:justify-center justify-between w-[100%] sm:pr-3 sm:pt-5 ">
-      <Link to="/home">
-        <div className="flex flex-row sm:hover:text-slate-800 sm:pb-6 pb-4 sm:pl-4 sm:pr-0 sm:pt-0 pt-4 text-slate-500  opacity-80 sm:opacity-100">
-          {window.innerWidth > 1024 ? (
-            <BiHomeCircle className="ml-5 sm:mb-1 mt-1 text-[26px] dark:text-white text-[#282c30]" />
-          ) : (
+    <div className="md:flex md:flex-col flex flex-row md:justify-center justify-around py-3  w-[100%] md:pr-3 md:pt-5">
+      <div className="flex flex-row md:hover:text-slate-800 md:pb-8  md:pl-4 md:pr-0 md:pt-0  text-slate-500  opacity-80 md:opacity-100">
+        {window.innerWidth > 1024 ? (
+          <Link to="/home">
+            <BiHomeCircle className="ml-5 md:mb-1 mt-1 text-3xl dark:text-white text-[#282c30]" />
+          </Link>
+        ) : (
+          <Link to="/home">
             <BiHomeCircle
               className=" dark:text-white text-[#0F1419]"
               style={{ fontSize: "30px" }}
             />
-          )}
-          <span
-            className="text-[20px] font-[550] pt-1 lg:block hidden sm:hidden dark:text-white text-[#0F1419]"
-            style={{ fontFamily: "Vazirmatn" }}
-          >
-            صفحه اصلی
-          </span>
-        </div>
-      </Link>
+          </Link>
+        )}
+        <span
+          className="text-[20px] font-[550] pt-1 lg:block hidden md:hidden dark:text-white text-[#0F1419]"
+          style={{ fontFamily: "Vazirmatn" }}
+        >
+          <Link to="/home">صفحه اصلی</Link>
+        </span>
+      </div>
 
-      <Link to="/explore">
-        <div className="flex sm:hover:text-slate-800 flex-row sm:pb-6 pb-4 sm:pl-4 sm:pr-0 sm:pt-0 pt-4 text-slate-500 opacity-80 sm:opacity-100">
-          {window.innerWidth > 1024 ? (
-            <BiHash className="ml-5 mb-1 mt-1 text-[26px] dark:text-white text-[#282c30]" />
-          ) : (
+      <div className="flex md:hover:text-slate-800 flex-row md:pb-8 md:pl-4 md:pr-0 md:pt-0  text-slate-500 opacity-80 md:opacity-100">
+        {window.innerWidth > 1024 ? (
+          <Link to="/explore">
+            <BiHash className="ml-5 mb-1 mt-1 text-3xl dark:text-white text-[#282c30]" />
+          </Link>
+        ) : (
+          <Link to="/explore">
             <BiHash
-              className="ml-5 mb-1 dark:text-white text-[#0F1419]"
+              className=" dark:text-white text-[#0F1419]"
               style={{ fontSize: "30px" }}
             />
-          )}
-          <span
-            className="text-[20px] font-[500] pt-1 lg:block hidden sm:hidden dark:text-white text-[#0F1419]"
-            style={{ fontFamily: "Vazirmatn" }}
-          >
-            گشت و گذار
-          </span>
-        </div>
-      </Link>
+          </Link>
+        )}
+        <span
+          className="text-[20px] font-[500] pt-1 lg:block hidden md:hidden dark:text-white text-[#0F1419]"
+          style={{ fontFamily: "Vazirmatn" }}
+        >
+          <Link to="/explore">گشت و گذار</Link>
+        </span>
+      </div>
 
-      <Link to="/blogs">
-        <div className="flex flex-row sm:hover:text-slate-800 sm:pb-6 pb-4 sm:pl-4 sm:pr-0 sm:pt-0 pt-4 text-slate-500 opacity-80 sm:opacity-100">
-          {window.innerWidth > 1024 ? (
-            <BiListUl className="ml-5 mb-1 mt-1 text-[26px] dark:text-white text-[#282c30]" />
-          ) : (
+      <div className="flex flex-row md:hover:text-slate-800 md:pb-8 md:pl-4 md:pr-0 md:pt-0  text-slate-500 opacity-80 md:opacity-100">
+        {window.innerWidth > 1024 ? (
+          <Link to="/blogs">
+            <BiListUl className="ml-5 mb-1 mt-1 text-3xl dark:text-white text-[#282c30]" />
+          </Link>
+        ) : (
+          <Link to="/blogs">
             <BiListUl
-              className="ml-5 mb-1 dark:text-white text-[#0F1419]"
+              className=" dark:text-white text-[#0F1419]"
               style={{ fontSize: "30px" }}
             />
-          )}
-          <span
-            className="text-[20px] font-[500] pt-1 lg:block hidden sm:hidden dark:text-white text-[#0F1419]"
-            style={{ fontFamily: "Vazirmatn" }}
-          >
-            بلاگ ها
-          </span>
-        </div>
-      </Link>
+          </Link>
+        )}
+        <span
+          className="text-[20px] font-[500] pt-1 lg:block hidden md:hidden dark:text-white text-[#0F1419]"
+          style={{ fontFamily: "Vazirmatn" }}
+        >
+          <Link to="/blogs">بلاگ ها</Link>
+        </span>
+      </div>
 
-      <Link to="/products">
-        <div className="flex flex-row  sm:hover:text-slate-800 sm:pb-6 pb-4 sm:pl-4 sm:pr-0 sm:pt-0 pt-4 text-slate-500 opacity-80 sm:opacity-100">
-          {window.innerWidth > 1024 ? (
-            <BiCartAlt className="ml-5 mb-1 mt-1 text-[26px] dark:text-white text-[#282c30]" />
-          ) : (
+      <div className="flex flex-row  md:hover:text-slate-800 md:pb-8  md:pl-4 md:pr-0 md:pt-0  text-slate-500 opacity-80 md:opacity-100">
+        {window.innerWidth > 1024 ? (
+          <Link to="/products">
+            <BiCartAlt className="ml-5 mb-1 mt-1 text-3xl dark:text-white text-[#282c30]" />
+          </Link>
+        ) : (
+          <Link to="/products">
             <BiCartAlt
-              className="ml-5 mb-1 dark:text-white text-[#0F1419]"
+              className=" dark:text-white text-[#0F1419]"
               style={{ fontSize: "30px" }}
             />
-          )}
-          <span
-            className="text-[20px] font-[500] pt-1 lg:block hidden sm:hidden dark:text-white text-[#0F1419]"
-            style={{ fontFamily: "Vazirmatn" }}
-          >
-            محصولات
-          </span>
-        </div>
-      </Link>
-      <Link to="/profile">
-        <div className="sm:flex flex-row sm:hover:text-slate-800 sm:pb-6 pb-4 sm:pl-4 sm:pr-0 sm:pt-0 pt-4 text-slate-500  hidden opacity-80 sm:opacity-100">
-          {window.innerWidth > 1024 ? (
-            <BiUser className="ml-5 mb-1 mt-1 text-[26px] dark:text-white text-[#282c30]" />
-          ) : (
+          </Link>
+        )}
+        <span
+          className="text-[20px] font-[500] pt-1 lg:block hidden md:hidden dark:text-white text-[#0F1419]"
+          style={{ fontFamily: "Vazirmatn" }}
+        >
+          <Link to="/products">محصولات</Link>
+        </span>
+      </div>
+      <div className="flex flex-row md:hover:text-slate-800 md:pb-8 md:pl-4 md:pr-0 md:pt-0  text-slate-500 opacity-80 md:opacity-100">
+        {window.innerWidth > 1024 ? (
+          <Link to="/profile">
+            <BiUser className="ml-5 mb-1 mt-1 text-3xl dark:text-white text-[#282c30]" />
+          </Link>
+        ) : (
+          <Link to="/profile">
             <BiUser
-              className="ml-5 mb-1 dark:text-white text-[#0F1419]"
+              className=" dark:text-white text-[#0F1419]"
               style={{ fontSize: "30px" }}
             />
-          )}
-          <span
-            className="text-[20px] font-[500] pt-1 lg:block hidden sm:hidden dark:text-white text-[#0F1419]"
-            style={{ fontFamily: "Vazirmatn" }}
-          >
-            پروفایل
-          </span>
-        </div>
-      </Link>
+          </Link>
+        )}
+        <span
+          className="text-[20px] font-[500] pt-1 lg:block hidden md:hidden dark:text-white text-[#0F1419]"
+          style={{ fontFamily: "Vazirmatn" }}
+        >
+          <Link to="/profile">پروفایل</Link>
+        </span>
+      </div>
 
-      <Link to="/settings">
-        <div className="sm:flex flex-row sm:hover:text-slate-800 sm:pb-6 pb-4 sm:pl-4 sm:pr-0 sm:pt-0 pt-4 text-slate-500  hidden opacity-80 sm:opacity-100">
-          {window.innerWidth > 1024 ? (
-            <BiCog className="ml-5 mb-1 mt-1 text-[26px] dark:text-white text-[#282c30]" />
-          ) : (
-            <BiCog
-              className="ml-5 mb-2 dark:text-white text-[#0F1419]"
-              style={{ fontSize: "30px" }}
-            />
-          )}
-          <span
-            className="text-[20px] font-[500] pt-1 lg:block hidden sm:hidden dark:text-white text-[#0F1419]"
-            style={{ fontFamily: "Vazirmatn" }}
-          >
-            تنظیمات
-          </span>
-        </div>
-      </Link>
-      <div className="sm:flex flex-row sm:hover:text-slate-800 sm:pb-6 pb-4 sm:pl-4 sm:pr-0 sm:pt-0 pt-4 text-slate-500  hidden opacity-80 sm:opacity-100">
+      <div className="md:flex flex-row md:hover:text-slate-800 md:pb-8 md:pl-4 md:pr-0 md:pt-0  text-slate-500  hidden opacity-80 md:opacity-100">
+        {window.innerWidth > 1024 ? (
+          <Link to="/settings">
+            <BiCog className="ml-5 mb-1 mt-1 text-3xl dark:text-white text-[#282c30]" />
+          </Link>
+        ) : (
+          <BiCog
+            className=" dark:text-white text-[#0F1419]"
+            style={{ fontSize: "30px" }}
+          />
+        )}
+        <span
+          className="text-[20px] font-[500] pt-1 lg:block hidden md:hidden dark:text-white text-[#0F1419]"
+          style={{ fontFamily: "Vazirmatn" }}
+        >
+          <Link to="/settings">تنظیمات</Link>
+        </span>
+      </div>
+      <div className="md:flex flex-row md:hover:text-slate-800 md:pb-8 md:pl-4 md:pr-0 md:pt-0  text-slate-500  hidden opacity-80 md:opacity-100">
         {window.innerWidth > 1024 ? (
           <button onClick={handleLogout}>
-            <BiLogOutCircle className="ml-5 mb-1 mt-1  text-[26px] dark:text-white text-red-600" />
+            <BiLogOutCircle className="ml-5 mb-1 mt-1  text-3xl dark:text-white text-red-600" />
           </button>
         ) : (
           <button onClick={handleLogout}>
@@ -164,7 +174,7 @@ function MenuBar() {
         )}
         <span
           onClick={handleLogout}
-          className="text-[18px] font-semibold pt-1 lg:block hidden sm:hidden dark:text-white text-red-600 hover:cursor-pointer"
+          className="text-[18px] font-semibold pt-1 lg:block hidden md:hidden dark:text-white text-red-600 hover:cursor-pointer"
           style={{ fontFamily: "Vazirmatn" }}
         >
           خروج از حساب
