@@ -83,14 +83,14 @@ export const UsersSlice = createSlice({
     },
     [UserLogin.rejected]: (state, action) => {
       if (action.error.message === "401") {
-        state.AuthError = "Unauthorized";
+        state.AuthError =
+          "کاربر یافت نشد - رمز عبور و یا نام کاربری اشتباه است";
       } else if (action.error.message === "403") {
         state.AuthError = "Request Incorrect";
       } else if (action.error.message === "404") {
-        console.log("404");
         state.AuthError = "Incorrect username or password";
       } else {
-        state.AuthError = "No Server Response";
+        state.AuthError = "سرور پاسخگو نیست";
       }
     },
     [UserLogout.fulfilled]: (state, action) => {
@@ -124,9 +124,12 @@ export const UsersSlice = createSlice({
     },
     [createNewFollow.fulfilled]: (state, action) => {
       state.hasFollowThreadUser = true;
+      state.ownerUser.followercount += 1;
     },
     [removeFollow.fulfilled]: (state, action) => {
       state.hasFollowThreadUser = false;
+      state.ownerUser.followercount -= 1;
+
       clearProfileBlogs();
     },
   },

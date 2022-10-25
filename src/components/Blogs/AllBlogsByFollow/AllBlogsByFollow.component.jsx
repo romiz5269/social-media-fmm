@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllBlogsByFollow,
@@ -7,6 +7,9 @@ import {
 } from "store/Reducers/Blogs/Blogs.Reducer";
 import { AiOutlineFileSearch } from "react-icons/ai";
 import { PostList } from "components";
+import { IoReloadOutline } from "react-icons/io5";
+import { BlogLoader } from "components";
+// const {PostListLazy} = React.lazy(() => import("components"));
 
 function AllBlogsByFollow() {
   const dispatch = useDispatch();
@@ -18,7 +21,6 @@ function AllBlogsByFollow() {
   const fetchError = useSelector((state) => state.blogs.fetchError);
 
   useEffect(() => {
-    dispatch(setIsLoading(false));
     dispatch(setFetchError({}));
     const controller = new AbortController();
     const { signal } = controller;
@@ -31,9 +33,7 @@ function AllBlogsByFollow() {
   const intObserver = useRef();
   const lastBlogRef = useCallback(
     (blog) => {
-      if (isLoading) return;
       if (intObserver.current) intObserver.current.disconnect();
-
       intObserver.current = new IntersectionObserver((blogs) => {
         console.log(blogs);
         if (blogs[0].isIntersecting) {
@@ -48,19 +48,29 @@ function AllBlogsByFollow() {
   const blogs = useSelector((state) => state.blogs.followingBlogs);
 
   if (isError) return <p>Error : {fetchError}</p>;
-  if (!blogs?.length)
+  if (isLoading) {
+    return (
+      <div className="w-full flex flex-row justify-center items-center pb-2 pt-4">
+        <BlogLoader />
+      </div>
+    );
+  }
+
+  if (!blogs?.length) {
     return (
       <div className="pt-10 text-2xl text-center flex flex-col justify-center">
         <AiOutlineFileSearch
           className="text-slate-500 mx-auto mb-5"
           style={{ fontSize: "70px" }}
         />
-        <span className="text-slate-500">
-          There is no blog to display , You Should follow some people to watch
-          their posts
-        </span>
+        <div className="text-slate-500 flex flex-row justify-center">
+          <span>مشکلی رخ داده است</span>
+          <IoReloadOutline className="text-blue-600 mr-2 hover:cursor-pointer" />
+        </div>
       </div>
     );
+  }
+
   const content = blogs?.map((blog, i) => {
     if (blogs?.length === i + 1) {
       return <PostList ref={lastBlogRef} key={blog.id} blogs={blog} />;

@@ -124,12 +124,8 @@ function AppRoute() {
           />
           <Route
             path={PATH.VERIFY}
-            element={
-              <PrivateRoute
-                Component={() => <Page.VerifyConfirmationPage />}
-                hasLayout={false}
-              />
-            }
+            element={<Page.VerifyConfirmationPage />}
+            hasLayout={false}
           />
           <Route
             path={PATH.LOGIN}

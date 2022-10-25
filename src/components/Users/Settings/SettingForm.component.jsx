@@ -120,6 +120,8 @@ const SettingForm = ({ profile }) => {
       setWhatsChanged(null);
     }
   }, [darkTheme, themeColor]);
+
+  
   const handleSaveChanges = (e, changedName) => {
     if (changedName === "profile") {
       dispatch(

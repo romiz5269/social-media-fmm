@@ -23,8 +23,8 @@ export const fetchAllBlogs = createAsyncThunk(
 );
 export const fetchAllBlogsByAuthor = createAsyncThunk(
   "blogs/fetchAllBlogsByAuthor",
-  async (username) => {
-    return await getAllBlogsByAuthor(username);
+  async (config) => {
+    return await getAllBlogsByAuthor(config);
   }
 );
 export const fetchSingleBlogById = createAsyncThunk(
@@ -85,7 +85,7 @@ export const BlogsSlice = createSlice({
     singleLike: [],
     postingStatus: false,
     isUserLiked: false,
-    isLoading: false,
+    isLoading: true,
     isError: false,
     fetchError: {},
     hasNextPage: false,
@@ -102,7 +102,7 @@ export const BlogsSlice = createSlice({
     insertNewComment: (state, action) => {
       addNewComment(action.payload);
       // state.singleBlog[0].comments.unshift(action.payload);
-      
+
       state.comments.unshift(action.payload);
     },
     createALike: (state, action) => {
@@ -135,7 +135,6 @@ export const BlogsSlice = createSlice({
     },
     clearProfileBlogs: (state) => {
       state.profileBlogs = [];
-      console.log("clear ran");
     },
     EditSingleBlog: (state, action) => {
       updateSingleBlog(action.payload);
@@ -157,7 +156,7 @@ export const BlogsSlice = createSlice({
       state.fetchError = { message: action.payload.message };
     },
     [addNewBlog.fulfilled]: (state, action) => {
-      state.status = "Post Created Successfully";
+      state.status = "پست با موفقیت منتشر شد";
       state.blogs.unshift(action.payload);
       state.profileBlogs.unshift(action.payload);
       state.postingStatus = false;
@@ -183,7 +182,7 @@ export const BlogsSlice = createSlice({
     },
     [fetchAllBlogsByAuthor.fulfilled]: (state, action) => {
       state.profileBlogs.push(...action.payload);
-      
+
       setHasNextPage(Boolean(action.payload.length));
       setIsLoading(false);
     },
@@ -193,12 +192,17 @@ export const BlogsSlice = createSlice({
       } else {
         state.followingBlogs.push(...action.payload);
         setHasNextPage(Boolean(action.payload.length));
-        setIsLoading(false);
+        state.isLoading = false;  
       }
       state.comments = [];
     },
     [fetchALLExplorePosts.fulfilled]: (state, action) => {
-      state.explorePosts = action.payload;
+      if (action.payload === undefined) {
+        state.explorePosts = [];
+      } else {
+        state.explorePosts.push(...action.payload);
+        setHasNextPage(Boolean(action.payload.length));
+      }
       state.comments = [];
     },
     [fetchAllCommentsOfPost.fulfilled]: (state, action) => {
@@ -211,18 +215,6 @@ export const BlogsSlice = createSlice({
         setIsLoading(false);
       }
     },
-    // [fetchAllBlogsByFollow.fulfilled]: (state, action) => {
-    //   if (action.payload === undefined) {
-    //     state.followingBlogs = [];
-    //   } else {
-    //     state.followingBlogs.push(...action.payload);
-    //     setHasNextPage(Boolean(action.payload.length));
-    //     setIsLoading(false);
-    //   }
-    // },
-    // [fetchALLExplorePosts.fulfilled]: (state, action) => {
-    //   state.explorePosts = action.payload;
-    // },
   },
 });
 export const {

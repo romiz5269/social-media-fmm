@@ -25,7 +25,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box >
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -72,10 +72,8 @@ function ShowUsersProfile() {
     <div>
       <ProfileData
         profile={profile}
-        // hasFollowButton={true}
-        // hasEditButton={false}
       />
-      <div className="mt-5 flex flex-row justify-center sm:mb-0 mb-10">
+      <div className="mt-5 flex flex-row justify-between  sm:mb-0 mb-10">
         <Box sx={{ width: "100%" }}>
           <Box
             sx={{ borderBottom: 1, borderColor: "divider", width: "100%" }}
@@ -142,12 +140,12 @@ function ShowUsersProfile() {
               />
             </Tabs>
           </Box>
-          <TabPanel value={value} index={0} className="min-h-[300px]">
+          <TabPanel value={value} index={0}>
             {hasFollow ? (
-              <AllOwnerBlogs  />
+              <AllOwnerBlogs />
             ) : (
               <div className="flex flex-col justify-center items-center">
-                <BiLock className="text-9xl  text-slate-400 w-[60px] h-[60px]" />
+                <BiLock className="text-9xl  text-slate-400 w-[60px] h-[60px] mt-4" />
                 <span className="text-slate-500 py-8 text-lg">
                   You can't see posts of this page , you should follow this
                 </span>

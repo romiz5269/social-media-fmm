@@ -17,9 +17,9 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "10px",
-  padding: "8px",
-  overflowY: "scroll",
-  height: "400px",
+  padding: "20px 10px",
+  overflowY: "auto",
+  height: "530px",
 };
 function EditBlogModal({ postid }) {
   console.log(postid)
@@ -51,7 +51,7 @@ function EditBlogModal({ postid }) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="w-5/6 sm:w-2/5">
+        <Box sx={style} className="w-5/6 sm:w-[450px]">
           <div className="flex flex-col mx-auto justify-center items-center">
             {targetBlog && <EditBlogForm blog={targetBlog} />}
           </div>

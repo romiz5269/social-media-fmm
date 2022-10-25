@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { createALike } from "store/Reducers/Blogs/Blogs.Reducer";
+import numberToPersian from "utils/toPersianNumbers/toPersianNumbers";
 // import { createALike, removeLike } from "store/Reducers/Blogs/Blogs.Reducer";
 
 function LikeComponent({ blogid, isLiked, LikeCount }) {
@@ -28,7 +29,9 @@ function LikeComponent({ blogid, isLiked, LikeCount }) {
           style={{ color: "#ce1126", opacity: 1 }}
           onClick={(e) => handleRemoveLike(blogid)}
         />
-        <span className="text-xs pr-2 dark:text-white">{likesCount}</span>
+        <span className="text-xs pr-2 dark:text-white font-Vazirmatn">
+          {likesCount && numberToPersian(likesCount)}
+        </span>
       </div>
     );
   } else {
@@ -38,7 +41,9 @@ function LikeComponent({ blogid, isLiked, LikeCount }) {
           className=" hover:cursor-pointer text-xl dark:text-white text-[#8e9ba2]"
           onClick={(e) => handleAddLike(blogid)}
         />
-        <span className="text-xs pr-2 dark:text-white">{likesCount}</span>
+        <span className="text-xs pr-2 dark:text-white font-Vazirmatn">
+          {likesCount && numberToPersian(likesCount)}
+        </span>
       </div>
     );
   }

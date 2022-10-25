@@ -17,7 +17,6 @@ import { PostList } from "../PostList/PostList.component";
 function AllOwnerBlogs({ routeName }) {
   const dispatch = useDispatch();
 
-  const username = "";
   const ownerName = jwtDecode(localStorage.getItem("authToken")).name;
   const { name } = useParams();
 
@@ -73,7 +72,6 @@ function AllOwnerBlogs({ routeName }) {
       intObserver.current = new IntersectionObserver((blogs) => {
         console.log(blogs);
         if (blogs[0].isIntersecting) {
-          console.log("we near last node");
           setPageNum((prev) => prev + 1);
         }
       });
@@ -96,7 +94,6 @@ function AllOwnerBlogs({ routeName }) {
       </div>
     );
   const content = blogs?.map((blog, i) => {
-    console.log("blog", blog);
     if (blogs?.length === i + 1) {
       return (
         <PostList
@@ -128,17 +125,7 @@ function AllOwnerBlogs({ routeName }) {
           <span className="text-slate-500">There is no blog to display</span>
         </div>
       )}
-      {/* {blogs.length > 0 ? (
-        <SingleBlog blogs={blogs} handleRemoveBlog={handleRemoveBlog} />
-      ) : (
-        <div className="pt-10 text-2xl text-center flex flex-col justify-center">
-          <AiOutlineFileSearch
-            className="text-slate-500 mx-auto mb-5"
-            style={{ fontSize: "70px" }}
-          />
-          <span className="text-slate-500">There is no blog to display</span>
-        </div>
-      )} */}
+      
     </>
   );
 }

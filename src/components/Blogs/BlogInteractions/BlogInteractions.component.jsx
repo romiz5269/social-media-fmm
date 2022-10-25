@@ -4,15 +4,17 @@ import { AiOutlineComment, AiOutlineRetweet } from "react-icons/ai";
 import { BiShare, BiShareAlt } from "react-icons/bi";
 import { FaRegComments, FaRetweet } from "react-icons/fa";
 import { GoComment, GoCommentDiscussion } from "react-icons/go";
+import numberToPersian from "utils/toPersianNumbers/toPersianNumbers";
 function BlogInteractions({ blog, owner }) {
-  console.log('owner :::=>',blog.user_likes)
+  console.log("owner :::=>", blog.user_likes);
   return (
     <>
       <div className="flex flex-row justify-start ml-8">
         <div className="flex flex-row dark:hover:bg-black hover:bg-slate-200 rounded-full  px-2 py-1 hover:cursor-pointer">
           <GoComment className="ml-1 text-xl dark:text-white text-[#8e9ba2] hover:text-green-600" />
-          <span className="text-xs pr-2 dark:text-white">
-            {blog?.comment ? blog?.comment?.length : blog?.comments_count}
+          <span className="text-xs pr-2 dark:text-white font-Vazirmatn">
+            {blog?.comment?.length >= 0 &&
+              numberToPersian(blog?.comment?.length)}
           </span>
         </div>
       </div>

@@ -15,12 +15,7 @@ const ShowComment = React.forwardRef(({ comments, author }, ref) => {
   useEffect(() => {
     dispatch(fetchOwnerProfile(owner.user_id));
   }, []);
-  console.log(owner)
-  console.log(
-    `owner:${owner}`,
-    `commenter:${comments?.commenter?.username}`,
-    `author:${author?.username}`
-  );
+
   const miniProfile = useSelector((state) => state.users.ownerUser);
   const handleRemoveComment = (id) => {
     console.log("clicked");

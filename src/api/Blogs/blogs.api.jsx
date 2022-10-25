@@ -73,7 +73,7 @@ export async function createNewBlog(data) {
       .post(URL.CREATEBLOG, data, {
         headers: { "Content-Type": "multipart/form-data" },
       })
-      .then((res) => resolve(res.status))
+      .then((res) => resolve(res.data))
       .catch((err) => reject(err.response?.status));
   });
 }
@@ -140,18 +140,12 @@ export async function deleteComment(data) {
 }
 
 export async function updateSingleBlog(data) {
+  console.log(data);
   return new Promise((resolve, reject) => {
     axiosPrivate
-      .patch(
-        `${URL.EDITBLOG}/${data.id}/`,
-        {
-          content: data.content,
-          title: data.title,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      )
+      .patch(`${URL.EDITBLOG}/${data.id}/`, data.formDataBody, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
       .then((res) => resolve(res.data))
       .catch((err) => reject(err.response?.status));
   });

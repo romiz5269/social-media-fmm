@@ -3,14 +3,17 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+import { http } from "services/Http/axios";
 
 function VerifyConfirmationPage() {
   let [searchParams, setSearchParams] = useSearchParams();
-  const code = searchParams.get("code");
-
+  const code = searchParams.get("cod");
+  const email = searchParams.get("email")
+  console.log(code)
   useEffect(() => {
-    document.body.dir = "ltr";
-  }, []);
+    const response =http.patch(`/account/register/verifycod/?${email}&${code}`).then(res=>console.log(res));
+
+  }, [code]);
   const [loading, setLoading] = useState(false);
   const [inp1Value, setInp1Value] = useState("");
   const [inp2Value, setInp2Value] = useState("");
@@ -43,7 +46,7 @@ function VerifyConfirmationPage() {
 
   return (
     <div className="min-w-screen min-h-screen flex flex-col justify-center items-center">
-      <p>Code is: {searchParams.get("code")}</p>
+      <p>Code is: {searchParams.get("cod")}</p>
 
       {loading ? (
         <div>loading ... </div>
