@@ -6,6 +6,6 @@ export default configureStore({
   reducer: {
     users: UsersReducer,
     blogs: BlogsReducer,
-    comment: CommentsReducer,
+    comments: CommentsReducer,
   },
 });

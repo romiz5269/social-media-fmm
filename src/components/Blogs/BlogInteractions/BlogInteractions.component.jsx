@@ -1,12 +1,11 @@
 import { LikeComponent } from "components/Likes/LikeComponent.component";
 import React from "react";
-import { AiOutlineComment, AiOutlineRetweet } from "react-icons/ai";
-import { BiShare, BiShareAlt } from "react-icons/bi";
-import { FaRegComments, FaRetweet } from "react-icons/fa";
+import { BiShareAlt } from "react-icons/bi";
 import { GoComment, GoCommentDiscussion } from "react-icons/go";
 import numberToPersian from "utils/toPersianNumbers/toPersianNumbers";
+
+
 function BlogInteractions({ blog, owner }) {
-  console.log("owner :::=>", blog.user_likes);
   return (
     <>
       <div className="flex flex-row justify-start ml-8">
@@ -18,7 +17,7 @@ function BlogInteractions({ blog, owner }) {
           </span>
         </div>
       </div>
-      <div className="flex flex-row justify-start  ml-12">
+      <div className="flex flex-row justify-start  ml-8">
         {blog?.youliked ? (
           <LikeComponent
             blogid={blog.id}
@@ -33,8 +32,8 @@ function BlogInteractions({ blog, owner }) {
           />
         )}
       </div>
-      <div className="flex flex-row justify-start  ml-8">
-        <GoCommentDiscussion className=" dark:text-white text-xl text-[#8e9ba2]" />
+      <div className="flex flex-row justify-start  ml-8 sm:px-2 sm:py-1">
+        <GoCommentDiscussion className="dark:text-white text-xl text-[#8e9ba2]" />
         <span className="text-xs pr-2 dark:text-white"></span>
       </div>
       <div className="flex flex-row justify-start dark:text-white">

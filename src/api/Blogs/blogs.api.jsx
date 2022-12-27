@@ -28,7 +28,7 @@ export async function getAllBlogsByAuthor(config) {
       .then((res) => resolve(res.data.results))
       .catch((err) => {
         if (config.options.signal.aborted) return;
-        reject(err.response?.status);
+        reject(err?.response?.status);
       });
   });
 }
@@ -100,7 +100,7 @@ export async function deleteLike(postid) {
 }
 
 export async function getAllComments(config) {
-  console.log(config);
+  console.log(config)
   return new Promise((resolve, reject) => {
     axiosPrivate
       .get(
@@ -109,8 +109,8 @@ export async function getAllComments(config) {
           signal: config.options.signal,
         }
       )
-      .then((res) => resolve(res.data.results))
-      .catch((err) => reject(err));
+      .then((res) => resolve(res?.data?.results))
+      .catch((err) => reject(err?.response?.status));
   });
 }
 
@@ -126,7 +126,7 @@ export async function addNewComment(data) {
           headers: { "Content-Type": "application/json" },
         }
       )
-      .then((res) => console.log("Successfully"))
+      .then((res) => resolve(res?.data))
       .catch((err) => reject(err.message));
   });
 }

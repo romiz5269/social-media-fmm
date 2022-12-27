@@ -1,27 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
 import jwtDecode from "jwt-decode";
 import { SettingForm } from "components";
-import { axiosPrivate } from "services/Private/axiosPrivate";
-import { URL } from "config/Urls/Urls.config";
 
 function Settings() {
   const dispatch = useDispatch();
   const owner = jwtDecode(localStorage.getItem("authToken")).name;
-  const [profile, setProfile] = useState(null);
   useEffect(() => {
-    try {
-      axiosPrivate
-        .get(`${URL.GETPROFILE}/${owner}`)
-        .then((res) => setProfile(res.data));
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(fetchOwnerProfile(owner));
+   
   }, [owner]);
-
-  return <>{profile && <SettingForm profile={profile} />}</>;
+  const profile = useSelector((state) => state.users.ownerUser);
+  console.log("profile before : ", profile);
+  return (
+    <>{Object.keys(profile).length > 0 && <SettingForm profile={profile} />}</>
+  );
 }
 
 export { Settings };

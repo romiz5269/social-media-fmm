@@ -5,16 +5,16 @@ import { useParams } from "react-router-dom";
 import {
   fetchAllBlogsByAuthor,
   removeOwnerBlog,
-  removeSingleBlog,
   setFetchError,
   setIsLoading,
 } from "store/Reducers/Blogs/Blogs.Reducer";
-import { SingleBlog } from "../SingleBlog/SingleBlog";
-import { AiOutlineFileSearch } from "react-icons/ai";
+
 import swal from "sweetalert";
 import { PostList } from "../PostList/PostList.component";
+import { BlogLoader } from "components/Loading/BlogLoader/BlogLoader";
+import { BiMessageSquareError } from "react-icons/bi";
 
-function AllOwnerBlogs({ routeName }) {
+function AllOwnerBlogs() {
   const dispatch = useDispatch();
 
   const ownerName = jwtDecode(localStorage.getItem("authToken")).name;
@@ -37,96 +37,92 @@ function AllOwnerBlogs({ routeName }) {
       }
     });
   };
-  const [pageNum, setPageNum] = useState(1);
+   const [pageNum, setPageNum] = useState(1);
 
-  console.log(ownerName === name);
-  const isLoading = useSelector((state) => state.blogs.isLoading);
-  const isError = useSelector((state) => state.blogs.isError);
-  const hasNextPage = useSelector((state) => state.blogs.hasNextPage);
-  const fetchError = useSelector((state) => state.blogs.fetchError);
+   const isLoading = useSelector((state) => state.blogs.isLoading);
+   const isError = useSelector((state) => state.blogs.isError);
+   const hasNextPage = useSelector((state) => state.blogs.hasNextPage);
+   const fetchError = useSelector((state) => state.blogs.fetchError);
+   const error = useSelector((state) => state.blogs.error);
+   useEffect(() => {
+     dispatch(setIsLoading(false));
+     dispatch(setFetchError({}));
+     const controller = new AbortController();
+     const { signal } = controller;
 
-  useEffect(() => {
-    dispatch(setIsLoading(false));
-    dispatch(setFetchError({}));
-    const controller = new AbortController();
-    const { signal } = controller;
-    
-    dispatch(
-      fetchAllBlogsByAuthor({
-        pageNum: pageNum,
-        options: { signal },
-        username: ownerName !== name &&  window.location.pathname !== "/profile" ? name : ownerName,
-      })
-    );
+     dispatch(
+       fetchAllBlogsByAuthor({
+         pageNum: pageNum,
+         options: { signal },
+         username:
+           ownerName !== name && window.location.pathname !== "/profile"
+             ? name
+             : ownerName,
+       })
+     );
 
-    return () => controller.abort();
-  }, [pageNum, dispatch]);
+     return () => controller.abort();
+   }, [pageNum, dispatch]);
 
-  const intObserver = useRef();
-  const lastBlogRef = useCallback(
-    (blog) => {
-      console.log("ran");
-      if (isLoading) return;
-      if (intObserver.current) intObserver.current.disconnect();
+   const intObserver = useRef();
+   const lastBlogRef = useCallback(
+     (blog) => {
+       if (isLoading) return;
+       if (intObserver.current) intObserver.current.disconnect();
 
-      intObserver.current = new IntersectionObserver((blogs) => {
-        console.log(blogs);
-        if (blogs[0].isIntersecting) {
-          setPageNum((prev) => prev + 1);
-        }
-      });
-      if (blog) intObserver.current.observe(blog);
-    },
-    [isLoading, hasNextPage]
-  );
-  const blogs = useSelector((state) => state.blogs.profileBlogs);
+       intObserver.current = new IntersectionObserver((blogs) => {
+         if (blogs[0].isIntersecting) {
+           setPageNum((prev) => prev + 1);
+         }
+       });
+       if (blog) intObserver.current.observe(blog);
+     },
+     [isLoading, hasNextPage]
+   );
+   const blogs = useSelector((state) => state.blogs.profileBlogs);
 
-  if (isError) return <p>Error : {fetchError}</p>;
+   if (isError) return <p>Error : {fetchError}</p>;
 
-  if (!blogs.length)
-    return (
-      <div className="pt-10 text-2xl text-center flex flex-col justify-center">
-        <AiOutlineFileSearch
-          className="text-slate-500 mx-auto mb-5"
-          style={{ fontSize: "70px" }}
-        />
-        <span className="text-slate-500">You dont have any posts yet</span>
-      </div>
-    );
-  const content = blogs?.map((blog, i) => {
-    if (blogs?.length === i + 1) {
-      return (
-        <PostList
-          ref={lastBlogRef}
-          key={blog.id}
-          blogs={blog}
-          handleRemoveBlog={handleRemoveBlog}
-        />
-      );
-    }
-    return (
-      <PostList
-        key={blog.id}
-        blogs={blog}
-        handleRemoveBlog={handleRemoveBlog}
-      />
-    );
-  });
-  return (
-    <>
-      {content ? (
-        content
-      ) : (
-        <div className="pt-10 text-2xl text-center flex flex-col justify-center">
-          <AiOutlineFileSearch
-            className="text-slate-500 mx-auto mb-5"
-            style={{ fontSize: "70px" }}
-          />
-          <span className="text-slate-500">There is no blog to display</span>
-        </div>
-      )}
-      
-    </>
-  );
+   const content = blogs?.map((blog, i) => {
+     if (blogs?.length === i + 1) {
+       return (
+         <PostList
+           ref={lastBlogRef}
+           key={blog.id}
+           blogs={blog}
+           handleRemoveBlog={handleRemoveBlog}
+         />
+       );
+     }
+     return (
+       <PostList
+         key={blog.id}
+         blogs={blog}
+         handleRemoveBlog={handleRemoveBlog}
+       />
+     );
+     console.log(isLoading);
+   });
+   return (
+     <>
+       {content ? (
+         <>
+           {content}
+           {error ? (
+             <div className="pb-20 text-center flex sm:flex-col flex-row justify-center items-center">
+               <BiMessageSquareError className="sm:text-[60px] text-[25px] text-slate-400 sm:mt-0 mt-3 sm:ml-0 ml-2" />
+               <span className="sm:text-xl pt-4 text-slate-400 font-bold">
+                 {error}
+               </span>
+             </div>
+           ) : (
+             <BlogLoader />
+           )}
+         </>
+       ) : (
+         <div>پستی برای نمایش وجود ندارد</div>
+       )}
+     </>
+   );
 }
-export { AllOwnerBlogs };
+export default AllOwnerBlogs;

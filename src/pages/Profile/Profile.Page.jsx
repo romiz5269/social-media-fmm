@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { AllBlogsById, AllOwnerBlogs } from "components";
+import { BlogLoader } from "components";
 import { Products } from "pages/products/Products.Page";
 import { ProfileData } from "components";
-import { fetchOwnerProfile, fetchUserData } from "store/Reducers/Users/UsersReducer";
+import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
 import jwtDecode from "jwt-decode";
 import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
+import { Suspense } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -46,6 +47,7 @@ function a11yProps(index) {
   };
 }
 function Profile() {
+  const ProfileBlogs  = React.lazy(()=>import('components/Blogs/AllOwnerBlogs/AllOwnerBlogs.component'))
   const [value, setValue] = useState(0);
   const {theme} = useCheckThemeMode()
   const userData = jwtDecode(localStorage.getItem("authToken")).name;
@@ -67,7 +69,7 @@ function Profile() {
   
   return (
     <div>
-      <ProfileData profile={profile} hasFollowButton={false} />
+      <ProfileData profile={profile} />
       <div className="mt-5 flex flex-row justify-between  sm:mb-0 mb-10">
         <Box sx={{ width: "100%" }}>
           <Box
@@ -136,7 +138,9 @@ function Profile() {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <AllOwnerBlogs />
+            <Suspense fallback={<BlogLoader />}>
+              <ProfileBlogs />
+            </Suspense>
           </TabPanel>
           <TabPanel value={value} index={1}>
             <Products />

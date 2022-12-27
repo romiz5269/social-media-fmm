@@ -1,13 +1,10 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchAllCommentsOfPost,
-  fetchSingleBlogById,
-} from "store/Reducers/Blogs/Blogs.Reducer";
-import { SingleBlog, AddComment, ShowComment, CommentsList } from "components";
+import { fetchAllCommentsOfPost } from "store/Reducers/Comments/Comments.Reducer";
+import { SingleBlog, AddComment, CommentsList } from "components";
 import { useState } from "react";
-import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
+import { fetchSingleBlogById } from "store/Reducers/Blogs/Blogs.Reducer";
 
 function SingleBlogDetail() {
   const [pageNum, setPageNum] = useState(1);
@@ -29,19 +26,23 @@ function SingleBlogDetail() {
         options: { signal },
       })
     );
-  
 
     return () => controller.abort();
   }, [pageNum, dispatch]);
-  const comments = useSelector((state) => state.blogs.comments);
+  const comments = useSelector((state) => state.comments.comments);
 
-  console.log('singleBlog',singleBlog)
+  console.log("singleBlog", singleBlog);
   return (
     <>
       <SingleBlog blogs={singleBlog} captionShow="show" />
       <AddComment id={singleBlog[0]?.id} commenter={singleBlog[0]?.author} />
 
-      {singleBlog.length > 0 && <CommentsList postId={singleBlog[0]?.id} author ={singleBlog[0]?.author} />}
+      {singleBlog.length > 0 && (
+        <CommentsList
+          postId={singleBlog[0]?.id}
+          author={singleBlog[0]?.author}
+        />
+      )}
     </>
   );
 }

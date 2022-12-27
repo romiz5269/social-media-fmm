@@ -1,7 +1,7 @@
 import { useState } from "react";
-import toast from "react-hot-toast";
-import { BiCheck, BiEditAlt, BiTrash, BiX } from "react-icons/bi";
-import { SlPencil } from "react-icons/sl";
+import { Toaster } from "react-hot-toast";
+import { BiCheck,  BiPencil, BiX } from "react-icons/bi";
+import { SlPencil, SlTrash } from "react-icons/sl";
 import { useDispatch } from "react-redux";
 import { EditSingleBlog } from "store/Reducers/Blogs/Blogs.Reducer";
 import previewPost from "assets/images/post/preview-post.png";
@@ -11,7 +11,7 @@ function EditBlogForm({ blog }) {
   const [title, setTitle] = useState(blog?.title);
   const [previewSrc, setPrewviewSrc] = useState(blog?.myimage);
   const [editable, setEditable] = useState(false);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(blog?.myimage);
   const formDataBody = new FormData();
 
   const dispatch = useDispatch();
@@ -20,56 +20,52 @@ function EditBlogForm({ blog }) {
     formDataBody.append("id", blog.id);
     formDataBody.append("title", title);
     formDataBody.append("content", content);
-    formDataBody.append("myimage", image);
-    // make a post request with redux for login api
+    formDataBody.append("image", image);
 
+    // make a post request with redux for login api
     dispatch(EditSingleBlog({ id: blog.id, formDataBody }));
-    // dispatch(
-    //   EditSingleBlog({
-    //     id: id,
-    //     myimage: image,
-    //     content: content,
-    //     title: title,
-    //   })
-    // );
+
   };
 
   const previewFile = () => {
     var preview = document.querySelector("img");
     var file = document.querySelector("input[type=file]").files[0];
-    console.log("file : ", file);
     setImage(file);
     preview.src = URL.createObjectURL(file);
     setPrewviewSrc(preview.src);
   };
-  console.log("image : ", image);
   const profileImage = () => {
     document.getElementById("profile-image-upload").click();
   };
   const handleCancelUploadNewImage = () => {
     setEditable(false);
     setImage(null);
-    setPrewviewSrc(blog?.myimage);
+    setPrewviewSrc(blog?.image);
   };
   return (
-    <>
+    <div className="w-full flex flex-col justify-center">
       {blog ? (
-        <div className="flex flex-col items-center justify-center h-[480px] w-full">
+        <>
           <form
             onSubmit={(e) => hanldeUpdateBlog(e, blog.id)}
-            encType="multipart/form-data"
-            className="flex flex-col items-center  h-full w-full"
+            className="flex flex-col justify-center "
           >
-            <div className="w-full">
+            <div className="flex flex-row justify-center w-full mx-auto pb-3 pt-2">
+              <BiPencil className="text-2xl text-slate-500 ml-1" />
+              <h3 className="font-Vazirmatn text-lg text-slate-500">
+                باکس ویرایش بلاگ
+              </h3>
+            </div>
+            <div className=" flex flex-col justify-center mx-auto mb-4 w-full">
               {editable ? (
                 <>
                   <div
-                    className="profile-pic relative w-full rounded-md"
+                    className="profile-pic relative w-full rounded-md "
                     style={{ border: "1px solid #e8e8e8" }}
                   >
                     <img
                       alt="User Pic"
-                      src={previewSrc}
+                      src={previewSrc !== null ? previewSrc : previewPost}
                       id="profile-image1"
                       onClick={(e) => profileImage()}
                       className=" rounded-md object-fill"
@@ -94,66 +90,77 @@ function EditBlogForm({ blog }) {
               ) : (
                 <>
                   <img
-                    src={previewSrc}
-                    className="rounded-md"
+                    src={previewSrc !== null ? previewSrc : previewPost}
+                    className="rounded-md border-dashed border-2"
                     style={{ height: "250px", width: "100%" }}
                   />
                 </>
               )}
               {editable ? (
-                <div className="sm:flex sm:flex-row flex flex-col absolute top-8 left-5 ">
+                <div className="sm:flex sm:flex-row flex flex-col absolute top-16 left-8 ">
                   <span
-                    className="bg-white  p-2  hover:cursor-pointer"
+                    className="bg-white  p-2  hover:cursor-pointer border"
                     onClick={(e) => setEditable(false)}
                   >
                     <BiCheck className="text-green-500 text-xl" />
                   </span>
                   <span
-                    className="bg-white  p-2  hover:cursor-pointer"
+                    className="bg-white  p-2  hover:cursor-pointer border"
                     onClick={(e) => handleCancelUploadNewImage()}
                   >
-                    <BiX className="text-red-600 text-xl" />
+                    <BiX className="text-red-600 text-xl " />
                   </span>
                 </div>
               ) : (
-                <span
-                  className="bg-white rounded-full p-2  hover:cursor-pointer absolute top-8 left-5"
-                  onClick={(e) => setEditable(true)}
-                >
-                  <SlPencil className="text-xl" />
-                </span>
+                <div className="flex flex-row absolute top-16 left-8">
+                  <span
+                    className="bg-white  p-2  hover:cursor-pointer border"
+                    onClick={(e) => setEditable(true)}
+                  >
+                    <SlPencil className="text-xl" />
+                  </span>
+                  <span
+                    className="bg-white  p-2  hover:cursor-pointer border"
+                    onClick={(e) => {
+                      setImage(null);
+                      setPrewviewSrc(null);
+                    }}
+                  >
+                    <SlTrash className="text-red-600 text-xl" />
+                  </span>
+                </div>
               )}
+             
             </div>
-            <div className="w-full my-2">
+            <div className="w-full flex flex-col justify-center mx-auto">
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full border-2 h-[50px] bg-white outline-none px-2 py-2 text-md font-Vazirmatn text-slate-600 rounded-md "
-                style={{ border: "1px solid #e8e8e8" }}
+                className="bg-slate-300 rounded-md py-2 pr-3 font-Vazirmatn text-md text-slate-600 focus:bg-slate-100"
               />
             </div>
-            <div className="w-full my-2 ">
+            <div className="w-full flex flex-col justify-center mx-auto my-4">
               <textarea
                 type="text"
+                rows="5"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                rows="4"
-                className="border-2 w-[100%] bg-white outline-none px-2 py-2 text-md font-Vazirmatn text-slate-600 rounded-md "
-                style={{ border: "1px solid #e8e8e8" }}
+                className="bg-slate-300 rounded-md py-2 pr-3 font-Vazirmatn text-md text-slate-600 focus:bg-slate-100"
               />
             </div>
-            <div className="w-full">
-              <button className=" bg-gradient-to-r from-blue-500 to-blue-600 py-2 px-10  text-white font-Vazirmatn w-full rounded-md ">
-                ثبت تغییرات
+            <div className="w-full flex flex-col justify-center mx-auto">
+              <button className="w-full transition ease-in-out delay-150 bg-orange-500   hover:bg-red-500 duration-300  px-10 py-2 rounded-md font-Vazirmatn text-white">
+                ذخیره تغییرات
               </button>
             </div>
           </form>
-        </div>
+        </>
       ) : (
-        "failed to load data"
+        "Failed to Load Data"
       )}
-    </>
+      <Toaster position="top-center" />
+    </div>
   );
 }
 

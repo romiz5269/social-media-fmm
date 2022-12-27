@@ -1,7 +1,7 @@
 import { UserAvatar } from "components";
 import moment from "moment";
 import React from "react";
-import { AiOutlineDelete, AiOutlineWarning } from "react-icons/ai";
+import { AiOutlineDelete } from "react-icons/ai";
 import LinesEllipsis from "react-lines-ellipsis";
 import { Link, useLocation } from "react-router-dom";
 import { BlogInteractions } from "components";
@@ -49,14 +49,6 @@ function BlogsInfo({ blog, owner, captionShow, handleRemoveBlog }) {
                   </div>
                 </>
               )}
-            {/* {blog?.author?.username !== owner && (
-              <div>
-                <div className="text-sm flex flex-row">
-                  <span className="text-xs text-yellow-600">Report</span>
-                  <AiOutlineWarning className="text-md mr-2 text-yellow-600" />
-                </div>
-              </div>
-            )} */}
           </div>
         </div>
         <Link to={`/thread/blog/${blog.id}`}>
@@ -85,6 +77,7 @@ function BlogsInfo({ blog, owner, captionShow, handleRemoveBlog }) {
           </div>
           <div className="py-2 pl-3">
             <img
+              alt=""
               src={blog.image}
               className="rounded-[10px] mt-1 border-2"
               style={{ height: "275px", width: "100%" }}

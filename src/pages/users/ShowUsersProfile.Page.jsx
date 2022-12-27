@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import React,{ useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchOwnerProfile } from "store/Reducers/Users/UsersReducer";
 import useCheckThemeMode from "hooks/useCheckThemeMode.hook";
-import { AllBlogsById, AllOwnerBlogs, ProfileData } from "components";
+import { AllBlogsById,BlogLoader,ProfileData } from "components";
 import { Products } from "pages";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import jwtDecode from "jwt-decode";
 import { BiLock } from "react-icons/bi";
+import { Suspense } from "react";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -47,6 +48,7 @@ function a11yProps(index) {
 }
 
 function ShowUsersProfile() {
+  const ProfileBlogs = React.lazy(()=>import('components/Blogs/AllOwnerBlogs/AllOwnerBlogs.component'))
   const [value, setValue] = useState(0);
   const { name } = useParams();
   const { theme } = useCheckThemeMode();
@@ -70,9 +72,7 @@ function ShowUsersProfile() {
   console.log(hasFollow);
   return (
     <div>
-      <ProfileData
-        profile={profile}
-      />
+      <ProfileData profile={profile} />
       <div className="mt-5 flex flex-row justify-between  sm:mb-0 mb-10">
         <Box sx={{ width: "100%" }}>
           <Box
@@ -142,7 +142,9 @@ function ShowUsersProfile() {
           </Box>
           <TabPanel value={value} index={0}>
             {hasFollow ? (
-              <AllOwnerBlogs />
+              <Suspense fallback={<BlogLoader />}>
+                <ProfileBlogs />
+              </Suspense>
             ) : (
               <div className="flex flex-col justify-center items-center">
                 <BiLock className="text-9xl  text-slate-400 w-[60px] h-[60px] mt-4" />

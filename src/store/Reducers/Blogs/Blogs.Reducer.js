@@ -101,7 +101,6 @@ export const BlogsSlice = createSlice({
     },
     insertNewComment: (state, action) => {
       addNewComment(action.payload);
-      // state.singleBlog[0].comments.unshift(action.payload);
 
       state.comments.unshift(action.payload);
     },
@@ -145,15 +144,26 @@ export const BlogsSlice = createSlice({
   },
   extraReducers: {
     [fetchAllBlogs.fulfilled]: (state, action) => {
-      state.blogs.push(...action.payload);
-      setHasNextPage(Boolean(action.payload.length));
-      setIsLoading(false);
+      state.error = null;
+      if (action.payload === undefined) {
+        state.blogs = [];
+      } else {
+        state.blogs.push(...action.payload);
+        setHasNextPage(Boolean(action.payload.length));
+        state.isLoading = false;
+        state.error = null;
+      }
       state.comments = [];
     },
+    [fetchAllBlogs.pending]: (state, action) => {
+      state.error = null;
+    },
     [fetchAllBlogs.rejected]: (state, action) => {
-      state.isLoading = false;
-      state.isError = true;
-      state.fetchError = { message: action.payload.message };
+      if (action.error.message === "404") {
+        state.error = "موردی یافت نشد";
+      } else {
+        state.error = "مشکلی رخ داده است";
+      }
     },
     [addNewBlog.fulfilled]: (state, action) => {
       state.status = "پست با موفقیت منتشر شد";
@@ -181,10 +191,23 @@ export const BlogsSlice = createSlice({
       state.comments = [];
     },
     [fetchAllBlogsByAuthor.fulfilled]: (state, action) => {
-      state.profileBlogs.push(...action.payload);
+      if (action.payload.length > 0) {
+        state.profileBlogs.push(...action.payload);
 
-      setHasNextPage(Boolean(action.payload.length));
-      setIsLoading(false);
+        setHasNextPage(Boolean(action.payload.length));
+        state.isLoading = false;
+      } else {
+        state.profileBlogs = [];
+        state.isLoading = false;
+      }
+    },
+    [fetchAllBlogsByAuthor.rejected]: (state, action) => {
+      console.log(action.error.message)
+      if (action.error.message === "404") {
+        state.error = "موردی یافت نشد";
+      } else {
+        state.error = "مشکلی رخ داده است";
+      }
     },
     [fetchAllBlogsByFollow.fulfilled]: (state, action) => {
       if (action.payload === undefined) {
@@ -192,21 +215,44 @@ export const BlogsSlice = createSlice({
       } else {
         state.followingBlogs.push(...action.payload);
         setHasNextPage(Boolean(action.payload.length));
-        state.isLoading = false;  
+        state.isLoading = false;
       }
       state.comments = [];
     },
+    [fetchAllBlogsByFollow.pending]: (state, action) => {
+      state.error = null;
+    },
+    [fetchAllBlogsByFollow.rejected]: (state, action) => {
+      if (action.error.message === "404") {
+        state.error = "موردی یافت نشد";
+      } else {
+        state.error = "مشکلی رخ داده است";
+      }
+    },
     [fetchALLExplorePosts.fulfilled]: (state, action) => {
+      state.error = null;
       if (action.payload === undefined) {
         state.explorePosts = [];
       } else {
         state.explorePosts.push(...action.payload);
         setHasNextPage(Boolean(action.payload.length));
+        state.isLoading = false;
+        state.error = null;
       }
       state.comments = [];
     },
+    [fetchALLExplorePosts.pending]: (state) => {
+      state.error = null;
+    },
+    [fetchALLExplorePosts.rejected]: (state, action) => {
+      if (action.error.message === "404") {
+        state.error = "موردی یافت نشد";
+      } else {
+        state.error = "مشکلی رخ داده است";
+      }
+    },
     [fetchAllCommentsOfPost.fulfilled]: (state, action) => {
-      // console.log(action.payload);
+      
       if (action.payload === undefined) {
         state.comments = [];
       } else {

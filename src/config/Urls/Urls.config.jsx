@@ -1,5 +1,5 @@
 export const URL = {
-  REQ_URL: "http://binjhom.ir/blog",
+  REQ_URL: "https://binjhom.ir/blog",
   USER: "/user",
   BLOGS: "/blogs",
   REGISTER: "/account/register/", //POST

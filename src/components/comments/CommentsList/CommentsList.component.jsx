@@ -1,77 +1,62 @@
+import { BlogLoader } from "components/Loading/BlogLoader/BlogLoader";
 import React from "react";
 import { useEffect } from "react";
 import { useRef } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
-import { AiOutlineFileSearch } from "react-icons/ai";
+import { BiMessageSquareError } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllCommentsOfPost,
-  setFetchError,
+
   setIsLoading,
-} from "store/Reducers/Blogs/Blogs.Reducer";
+} from "store/Reducers/Comments/Comments.Reducer";
 import { ShowComment } from "../ShowComments/ShowComment.component";
 
 function CommentsList({ postId, author }) {
-  console.log(postId);
   const dispatch = useDispatch();
   const [pageNum, setPageNum] = useState(1);
 
-  const isLoading = useSelector((state) => state.blogs.isLoading);
-  const isError = useSelector((state) => state.blogs.isError);
-  const hasNextPage = useSelector((state) => state.blogs.hasNextPage);
-  const fetchError = useSelector((state) => state.blogs.fetchError);
-
+  const hasNextPage = useSelector((state) => state.comments.hasNextPage);
+  const error = useSelector((state) => state.comments.error);
   useEffect(() => {
-    dispatch(setIsLoading(false));
-    dispatch(setFetchError({}));
+
     const controller = new AbortController();
     const { signal } = controller;
-
     dispatch(
       fetchAllCommentsOfPost({
+        postId: postId,
         pageNum: pageNum,
         options: { signal },
-        postId: postId,
       })
     );
 
     return () => controller.abort();
   }, [pageNum, dispatch]);
 
+  const isLoading = useSelector((state) => state.comments.isLoading);
+
   const intObserver = useRef();
   const lastBlogRef = useCallback(
-    (comments) => {
-      console.log("ran");
-      if (isLoading) return <div>Loading...</div>;
+    (comment) => {
+      if (isLoading) return;
       if (intObserver.current) intObserver.current.disconnect();
 
       intObserver.current = new IntersectionObserver((comments) => {
-        console.log(comments);
+
         if (comments[0].isIntersecting) {
+          dispatch(setIsLoading(true));
           setPageNum((prev) => prev + 1);
         }
       });
-      if (comments) intObserver.current.observe(comments);
+      if (comment) {
+        intObserver.current.observe(comment);
+      }
     },
     [isLoading, hasNextPage]
   );
-  const comments = useSelector((state) => state.blogs.comments);
-  console.log("comments : ", comments);
-  if (isError) return <p>Error : {fetchError}</p>;
+  const comments = useSelector((state) => state.comments.comments);
 
-  if (!comments?.length)
-    return (
-      <div className="pt-10 text-2xl text-center flex flex-col justify-center">
-        <AiOutlineFileSearch
-          className="text-slate-500 mx-auto mb-5"
-          style={{ fontSize: "70px" }}
-        />
-        <span className="text-slate-500 font-Vazirmatn">
-          هنوز هیچ نظری برای این بلاگ ثبت نشده است
-        </span>
-      </div>
-    );
   const content = comments?.map((comment, i) => {
     if (comments?.length === i + 1) {
       return (
@@ -82,16 +67,36 @@ function CommentsList({ postId, author }) {
           author={author}
         />
       );
+    } else {
+      return (
+        <ShowComment key={comment.id} comments={comment} author={author} />
+      );
     }
-
-    return <ShowComment key={comment.id} comments={comment} author={author} />;
   });
   return (
-    <div
-      className="flex flex-col px-4 "
-      style={{ borderTop: "2px solid #f6f6f6" }}
-    >
-      {isLoading ? <p>Loading More Blogs ...</p> : content}
+    <div style={{ borderTop: "1px solid #e8e8e8" }}>
+      <div className="w-full flex flex-row justify-start p-3 border-b-2 border-dashed">
+        <h3>نظرات کاربران</h3>
+      </div>
+      {content ? (
+        <>
+          {content}
+          {error ? (
+            <div className="py-5 text-center flex flex-col justify-center items-center">
+              <div className="flex flex-col items-center justify-center">
+                <BiMessageSquareError className="text-[60px] text-slate-400" />
+                <span className="text-2xl pt-4 text-slate-400 font-bold">
+                  {error}
+                </span>
+              </div>
+            </div>
+          ) : (
+            <BlogLoader />
+          )}
+        </>
+      ) : (
+        <div>مشکلی رخ داده است</div>
+      )}
     </div>
   );
 }

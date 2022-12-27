@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { FaCheck, FaTimes, FaInfoCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { http } from "services/Http/axios";
@@ -100,11 +101,7 @@ function Register() {
       const response = await http.post("/account/register/", bodyFormData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
-      if (response.status === 200) {
-        console.log("Your Account successfully created");
-        navigate('/login',{replace:true})
-      }
+      toast.success("ایمیل تایید برای شما ارسال شد");
     } catch (err) {
       if (!err?.response) {
         setErrMsg("No Server Response");
@@ -117,6 +114,7 @@ function Register() {
   };
   return (
     <>
+      <Toaster position="top-center" />
       {success ? (
         <div className="form-section">
           <p>success ! you Logged In</p>

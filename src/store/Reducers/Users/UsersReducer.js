@@ -5,12 +5,15 @@ import {
   getOwnerProfile,
   getUserProfile,
   updateSingleProfile,
+  updateSingleProfileImage,
   userLogin,
   userLogout,
 } from "api/Users/Users.api";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import BlogsReducer, { clearProfileBlogs } from "../Blogs/Blogs.Reducer";
+import LogoutUser from "utils/LogoutFunc/Logout.Func";
+
 export const UserLogin = createAsyncThunk("users/UserLogin", async (data) => {
   return await userLogin(data);
 });
@@ -48,6 +51,12 @@ export const updateUserData = createAsyncThunk(
     return await updateSingleProfile(data);
   }
 );
+export const updateUserImage = createAsyncThunk(
+  "users/updateUserImage",
+  async (data) => {
+    return await updateSingleProfileImage(data);
+  }
+);
 export const UsersSlice = createSlice({
   name: "users",
   initialState: {
@@ -56,8 +65,13 @@ export const UsersSlice = createSlice({
     ownerUser: [],
     isUserLogged: false,
     userAuthToken: "",
-    AuthError: "",
+    AuthError: null,
     userData: [],
+    error: null,
+    status: {
+      type: null,
+      message: "",
+    },
     hasFollowThreadUser: false,
   },
   reducers: {
@@ -78,48 +92,43 @@ export const UsersSlice = createSlice({
   },
   extraReducers: {
     [UserLogin.fulfilled]: (state, action) => {
+      state.userAuthToken = null;
       localStorage.setItem("authToken", action.payload);
       state.userAuthToken = action.payload;
     },
     [UserLogin.rejected]: (state, action) => {
-      if (action.error.message === "401") {
-        state.AuthError =
-          "کاربر یافت نشد - رمز عبور و یا نام کاربری اشتباه است";
-      } else if (action.error.message === "403") {
-        state.AuthError = "Request Incorrect";
-      } else if (action.error.message === "404") {
-        state.AuthError = "Incorrect username or password";
-      } else {
-        state.AuthError = "سرور پاسخگو نیست";
-      }
+      console.log(action.payload)
+      state.AuthError = null;
+      state.AuthError = action.payload;
+      // if (action.error.message === "401") {
+      //   state.AuthError =
+      //     "کاربر یافت نشد - رمز عبور و یا نام کاربری اشتباه است";
+      // } else if (action.error.message === "403") {
+      //   state.AuthError = "Request Incorrect";
+      // } else if (action.error.message === "404") {
+      //   state.AuthError = "Incorrect username or password";
+      // } else {
+      //   state.AuthError = "سرور پاسخگو نیست";
+      // }
     },
     [UserLogout.fulfilled]: (state, action) => {
       localStorage.removeItem("authToken");
     },
-    [fetchUserData.fulfilled]: (state, action) => {
-      state.singleUser = action.payload;
-    },
-    [fetchUserData.rejected]: (state, action) => {
-      if (action.error.message === "401") {
-        state.error = "Unauthorized";
-      }
-      if (action.error.message === "403") {
-        state.error = "Request Incorrect";
-      }
-      if (action.error.message === "404") {
-        console.log("404");
-        state.error = "Incorrect username or password";
-      }
-      if (action.error.message === "500") {
-        state.error = "No Server Response";
-      }
-    },
+
     [fetchOwnerProfile.fulfilled]: (state, action) => {
       state.ownerUser = action.payload;
       if (action.payload.youfollow) {
         state.hasFollowThreadUser = true;
       } else {
         state.hasFollowThreadUser = false;
+      }
+    },
+    [fetchOwnerProfile.rejected]: (state, action) => {
+      if (action.error.message === "404") {
+        state.error = "موردی یافت نشد";
+        // localStorage.removeItem("authToken");
+      } else {
+        state.error = "مشکلی رخ داده است";
       }
     },
     [createNewFollow.fulfilled]: (state, action) => {
@@ -131,6 +140,12 @@ export const UsersSlice = createSlice({
       state.ownerUser.followercount -= 1;
 
       clearProfileBlogs();
+    },
+    [updateUserData.fulfilled]: (state, action) => {
+      state.ownerUser = action.payload;
+    },
+    [updateSingleProfileImage.fulfilled]: (state, action) => {
+      state.ownerUser = action.payload;
     },
   },
 });

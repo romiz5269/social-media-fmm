@@ -11,18 +11,17 @@ import Box from "@mui/material/Box";
 
 const style = {
   position: "absolute",
-  top: "50%",
+  top: "45%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   boxShadow: 24,
   borderRadius: "10px",
-  padding: "20px 10px",
-  overflowY: "auto",
-  height: "530px",
+  padding: "8px 20px",
+  height: "600px",
 };
+
 function EditBlogModal({ postid }) {
-  console.log(postid)
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [targetBlog, setTargetBlog] = useState(null);
